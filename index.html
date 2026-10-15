@@ -698,6 +698,10 @@ div.ag{cursor:default}
 .ag.blk-r.st-miss .ag-m b{color:var(--muted)}
 .wg-col .m{font-size:10px;line-height:1;text-align:center;overflow:hidden;color:var(--fg)}
 .wg-col .m.st-done{color:var(--bg)}
+.wg-col .m.f{background:color-mix(in srgb,var(--fg) 20%,var(--bg));border:1.5px solid color-mix(in srgb,var(--fg) 38%,var(--bg));color:var(--fg);display:flex;align-items:center;justify-content:center}
+.wg-col .m.f span{font:700 10px/1.1 var(--font);letter-spacing:-.5px;overflow:hidden;white-space:nowrap}
+.wg-col .m.k-deep,.wg-col .m.k-light,.wg-col .m.k-out,.wg-col .m.k-rest,.wg-col .m.k-event{display:flex;align-items:center;justify-content:center}
+.wg-col .m.st-up,.wg-col .m.st-now{background:color-mix(in srgb,var(--kc) 28%,var(--bg));border-width:2px}
 
 </style>
 
@@ -2992,7 +2996,7 @@ function weekGrid(wk,sel,act){
   axis+='</div>';
   const cols=DAYS.map((_,i)=>{
     const mode=modeFor(wk,i),it=dayItems(wk,i,'past');let h='';
-    for(const f of it.fx)if(f.t!=='clear')h+='<i class="m f" style="top:'+y(f.start)+'px;height:'+Math.max(3,y(f.end)-y(f.start)-1)+'px"></i>';
+    for(const f of it.fx)if(f.t!=='clear'){const fh=Math.max(3,y(f.end)-y(f.start)-1);h+='<i class="m f" style="top:'+y(f.start)+'px;height:'+fh+'px">'+(fh>=14?'<span>'+esc(emoOnly(f.label)||String(f.label).replace(/\s/g,'').slice(0,3))+'</span>':'')+'</i>';}
     for(const b of it.bl)h+='<i class="m k-'+b.kind+' st-'+blockState(b,mode)+'" style="top:'+y(b.start)+'px;height:'+Math.max(4,y(b.start+b.dur)-y(b.start)-1)+'px">'+(y(b.start+b.dur)-y(b.start)>=14?emoOnly(b.title):'')+'</i>';
     if(gpOn)for(const b of gp.blocks)if(b.day===i&&!b.off)h+='<i class="m gh" style="top:'+y(b.start)+'px;height:'+Math.max(5,y(b.start+b.dur)-y(b.start)-1)+'px"></i>';
     if(i===td){const n=nowMin();if(n>r[0]&&n<r[1])h+='<i class="nl" style="top:'+y(n)+'px"></i>';}
@@ -3597,7 +3601,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.15-8';
+const APP_VER='2026.10.15-9';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
