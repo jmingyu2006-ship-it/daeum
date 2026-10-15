@@ -2599,8 +2599,11 @@ async function aiTurn(text){
   pushGuide({text:say,chips});return true;
 }
 async function guideReply(text){
+  aiErr=null;
   const ok=await aiTurn(text).catch(()=>false);
-  if(!ok)localTurn(text);
+  if(!ok){localTurn(text);
+    const gm=guideState().msgs;const lm=gm[gm.length-1];
+    if(lm&&lm.role==='guide'&&!(window.claude&&window.claude.use)&&(aiErr||aiOff))lm.fail=aiErr?aiErrText(aiErr):'AI를 쓸 수 없는 상태예요';}
   ui.gScroll=true;commit();
 }
 function guideSend(text){
@@ -2630,7 +2633,7 @@ const AVA=guideAva('idle');
 function msgHtml(m,idx){
   if(m.role==='me')return '<div class="msg me"><p>'+esc(m.text)+'</p></div>';
   const ms=guideState().msgs,last=idx===ms.length-1,busy=ui.busy.guide;
-  let h='<div class="msg guide">'+AVA+'<div class="g-body">'+(m.label?'<span class="g-label">'+esc(m.label)+'</span>':'')+'<p>'+esc(m.text)+(m.sub?'<span class="g-sub">'+esc(m.sub)+'</span>':'')+'</p>';
+  let h='<div class="msg guide">'+AVA+'<div class="g-body">'+(m.label?'<span class="g-label">'+esc(m.label)+'</span>':'')+'<p>'+esc(m.text)+(m.sub?'<span class="g-sub">'+esc(m.sub)+'</span>':'')+'</p>'+(m.fail?'<span class="xs muted">AI 연결이 안 돼서 기본 규칙으로 답했어요 · '+esc(m.fail)+'</span>':'');
   if(m.options&&m.options.length&&last&&!busy)h+='<div class="g-opts">'+m.options.map(o=>'<button type="button" class="chip opt" data-act="g-chip" data-v="'+esc(o)+'">'+esc(o)+'</button>').join('')+'</div>';
   const p=m.prop;
   if(p){const tt=propTotal(p);
@@ -3438,6 +3441,9 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
+const APP_VER='2026.10.15-3';
+let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
+function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
 function remoteSample(url){
   const call=async(input,opts,asJson)=>{
@@ -3445,17 +3451,18 @@ function remoteSample(url){
     const msgs=typeof input==='string'?[{role:'user',content:input}]:input;
     let r;
     try{r=await fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:msgs,json:!!asJson,tier:opts.modelTier||'default'}),signal:opts.signal});}
-    catch(e){if(e&&e.name==='AbortError')throw {code:'cancelled'};throw {code:'network'};}
-    if(r.status===429)throw {code:'rate_limited'};
-    if(!r.ok)throw {code:'server'};
-    let j;try{j=await r.json();}catch(e){throw {code:'server'};}
-    if(!j||typeof j.text!=='string')throw {code:'server'};
+    catch(e){if(e&&e.name==='AbortError')throw {code:'cancelled'};aiErr={code:'network',msg:String(e&&e.message||e).slice(0,60)};throw {code:'network'};}
+    let j=null;try{j=await r.json();}catch(e){}
+    if(r.status===429){aiErr={code:'rate_limited',status:429};throw {code:'rate_limited'};}
+    if(!r.ok){aiErr={code:'server',status:r.status,detail:j&&j.error};throw {code:'server'};}
+    if(!j||typeof j.text!=='string'){aiErr={code:'server',status:r.status,detail:'bad_reply'};throw {code:'server'};}
+    aiErr=null;
     return j.text;
   };
   const s=async(input,opts)=>{const t=await call(input,opts,false);if(opts&&opts.onText)opts.onText({text:t,delta:t});return {text:t,truncated:false};};
   s.json=async(input,opts)=>{
     const t=await call(input,opts,true);
-    try{return JSON.parse(t);}catch(e){const m=/\{[\s\S]*\}/.exec(t);if(m){try{return JSON.parse(m[0]);}catch(e2){}}throw {code:'parse'};}
+    try{return JSON.parse(t);}catch(e){const m=/\{[\s\S]*\}/.exec(t);if(m){try{return JSON.parse(m[0]);}catch(e2){}}aiErr={code:'parse'};throw {code:'parse'};}
   };
   s.limits=async()=>({images:false});
   s.remote=true;
@@ -3483,14 +3490,14 @@ async function testAi(){
     if(!s){ui.aiTest='noaddr';render();return;}
     const t0=Date.now();const r=await s.json('JSON 하나로만 답하라: {"ok":true,"say":"한 문장으로 인사"}',{cache:false});
     ui.aiTest=r&&(r.ok||r.say)?'ok':'bad';ui.aiMs=Date.now()-t0;
-  }catch(e){ui.aiTest=e&&e.code==='network'?'net':e&&e.code==='rate_limited'?'rate':'bad';}
+  }catch(e){ui.aiTest=e&&e.code==='network'?'net':e&&e.code==='rate_limited'?'rate':'bad';ui.aiWhy=aiErrText(aiErr);}
   render();
 }
 function devMode(){try{if(/[?&]dev=1/.test(location.search))localStorage.setItem('daeum-dev','1');if(/[?&]dev=0/.test(location.search))localStorage.removeItem('daeum-dev');return localStorage.getItem('daeum-dev')==='1';}catch(e){return false;}}
 function aiCard(){
-  if(!devMode())return '';
+  if(!devMode())return '<p class="small muted" style="text-align:center">다음 주 버전 '+APP_VER+'</p>';
   const inClaude=!!(window.claude&&window.claude.use),u=(S.setup&&S.setup.aiUrl)||aiUrl();
-  const st=ui.aiTest,msg=st==='pending'?'확인하는 중이에요…':st==='ok'?'연결됐어요 ('+Math.round((ui.aiMs||0)/100)/10+'초). 이제 길잡이가 AI로 답해요.':st==='noaddr'?'주소를 먼저 넣어 주세요.':st==='net'?'서버에 닿지 않아요. 주소와 인터넷 연결을 확인해 주세요.':st==='rate'?'요청이 많아요. 잠시 뒤 다시 눌러 주세요.':st==='bad'?'서버는 응답했지만 답을 읽지 못했어요. 주소가 맞는지 확인해 주세요.':'';
+  const st=ui.aiTest,msg=(st==='net'||st==='bad'||st==='rate')&&ui.aiWhy?ui.aiWhy:st==='pending'?'확인하는 중이에요…':st==='ok'?'연결됐어요 ('+Math.round((ui.aiMs||0)/100)/10+'초). 이제 길잡이가 AI로 답해요.':st==='noaddr'?'주소를 먼저 넣어 주세요.':st==='net'?'서버에 닿지 않아요. 주소와 인터넷 연결을 확인해 주세요.':st==='rate'?'요청이 많아요. 잠시 뒤 다시 눌러 주세요.':st==='bad'?'서버는 응답했지만 답을 읽지 못했어요. 주소가 맞는지 확인해 주세요.':'';
   return '<div class="card line"><h2>AI 서버</h2><p class="small muted">'+(inClaude?'Claude 앱 안에서는 따로 설정하지 않아도 길잡이가 AI로 답해요. 앱 밖(휴대폰 브라우저)에서 쓸 때만 서버 주소를 넣으세요.':'휴대폰 브라우저에서 길잡이를 AI로 쓰려면 서버 주소를 넣으세요. 비워 두면 기본 규칙으로 동작해요.')+'</p>'+
     '<label class="label" for="aiUrl">서버 주소</label><input id="aiUrl" class="field" data-field="ai-url" value="'+esc(u)+'" placeholder="https://daeum-ai.내계정.workers.dev" inputmode="url" autocapitalize="off" autocomplete="off" spellcheck="false">'+
     '<div class="row" style="gap:10px;align-items:center"><button type="button" class="btn sm" data-act="ai-test"'+(st==='pending'?' disabled':'')+'>연결 확인</button><span class="small'+(st==='ok'?'':' muted')+'" role="status">'+esc(msg)+'</span></div></div>';
