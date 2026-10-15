@@ -673,6 +673,31 @@ html[data-px="lite"] .pf-bar i{background:repeating-linear-gradient(90deg,#ffd23
 .chip{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:8px 12px;font:600 13px var(--font);cursor:pointer;min-height:38px}
 .chip.on{background:var(--fg);color:var(--bg);border-color:transparent}
 .g-sub{white-space:pre-line}
+.ag-strip{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ag-list{display:flex;flex-direction:column;gap:6px}
+.ag{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;border-radius:14px;background:var(--surface);color:var(--fg);padding:8px 12px;font:inherit;cursor:pointer;min-height:52px}
+div.ag{cursor:default}
+.ag-t{flex:0 0 42px;font-size:12px;line-height:1.3;color:var(--muted);text-align:left}
+.ag-bar{flex:0 0 5px;align-self:stretch;border-radius:3px;background:var(--kc,var(--line))}
+.ag-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.ag-m b{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ag-m .xs{color:var(--muted)}
+.ag-s{flex:0 0 auto;font-weight:800;font-size:13px}
+.ag.ag-fx{background:transparent;border:1px dashed var(--line)}
+.ag.ag-fx .ag-bar{background:repeating-linear-gradient(-45deg,var(--line) 0 3px,transparent 3px 6px)}
+.ag.ag-gap{background:transparent;border:1.5px dashed var(--line);color:var(--muted)}
+.ag.ag-gap .ag-s{font-size:18px}
+.ag.blk-r.st-now{outline:2px solid var(--now,var(--accent));background:color-mix(in srgb,var(--kc) 10%,var(--surface))}
+.ag.blk-r.st-now .ag-s{color:var(--now,var(--accent))}
+.ag.blk-r.st-done{background:var(--sunk)}
+.ag.blk-r.st-done .ag-bar{background:var(--muted)}
+.ag.blk-r.st-done .ag-m b{text-decoration:line-through;text-decoration-thickness:1px;color:var(--muted)}
+.ag.blk-r.st-done .ag-s{color:#2E9E52}
+.ag.blk-r.st-miss{background:var(--sunk);color:var(--muted)}
+.ag.blk-r.st-miss .ag-bar{background:var(--line)}
+.ag.blk-r.st-miss .ag-m b{color:var(--muted)}
+.wg-col .m{font-size:10px;line-height:1;text-align:center;overflow:hidden;color:var(--fg)}
+.wg-col .m.st-done{color:var(--bg)}
 
 </style>
 
@@ -2908,7 +2933,7 @@ function viewToday(){
     for(const p of ui.proposals){const b=wk.blocks.find(x=>x.id===p.id);if(!b)continue;
       out.push('<div class="card line"><span class="xs muted">끝낸 표시가 없는 블록</span><p>'+moveCopy(esc(b.title),p.to)+'</p><div class="row">'+(p.to?'<button type="button" class="btn primary sm" data-act="move-accept" data-id="'+b.id+'">옮기기</button>':'')+'<button type="button" class="btn sm" data-act="move-next" data-id="'+b.id+'">다음 주로</button></div></div>');}
   }
-  out.push('<div class="stack"><div class="section-title"><h2>오늘</h2><span class="xs muted">빈 칸을 누르면 넣어요</span></div>'+timelineHtml(wk,td)+
+  out.push('<div class="stack"><div class="section-title"><h2>오늘</h2>'+tlToggle()+'</div>'+dayView(wk,td)+
     '<div class="row-wrap xs muted" style="gap:12px">'+Object.keys(KIND).map(k=>'<span class="row" style="gap:5px"><span class="dot k-'+k+'"></span>'+KIND[k]+'</span>').join('')+'<span class="row" style="gap:5px"><span class="dot ghost"></span>AI 제안</span></div>'+assumeLine()+'</div>');
   if(wk.blocks.length&&!ui.proposals&&new Date().getHours()>=19)out.push('<button type="button" class="btn block" data-act="close-day">하루 정리하기</button>');
   return out.join('');
@@ -2920,10 +2945,10 @@ function viewWeek(){
   const fxMin=S.setup.fixed.reduce((a,f)=>a+f.end-f.start,0),gb=wk.blocks.filter(b=>b.goalId).length;
   const out=['<div class="stack" style="gap:4px"><span class="mono small muted">'+md(start)+' – '+md(addDays(start,6))+'</span><h1>이번 주</h1></div>'];
   if(p&&p.key===wk.key)out.push('<div class="pp-bar"><div class="stack" style="gap:2px"><b>'+esc(p.name)+' · 제안 확인 중</b><span class="small muted">점선 블록을 눌러 근거와 다른 시간을 확인할 수 있어요.</span></div><div class="grid2"><button type="button" class="btn primary" data-act="pp-start">제안 확정</button><button type="button" class="btn" data-act="pp-view">제안 전체 보기</button></div></div>');
-  out.push('<div class="grid3"><div class="stat"><span class="xs muted">고정 일정</span><b>'+(Math.round(fxMin/6)/10)+'h</b></div><div class="stat"><span class="xs muted">목표 블록</span><b>'+gb+'개</b></div><div class="stat"><span class="xs muted">남은 빈 시간</span><b>'+freeHours(wk)+'h</b></div></div>');
   for(const c of conflicts(wk).slice(0,2))out.push('<div class="card warn"><b>시간이 겹쳐요</b><span class="small">'+DAYS[c.b.day]+'요일 '+esc(c.b.title)+' · '+esc(c.with)+'. 블록을 눌러 옮기거나, 오늘 화면의 제안을 받아 보세요.</span></div>');
-  out.push(trkCard(wk));out.push(weekGrid(wk,dv,'day'));
-  out.push('<div class="stack"><div class="section-title"><h2>'+DAYS[dv]+'요일 '+md(addDays(start,dv))+(dv===dow(today())?' · 오늘':'')+'</h2><span class="xs muted">블록을 눌러 고치기</span></div>'+timelineHtml(wk,dv)+assumeLine()+'</div>');
+  out.push(trkStrip(wk));out.push(weekGrid(wk,dv,'day'));
+  out.push('<div class="stack"><div class="section-title"><h2>'+DAYS[dv]+'요일 '+md(addDays(start,dv))+(dv===dow(today())?' · 오늘':'')+'</h2>'+tlToggle()+'</div>'+dayView(wk,dv)+assumeLine()+'</div>');
+  out.push(trkCard(wk));
   const left=wk.overflow.concat(wk.deferred||[]).filter(o=>o.src!=='guide');
   if(left.length)out.push('<div class="card dashed"><b class="small">이번 주에 자리를 못 찾은 것</b><span class="small muted">'+left.map(o=>esc(o.title)).join(', ')+' · 빈 칸을 누르면 바로 넣을 수 있어요.</span></div>');
   return out.join('');
@@ -2957,7 +2982,7 @@ function timelineHtml(wk,d){
   return '<div class="tl-scroll" data-key="'+wk.key+'-'+d+'"><div class="tl" style="height:'+Math.round((r[1]-r[0])*PX)+'px">'+h+'</div></div>';
 }
 function weekGrid(wk,sel,act){
-  const r=dayRange(),H=Math.round((r[1]-r[0])*WPX),y=m=>Math.round((clamp(m,r[0],r[1])-r[0])*WPX),start=fromIso(wk.key);
+  const r=dayRange(),H=Math.round((r[1]-r[0])*0.34),y=m=>Math.round((clamp(m,r[0],r[1])-r[0])*0.34),start=fromIso(wk.key);
   const td=wk.key===curKey()?dow(today()):-1,gp=openProp(),gpOn=gp&&gp.key===wk.key;
   const head='<div class="wg-head"><span></span>'+DAYS.map((d,i)=>{
     const n=wk.blocks.filter(b=>b.day===i&&b.dur>0&&b.src!=='rest').length+(gpOn?gp.blocks.filter(b=>b.day===i&&!b.off).length:0);
@@ -2968,7 +2993,7 @@ function weekGrid(wk,sel,act){
   const cols=DAYS.map((_,i)=>{
     const mode=modeFor(wk,i),it=dayItems(wk,i,'past');let h='';
     for(const f of it.fx)if(f.t!=='clear')h+='<i class="m f" style="top:'+y(f.start)+'px;height:'+Math.max(3,y(f.end)-y(f.start)-1)+'px"></i>';
-    for(const b of it.bl)h+='<i class="m k-'+b.kind+' st-'+blockState(b,mode)+'" style="top:'+y(b.start)+'px;height:'+Math.max(4,y(b.start+b.dur)-y(b.start)-1)+'px"></i>';
+    for(const b of it.bl)h+='<i class="m k-'+b.kind+' st-'+blockState(b,mode)+'" style="top:'+y(b.start)+'px;height:'+Math.max(4,y(b.start+b.dur)-y(b.start)-1)+'px">'+(y(b.start+b.dur)-y(b.start)>=14?emoOnly(b.title):'')+'</i>';
     if(gpOn)for(const b of gp.blocks)if(b.day===i&&!b.off)h+='<i class="m gh" style="top:'+y(b.start)+'px;height:'+Math.max(5,y(b.start+b.dur)-y(b.start)-1)+'px"></i>';
     if(i===td){const n=nowMin();if(n>r[0]&&n<r[1])h+='<i class="nl" style="top:'+y(n)+'px"></i>';}
     return '<div class="wg-col'+(i===sel?' sel':'')+(mode==='past'?' pst':'')+'" data-act="'+act+'" data-i="'+i+'" style="height:'+H+'px" aria-hidden="true">'+h+'</div>';
@@ -3572,7 +3597,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.15-7';
+const APP_VER='2026.10.15-8';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -3895,6 +3920,7 @@ function evCard(){
    '<span class="xs muted">시간이 고정되고, 겹치는 블록은 가까운 빈 시간으로 자동으로 옮겨요.</span></div>';
 }
 function trkAct(a,d){
+  if(a==='tl-toggle'){ui.tlView=ui.tlView==='tl'?'list':'tl';render();return true;}
   if(a==='ev-w'||a==='ev-d'){const e=evState(),el=document.getElementById('qEvt');if(el)e.name=el.value;
     if(a==='ev-w')e.w=d.v;else e.d=Number(d.v);render();return true;}
   if(a==='ev-add'){
@@ -3911,6 +3937,30 @@ function trkAct(a,d){
     toast(DAYS[t.day]+'요일 '+hm(t.start)+' 약속을 넣었어요'+(moved?' · 블록 '+moved+'개 옮김':'')+(stuck?' · '+stuck+'개는 직접 옮겨 주세요':''));
     commit();return true;}
   return false;
+}
+
+/* ---------- 한눈에 보는 하루 목록 (스크롤 없이) ---------- */
+function emoOnly(t){const e=emo(t);return e===String(t||'')?'':e.split(' ')[0];}
+function dayAgenda(wk,d){
+  const mode=modeFor(wk,d),it=dayItems(wk,d,mode),nm=nowMin(),rows=[];
+  for(const f of it.fx)if(f.t==='fixed')rows.push({s:f.start,h:'<div class="ag ag-fx"><span class="ag-t mono">'+hm(f.start)+'<br>'+hm(f.end)+'</span><span class="ag-bar"></span><span class="ag-m"><b>'+esc(emo(f.label))+'</b><span class="xs">고정 일정</span></span></div>'});
+  for(const b of it.bl){
+    const st=blockState(b,mode),g=goalOf(b);
+    const tag=g?g.name:b.kind==='event'?'약속 · 시간 고정':b.lock?'시간 고정':b.src==='rest'?'개인 시간':KIND[b.kind]||'';
+    rows.push({s:b.start,h:'<button type="button" class="ag blk-r k-'+b.kind+' st-'+st+'" data-act="blk" data-k="'+wk.key+'" data-id="'+b.id+'" aria-label="'+esc(b.title+', '+hm(b.start)+'부터 '+durLabel(b.dur)+(st==='done'?', 끝냄':''))+'">'+
+      '<span class="ag-t mono">'+hm(b.start)+'<br>'+hm(b.start+b.dur)+'</span><span class="ag-bar"></span><span class="ag-m"><b>'+esc(emo(b.title))+'</b><span class="xs">'+durLabel(b.dur)+(tag?' · '+esc(tag):'')+'</span></span>'+
+      '<span class="ag-s">'+(st==='done'?'✓':st==='now'?'지금':st==='miss'?'':'')+'</span></button>'});
+  }
+  for(const g of it.gaps)rows.push({s:g.start,h:'<button type="button" class="ag ag-gap" data-act="gap" data-k="'+wk.key+'" data-d="'+d+'" data-s="'+g.start+'" data-e="'+g.end+'"><span class="ag-t mono">'+hm(g.start)+'<br>'+hm(g.end)+'</span><span class="ag-bar"></span><span class="ag-m"><b>빈 시간</b><span class="xs">'+durLabel(g.end-g.start)+' · 눌러서 넣기</span></span><span class="ag-s">＋</span></button>'});
+  rows.sort((a,b)=>a.s-b.s);
+  if(!rows.length)return '<div class="card dashed"><span class="small muted">이 날은 비어 있어요.</span></div>';
+  return '<div class="ag-list">'+rows.map(r=>r.h).join('')+'</div>';
+}
+function dayView(wk,d){return ui.tlView==='tl'?timelineHtml(wk,d):dayAgenda(wk,d);}
+function tlToggle(){return '<button type="button" class="btn sm" data-act="tl-toggle">'+(ui.tlView==='tl'?'목록으로 보기':'시간대로 보기')+'</button>';}
+function trkStrip(wk){
+  const a=weekStats(wk).all,gb=wk.blocks.filter(b=>b.goalId).length;
+  return '<div class="ag-strip"><span class="trk-lv lv-'+(a.lv||'')+'">실천도 '+(a.n?TRK_LV[a.lv]+' · '+a.pct+'%':'–')+'</span><span class="xs muted">고정 '+(Math.round(S.setup.fixed.reduce((x,f)=>x+f.end-f.start,0)/6)/10)+'h · 목표 블록 '+gb+'개 · 빈 시간 '+freeHours(wk)+'h</span></div>';
 }
 
 /* ---------- boot ---------- */
