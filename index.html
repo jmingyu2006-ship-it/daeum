@@ -702,6 +702,23 @@ div.ag{cursor:default}
 .wg-col .m.f span{font:700 10px/1.1 var(--font);letter-spacing:-.5px;overflow:hidden;white-space:nowrap}
 .wg-col .m.k-deep,.wg-col .m.k-light,.wg-col .m.k-out,.wg-col .m.k-rest,.wg-col .m.k-event{display:flex;align-items:center;justify-content:center}
 .wg-col .m.st-up,.wg-col .m.st-now{background:color-mix(in srgb,var(--kc) 28%,var(--bg));border-width:2px}
+/* ===== 주간표 새 디자인: 과목별 색, 가벼운 칸 ===== */
+.wg{--fa:hsl(var(--h,200) 75% 91%);--fb:hsl(var(--h,200) 55% 62%);--ft:hsl(var(--h,200) 55% 22%);padding:12px 8px 14px}
+.wg .wg-col{background:color-mix(in srgb,var(--sunk) 45%,var(--surface));border-radius:10px}
+.wg .wg-col.pst{background:transparent;opacity:.55}
+.wg .wg-col.sel{box-shadow:none;background:color-mix(in srgb,var(--accent) 9%,var(--surface));outline:2px solid color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:-1px}
+.wg .wg-col .m.f{--a:hsl(var(--h) 80% 90%);--b:hsl(var(--h) 60% 55%);--t:hsl(var(--h) 60% 20%);background:var(--a);border:0;border-left:3px solid var(--b);border-radius:6px;color:var(--t);left:2px;right:2px}
+.wg .wg-col .m.f span{font:700 11px/1.15 var(--font);letter-spacing:-.6px;color:var(--t)}
+.wg .wg-col .m.st-up,.wg .wg-col .m.st-now{border-radius:6px}
+.ag.ag-fx{background:hsl(var(--h,200) 80% 94%);border:0;color:hsl(var(--h,200) 60% 20%)}
+.ag.ag-fx .ag-bar{background:hsl(var(--h,200) 60% 55%)}
+.ag.ag-fx .ag-t,.ag.ag-fx .ag-m .xs{color:hsl(var(--h,200) 35% 38%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wg .wg-col .m.f{--a:hsl(var(--h) 32% 24%);--b:hsl(var(--h) 65% 62%);--t:hsl(var(--h) 85% 88%)}
+:root:not([data-theme="light"]) .ag.ag-fx{background:hsl(var(--h,200) 28% 20%);color:hsl(var(--h,200) 80% 90%)}
+:root:not([data-theme="light"]) .ag.ag-fx .ag-t,:root:not([data-theme="light"]) .ag.ag-fx .ag-m .xs{color:hsl(var(--h,200) 40% 72%)}}
+:root[data-theme="dark"] .wg .wg-col .m.f{--a:hsl(var(--h) 32% 24%);--b:hsl(var(--h) 65% 62%);--t:hsl(var(--h) 85% 88%)}
+:root[data-theme="dark"] .ag.ag-fx{background:hsl(var(--h,200) 28% 20%);color:hsl(var(--h,200) 80% 90%)}
+:root[data-theme="dark"] .ag.ag-fx .ag-t,:root[data-theme="dark"] .ag.ag-fx .ag-m .xs{color:hsl(var(--h,200) 40% 72%)}
 
 </style>
 
@@ -2996,7 +3013,7 @@ function weekGrid(wk,sel,act){
   axis+='</div>';
   const cols=DAYS.map((_,i)=>{
     const mode=modeFor(wk,i),it=dayItems(wk,i,'past');let h='';
-    for(const f of it.fx)if(f.t!=='clear'){const fh=Math.max(3,y(f.end)-y(f.start)-1);h+='<i class="m f" style="top:'+y(f.start)+'px;height:'+fh+'px">'+(fh>=14?'<span>'+esc(emoOnly(f.label)||String(f.label).replace(/\s/g,'').slice(0,3))+'</span>':'')+'</i>';}
+    for(const f of it.fx)if(f.t!=='clear'){const fh=Math.max(3,y(f.end)-y(f.start)-1);h+='<i class="m f" style="--h:'+hueOf(f.label)+';top:'+y(f.start)+'px;height:'+fh+'px">'+(fh>=14?'<span>'+esc(String(f.label).replace(/\s/g,'').slice(0,3))+'</span>':'')+'</i>';}
     for(const b of it.bl)h+='<i class="m k-'+b.kind+' st-'+blockState(b,mode)+'" style="top:'+y(b.start)+'px;height:'+Math.max(4,y(b.start+b.dur)-y(b.start)-1)+'px">'+(y(b.start+b.dur)-y(b.start)>=14?emoOnly(b.title):'')+'</i>';
     if(gpOn)for(const b of gp.blocks)if(b.day===i&&!b.off)h+='<i class="m gh" style="top:'+y(b.start)+'px;height:'+Math.max(5,y(b.start+b.dur)-y(b.start)-1)+'px"></i>';
     if(i===td){const n=nowMin();if(n>r[0]&&n<r[1])h+='<i class="nl" style="top:'+y(n)+'px"></i>';}
@@ -3601,7 +3618,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.15-9';
+const APP_VER='2026.10.15-10';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -3947,7 +3964,7 @@ function trkAct(a,d){
 function emoOnly(t){const e=emo(t);return e===String(t||'')?'':e.split(' ')[0];}
 function dayAgenda(wk,d){
   const mode=modeFor(wk,d),it=dayItems(wk,d,mode),nm=nowMin(),rows=[];
-  for(const f of it.fx)if(f.t==='fixed')rows.push({s:f.start,h:'<div class="ag ag-fx"><span class="ag-t mono">'+hm(f.start)+'<br>'+hm(f.end)+'</span><span class="ag-bar"></span><span class="ag-m"><b>'+esc(emo(f.label))+'</b><span class="xs">고정 일정</span></span></div>'});
+  for(const f of it.fx)if(f.t==='fixed')rows.push({s:f.start,h:'<div class="ag ag-fx" style="--h:'+hueOf(f.label)+'"><span class="ag-t mono">'+hm(f.start)+'<br>'+hm(f.end)+'</span><span class="ag-bar"></span><span class="ag-m"><b>'+esc(emo(f.label))+'</b><span class="xs">고정 일정</span></span></div>'});
   for(const b of it.bl){
     const st=blockState(b,mode),g=goalOf(b);
     const tag=g?g.name:b.kind==='event'?'약속 · 시간 고정':b.lock?'시간 고정':b.src==='rest'?'개인 시간':KIND[b.kind]||'';
@@ -3964,8 +3981,11 @@ function dayView(wk,d){return ui.tlView==='tl'?timelineHtml(wk,d):dayAgenda(wk,d
 function tlToggle(){return '<button type="button" class="btn sm" data-act="tl-toggle">'+(ui.tlView==='tl'?'목록으로 보기':'시간대로 보기')+'</button>';}
 function trkStrip(wk){
   const a=weekStats(wk).all,gb=wk.blocks.filter(b=>b.goalId).length;
-  return '<div class="ag-strip"><span class="trk-lv lv-'+(a.lv||'')+'">실천도 '+(a.n?TRK_LV[a.lv]+' · '+a.pct+'%':'–')+'</span><span class="xs muted">고정 '+(Math.round(S.setup.fixed.reduce((x,f)=>x+f.end-f.start,0)/6)/10)+'h · 목표 블록 '+gb+'개 · 빈 시간 '+freeHours(wk)+'h</span></div>';
+  return '<div class="ag-strip">'+(a.n?'<span class="trk-lv lv-'+a.lv+'">실천도 '+TRK_LV[a.lv]+' · '+a.pct+'%</span>':'<span class="small muted">아직 지난 블록이 없어요</span>')+'<span class="xs muted">고정 '+(Math.round(S.setup.fixed.reduce((x,f)=>x+f.end-f.start,0)/6)/10)+'h · 목표 블록 '+gb+'개 · 빈 시간 '+freeHours(wk)+'h</span></div>';
 }
+
+const HUES=[8,28,45,95,150,175,205,235,275,320];
+function hueOf(t){let h=0;t=String(t||'');for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))>>>0;return HUES[h%HUES.length];}
 
 /* ---------- boot ---------- */
 getSample().then(sm=>sm&&sm.limits?sm.limits():null).then(c=>{if(c&&c.images){ui.imgOK=true;ui.imgTypes=(c.images.mediaTypes||[]).join(',');render();}}).catch(()=>{});
