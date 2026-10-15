@@ -3428,7 +3428,7 @@ function gameAct(a,d){
 }
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
-const AI_URL_DEFAULT='';
+const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
 function remoteSample(url){
   const call=async(input,opts,asJson)=>{
@@ -3477,7 +3477,9 @@ async function testAi(){
   }catch(e){ui.aiTest=e&&e.code==='network'?'net':e&&e.code==='rate_limited'?'rate':'bad';}
   render();
 }
+function devMode(){try{if(/[?&]dev=1/.test(location.search))localStorage.setItem('daeum-dev','1');if(/[?&]dev=0/.test(location.search))localStorage.removeItem('daeum-dev');return localStorage.getItem('daeum-dev')==='1';}catch(e){return false;}}
 function aiCard(){
+  if(!devMode())return '';
   const inClaude=!!(window.claude&&window.claude.use),u=(S.setup&&S.setup.aiUrl)||aiUrl();
   const st=ui.aiTest,msg=st==='pending'?'확인하는 중이에요…':st==='ok'?'연결됐어요 ('+Math.round((ui.aiMs||0)/100)/10+'초). 이제 길잡이가 AI로 답해요.':st==='noaddr'?'주소를 먼저 넣어 주세요.':st==='net'?'서버에 닿지 않아요. 주소와 인터넷 연결을 확인해 주세요.':st==='rate'?'요청이 많아요. 잠시 뒤 다시 눌러 주세요.':st==='bad'?'서버는 응답했지만 답을 읽지 못했어요. 주소가 맞는지 확인해 주세요.':'';
   return '<div class="card line"><h2>AI 서버</h2><p class="small muted">'+(inClaude?'Claude 앱 안에서는 따로 설정하지 않아도 길잡이가 AI로 답해요. 앱 밖(휴대폰 브라우저)에서 쓸 때만 서버 주소를 넣으세요.':'휴대폰 브라우저에서 길잡이를 AI로 쓰려면 서버 주소를 넣으세요. 비워 두면 기본 규칙으로 동작해요.')+'</p>'+
