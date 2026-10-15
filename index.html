@@ -645,6 +645,34 @@ html[data-px="lite"] .pf-bar i{background:repeating-linear-gradient(90deg,#ffd23
 .lead-sw{display:flex;gap:8px;flex-wrap:wrap}
 .lead-go{margin-top:2px}
 
+.trk{display:flex;flex-direction:column;gap:8px}
+.trk-lv{font-weight:800;font-size:15px;padding:2px 10px;border-radius:999px;background:var(--sunk)}
+.trk-lv.lv-hi{background:#CFF0D6;color:#0B5A22}.trk-lv.lv-mid{background:#FFE9B5;color:#6B4600}.trk-lv.lv-lo{background:#FFD3CE;color:#8A1F14}
+:root[data-theme="dark"] .trk-lv.lv-hi,:root:not([data-theme="light"]) .trk-lv.lv-hi{}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trk-lv.lv-hi{background:#1C4A2B;color:#BDF0CB}:root:not([data-theme="light"]) .trk-lv.lv-mid{background:#524018;color:#FFE3A0}:root:not([data-theme="light"]) .trk-lv.lv-lo{background:#5A2420;color:#FFC9C3}}
+:root[data-theme="dark"] .trk-lv.lv-hi{background:#1C4A2B;color:#BDF0CB}:root[data-theme="dark"] .trk-lv.lv-mid{background:#524018;color:#FFE3A0}:root[data-theme="dark"] .trk-lv.lv-lo{background:#5A2420;color:#FFC9C3}
+.trk-bar,.trk-b{height:10px;border-radius:6px;background:var(--sunk);overflow:hidden;display:block}
+.trk-b{height:8px;flex:1}
+.trk-bar i,.trk-b i{display:block;height:100%;border-radius:6px;background:var(--muted)}
+.trk i.lv-hi{background:#2E9E52}.trk i.lv-mid{background:#E3A11C}.trk i.lv-lo{background:#E0584B}
+.trk-g{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.trk-g i{font-style:normal;text-align:center;font-size:12px;font-weight:700;padding:3px 0;border-radius:8px;background:var(--sunk);color:var(--muted)}
+.trk-g i.on{color:#fff}.trk-g i.g-hi.on{background:#2E9E52}.trk-g i.g-mid.on{background:#C98A0E}.trk-g i.g-lo.on{background:#E0584B}
+.trk-rows{display:flex;flex-direction:column;gap:6px}
+.trk-row{display:flex;align-items:center;gap:8px}
+.trk-nm{flex:0 0 38%;min-width:0;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* 지난 블록은 회색, 끝낸 건 ✓ */
+.blk.st-miss{--kc:var(--muted);background:var(--sunk);border-style:dashed;border-color:var(--line);color:var(--muted);opacity:1}
+.blk.st-done{background:color-mix(in srgb,var(--muted) 22%,var(--surface));border:2px solid var(--muted);color:var(--fg)}
+.blk.st-done .blk-t{text-decoration:line-through;text-decoration-thickness:1px}
+.blk.st-done .blk-ck{color:#2E9E52;font-weight:900}
+.wg-col .m.st-miss{background:var(--sunk);border:1.5px dashed var(--line);opacity:1}
+.wg-col .m.st-done{background:var(--muted);border-color:var(--muted);opacity:.75}
+.wg-col.pst{background:color-mix(in srgb,var(--sunk) 55%,transparent)}
+.wg-head button.pst{opacity:.55}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:8px 12px;font:600 13px var(--font);cursor:pointer;min-height:38px}
+.chip.on{background:var(--fg);color:var(--bg);border-color:transparent}
+
 </style>
 
 <div id="app">
@@ -2827,7 +2855,7 @@ function nowCard(wk){
   if(cur){
     const started=!!cur.started,el=started?Math.max(0,Math.round((Date.now()-cur.started)/6e4)):0,p=started?clamp(Math.round(el/cur.dur*100),0,100):Math.round((n-cur.start)/cur.dur*100);
     return '<section class="now-card" aria-label="지금 할 일"><div class="between"><span class="now-tag"><i></i>'+(started?'하는 중':'지금 할 일')+'</span><span class="mono xs">'+hm(cur.start)+'–'+hm(cur.start+cur.dur)+'</span></div>'+
-      '<h2 class="now-title">'+esc(cur.title)+'</h2><span class="now-meta">'+meta(cur)+'</span>'+
+      '<h2 class="now-title">'+esc(emo(cur.title))+'</h2><span class="now-meta">'+meta(cur)+'</span>'+
       (started?'<div class="now-left">'+bigLeft(el,'째 하는 중').replace('분 째','분째')+'</div><div class="now-bar"><i style="width:'+p+'%"></i></div>':'')+
       (!cur.first&&cur.ifthen&&!started?'<p class="now-if">'+esc(cur.ifthen)+'</p>':'')+
       '<div class="now-act two">'+(started?'<button type="button" class="btn primary" data-act="blk-done" data-k="'+k+'" data-id="'+cur.id+'">끝냈어요</button><button type="button" class="btn" data-act="blk-alt" data-k="'+k+'" data-id="'+cur.id+'">다르게 하기</button>'
@@ -2870,7 +2898,7 @@ function viewToday(){
   const free=dayItems(wk,td,'today').gaps.reduce((a,g)=>a+g.end-g.start,0);
   const out=['<div class="stack" style="gap:4px"><span class="mono small muted">'+md(t)+' '+DAYS[td]+'요일</span><h1>'+(nowMin()>=S.setup.dayEnd?'오늘 하루가 거의 끝났어요':free>=30?'오늘 남은 빈 시간은 '+durLabel(free)+'이에요':'오늘은 남은 여유가 거의 없어요')+'</h1>'+streakLine()+'</div>'];
   out.push(nowCard(wk));
-  out.push(nudgeCard(wk));
+  out.push(nudgeCard(wk));out.push(trkCard(wk,true));
   if(ui.proposals){
     if(!ui.proposals.length)out.push('<div class="card soft"><b>정리할 블록이 없어요.</b><button type="button" class="btn sm" data-act="close-done">닫기</button></div>');
     for(const p of ui.proposals){const b=wk.blocks.find(x=>x.id===p.id);if(!b)continue;
@@ -2890,7 +2918,7 @@ function viewWeek(){
   if(p&&p.key===wk.key)out.push('<div class="pp-bar"><div class="stack" style="gap:2px"><b>'+esc(p.name)+' · 제안 확인 중</b><span class="small muted">점선 블록을 눌러 근거와 다른 시간을 확인할 수 있어요.</span></div><div class="grid2"><button type="button" class="btn primary" data-act="pp-start">제안 확정</button><button type="button" class="btn" data-act="pp-view">제안 전체 보기</button></div></div>');
   out.push('<div class="grid3"><div class="stat"><span class="xs muted">고정 일정</span><b>'+(Math.round(fxMin/6)/10)+'h</b></div><div class="stat"><span class="xs muted">목표 블록</span><b>'+gb+'개</b></div><div class="stat"><span class="xs muted">남은 빈 시간</span><b>'+freeHours(wk)+'h</b></div></div>');
   for(const c of conflicts(wk).slice(0,2))out.push('<div class="card warn"><b>시간이 겹쳐요</b><span class="small">'+DAYS[c.b.day]+'요일 '+esc(c.b.title)+' · '+esc(c.with)+'. 블록을 눌러 옮기거나, 오늘 화면의 제안을 받아 보세요.</span></div>');
-  out.push(weekGrid(wk,dv,'day'));
+  out.push(trkCard(wk));out.push(weekGrid(wk,dv,'day'));
   out.push('<div class="stack"><div class="section-title"><h2>'+DAYS[dv]+'요일 '+md(addDays(start,dv))+(dv===dow(today())?' · 오늘':'')+'</h2><span class="xs muted">블록을 눌러 고치기</span></div>'+timelineHtml(wk,dv)+assumeLine()+'</div>');
   const left=wk.overflow.concat(wk.deferred||[]).filter(o=>o.src!=='guide');
   if(left.length)out.push('<div class="card dashed"><b class="small">이번 주에 자리를 못 찾은 것</b><span class="small muted">'+left.map(o=>esc(o.title)).join(', ')+' · 빈 칸을 누르면 바로 넣을 수 있어요.</span></div>');
@@ -2901,7 +2929,7 @@ function blockHtml(wk,b,mode,y){
   const p=st==='now'?Math.round((nowMin()-b.start)/b.dur*100):0,g=goalOf(b);
   const tag=g?g.name:b.kind==='event'||b.lock?(b.kind==='event'?'약속 · 시간 고정':'시간 고정'):b.src==='rest'?'개인 시간':'';
   return '<button type="button" class="blk k-'+b.kind+' st-'+st+(short?' short':'')+(b.started&&!b.done?' started':'')+'" style="top:'+(y(b.start)+2)+'px;height:'+h+'px" data-act="blk" data-k="'+wk.key+'" data-id="'+b.id+'" aria-label="'+esc(b.title+', '+hm(b.start)+'부터 '+durLabel(b.dur)+(tag?', '+tag:'')+(st==='done'?', 끝냄':''))+'">'+
-    '<span class="blk-t">'+esc(b.title)+'</span><span class="blk-m">'+hm(b.start)+'–'+hm(b.start+b.dur)+(tag&&!short?' · '+esc(tag):'')+'</span>'+
+    '<span class="blk-t">'+esc(emo(b.title))+'</span><span class="blk-m">'+hm(b.start)+'–'+hm(b.start+b.dur)+(tag&&!short?' · '+esc(tag):'')+'</span>'+
     (st==='done'?'<span class="blk-ck" aria-hidden="true">✓</span>':isGuard(wk,b)?'<span class="blk-b">지키는 선</span>':'')+
     (st==='now'?'<span class="blk-p" style="width:'+p+'%"></span>':'')+'</button>';
 }
@@ -2913,7 +2941,7 @@ function timelineHtml(wk,d){
   if(mode==='today')h+='<div class="tl-past" style="height:'+y(nowMin())+'px"></div>';
   for(const f of it.fx){
     const hh=Math.max(14,y(f.end)-y(f.start)-4);
-    h+='<div class="fx t-'+f.t+'" style="top:'+(y(f.start)+2)+'px;height:'+hh+'px"><span>'+esc(f.label)+(f.t==='fixed'&&hh>34?' <small>고정</small>':'')+'</span>'+(f.t==='fixed'&&hh>20?'<span class="mono">'+hm(f.start)+'–'+hm(f.end)+'</span>':'')+'</div>';
+    h+='<div class="fx t-'+f.t+'" style="top:'+(y(f.start)+2)+'px;height:'+hh+'px"><span>'+esc(f.t==='fixed'?emo(f.label):f.label)+(f.t==='fixed'&&hh>34?' <small>고정</small>':'')+'</span>'+(f.t==='fixed'&&hh>20?'<span class="mono">'+hm(f.start)+'–'+hm(f.end)+'</span>':'')+'</div>';
   }
   for(const g of it.gaps){const hh=y(g.end)-y(g.start)-4;
     h+='<button type="button" class="gap" style="top:'+(y(g.start)+2)+'px;height:'+hh+'px" data-act="gap" data-k="'+wk.key+'" data-d="'+d+'" data-s="'+g.start+'" data-e="'+g.end+'"><span aria-hidden="true">+</span>빈 시간 · '+durLabel(g.end-g.start)+'</button>';}
@@ -2929,7 +2957,7 @@ function weekGrid(wk,sel,act){
   const td=wk.key===curKey()?dow(today()):-1,gp=openProp(),gpOn=gp&&gp.key===wk.key;
   const head='<div class="wg-head"><span></span>'+DAYS.map((d,i)=>{
     const n=wk.blocks.filter(b=>b.day===i&&b.dur>0&&b.src!=='rest').length+(gpOn?gp.blocks.filter(b=>b.day===i&&!b.off).length:0);
-    return '<button type="button" class="'+(i===sel?'on ':'')+(i===td?'td':'')+'" data-act="'+act+'" data-i="'+i+'" aria-pressed="'+(i===sel)+'" aria-label="'+d+'요일, 블록 '+n+'개"><span>'+d+'</span><b>'+addDays(start,i).getDate()+'</b><span class="xs mono">'+(n?n:'–')+'</span></button>';}).join('')+'</div>';
+    return '<button type="button" class="'+(i===sel?'on ':'')+(i===td?'td ':'')+(wk.key===curKey()&&i<dow(today())||wk.key<curKey()?'pst':'')+'" data-act="'+act+'" data-i="'+i+'" aria-pressed="'+(i===sel)+'" aria-label="'+d+'요일, 블록 '+n+'개"><span>'+d+'</span><b>'+addDays(start,i).getDate()+'</b><span class="xs mono">'+(n?n:'–')+'</span></button>';}).join('')+'</div>';
   let axis='<div class="wg-axis">';
   for(let m=Math.ceil(r[0]/180)*180;m<r[1];m+=180)axis+='<span style="top:'+y(m)+'px">'+Math.floor(m/60)+'</span>';
   axis+='</div>';
@@ -2939,7 +2967,7 @@ function weekGrid(wk,sel,act){
     for(const b of it.bl)h+='<i class="m k-'+b.kind+' st-'+blockState(b,mode)+'" style="top:'+y(b.start)+'px;height:'+Math.max(4,y(b.start+b.dur)-y(b.start)-1)+'px"></i>';
     if(gpOn)for(const b of gp.blocks)if(b.day===i&&!b.off)h+='<i class="m gh" style="top:'+y(b.start)+'px;height:'+Math.max(5,y(b.start+b.dur)-y(b.start)-1)+'px"></i>';
     if(i===td){const n=nowMin();if(n>r[0]&&n<r[1])h+='<i class="nl" style="top:'+y(n)+'px"></i>';}
-    return '<div class="wg-col'+(i===sel?' sel':'')+'" data-act="'+act+'" data-i="'+i+'" style="height:'+H+'px" aria-hidden="true">'+h+'</div>';
+    return '<div class="wg-col'+(i===sel?' sel':'')+(mode==='past'?' pst':'')+'" data-act="'+act+'" data-i="'+i+'" style="height:'+H+'px" aria-hidden="true">'+h+'</div>';
   }).join('');
   return '<div class="wg">'+head+'<div class="wg-body">'+axis+cols+'</div></div>';
 }
@@ -2996,7 +3024,7 @@ function sheetHtml(){
   let inner='',label='';
   if(ui.sheet==='quick'){label='빠르게 추가';
     inner='<div class="grab"></div><div class="stack"><label class="label" for="qTodo">할 일 바로 넣기</label><div class="row"><input id="qTodo" class="field" placeholder="예: 은행 가기 금요일까지" enterkeyhint="done" data-field="q-todo"><button type="button" class="btn primary" data-act="quick-todo">넣기</button></div><span class="xs muted">가장 가까운 빈 시간에 넣어요.</span></div>'+
-      '<div class="sep"></div><button type="button" class="btn" data-act="quick-ask">길잡이에게 말하기</button>';}
+      ''+evCard()+'<div class="sep"></div><button type="button" class="btn" data-act="quick-ask">길잡이에게 말하기</button>';}
   else if(ui.sheet==='blk'){label='블록';inner=blkSheet();}
   else if(ui.sheet==='gap'){label='빈 시간 채우기';inner=gapSheet();}
   else if(ui.sheet==='time'){label=ui.sd.l;inner=timeSheet();}
@@ -3068,7 +3096,7 @@ function demoState(){
 /* ---------- actions (new) → falls through to the original handler ---------- */
 function act(a,d){
   const g=guideState();
-  if(gameAct(a,d))return;
+  if(gameAct(a,d))return;if(trkAct(a,d))return;
   if(leadAct(a,d))return;
   if(a==='alt-rest'||a==='rest-mark')markRest();
   switch(a){
@@ -3494,6 +3522,7 @@ function viewProfile(){
     '<div class="stat"><span class="pf-ic">'+pxImg(SPR[si.n?'i_flame':'i_flame_off'],18)+'</span><b>'+si.n+'일</b><span class="xs muted">연속 기록</span></div>'+
     '<div class="stat"><span class="pf-ic">'+pxImg(SPR.i_star,18)+'</span><b>'+xp+'</b><span class="xs muted">모은 XP</span></div>'+
     '<div class="stat"><span class="pf-ic">'+pxImg(SPR.i_flame,18)+'</span><b>'+Math.max(G.best,si.n)+'일</b><span class="xs muted">최고 기록</span></div></div>');
+  out.push(trkCard(getWeek(curKey())));
   out.push('<div class="card"><div class="between"><h2>이번 주 기록</h2><span class="xs muted">오늘 +'+todayXp()+' XP</span></div>'+weekStrip()+'<p class="xs muted">블록 하나를 끝내거나 쉼을 기록한 날은 불꽃이 켜져요. 기록이 끊겨도 XP는 줄지 않아요.</p></div>');
   out.push('<div class="g-nudge pf-say">'+guideAva(si.todayOn?'happy':'idle')+'<div class="grow"><p>'+esc(guideLine())+'</p></div></div>');
   out.push('<div class="card"><h2>배지</h2><div class="pf-badges">'+badgeList().map(b=>'<div class="pf-badge'+(b.on?' on':'')+'">'+pxImg(SPR[b.on?'i_'+b.i:'i_lock'],24)+'<b>'+b.n+'</b><span>'+b.s+'</span></div>').join('')+'</div></div>');
@@ -3539,7 +3568,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.15-5';
+const APP_VER='2026.10.15-6';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -3795,6 +3824,89 @@ function pxCard(){
   const m=pxMode();
   return '<div class="card line"><h2>화면 스타일</h2><p class="small muted">길잡이와 캐릭터는 그대로 두고, 화면 전체에 입히는 도트 정도를 고를 수 있어요.</p><div class="row-wrap">'+
     PX_MODES.map(x=>'<button type="button" class="chip'+(m===x[0]?' on':'')+'" aria-pressed="'+(m===x[0])+'" data-act="px-set" data-v="'+x[0]+'">'+x[1]+'</button>').join('')+'</div></div>';
+}
+/* ---------- 실천도 · 지난 블록 · 이모티콘 · 갑작스런 약속 ---------- */
+const EMO_MAP=[
+ [/운동|헬스|러닝|달리기|조깅|요가|필라|스트레칭|수영|산책|걷기/,'🏃'],[/영어|토익|단어|회화|어학|일본어|중국어/,'🔤'],[/공부|독서|책|읽기|복습|예습|과제|시험|수학|강의|인강/,'📚'],
+ [/코딩|개발|프로그래|코드/,'💻'],[/글쓰기|일기|블로그|보고서|논문|작성/,'✏️'],[/회의|미팅|면접|발표/,'🗣️'],[/병원|치과|약국|진료/,'🏥'],
+ [/식사|밥|점심|저녁|아침|요리|장보기|카페/,'🍚'],[/청소|빨래|정리|설거지|집안일/,'🧹'],[/은행|납부|신청|서류|세금|결제/,'🏦'],
+ [/약속|만남|친구|모임|데이트|술|회식/,'🤝'],[/수업|학교|강의실|학원/,'🏫'],[/출근|퇴근|이동|통학|운전/,'🚌'],[/휴식|쉼|낮잠|잠|수면|취침/,'😴'],
+ [/게임|영화|드라마|유튜브|취미|그림|음악|악기|피아노|기타/,'🎮']
+];
+function emo(t){t=String(t||'');for(const m of EMO_MAP)if(m[0].test(t))return m[1]+' '+t;return t;}
+
+function trkRate(arr){ /* arr: [{done}] -> {n,done,pct,lv} */
+  const n=arr.length,dn=arr.filter(x=>x.done).length,pct=n?Math.round(dn/n*100):0;
+  return {n,done:dn,pct,lv:!n?'':pct>=80?'hi':pct>=50?'mid':'lo'};
+}
+const TRK_LV={hi:'상',mid:'중',lo:'하'};
+function weekStats(wk){
+  const nm=nowMin(),cur=wk.key===curKey(),td=cur?dow(today()):-1;
+  const past=wk.blocks.filter(b=>{
+    if(b.dur<=0||b.kind==='event'||b.src==='rest'||b.lock)return false;
+    if(b.done)return true;
+    const m=modeFor(wk,b.day);return m==='past'||(m==='today'&&b.start+b.dur<=nm);
+  });
+  const total=wk.blocks.filter(b=>b.dur>0&&b.kind!=='event'&&b.src!=='rest'&&!b.lock).length;
+  const all=trkRate(past),goals=[];
+  const ids=[...new Set(past.map(b=>b.goalId||''))];
+  for(const id of ids){const g=id?goalById(id):null;const r=trkRate(past.filter(b=>(b.goalId||'')===id));goals.push(Object.assign({name:g?g.name:'기타 할 일'},r));}
+  goals.sort((a,b)=>b.n-a.n);
+  return Object.assign({all,total,goals,left:total-past.filter(b=>!b.done).length-all.done+past.filter(b=>!b.done).length});
+}
+function trkMsg(s){
+  const a=s.all;if(!a.n)return '아직 지난 블록이 없어요. 하나씩 끝낼 때마다 여기에 쌓여요.';
+  return a.lv==='hi'?'아주 잘 지키고 있어요.':a.lv==='mid'?'절반쯤 해냈어요. 조금만 더 힘내요.':'괜찮아요. 한 개만 다시 시작해 봐요.';
+}
+function trkGauge(lv){return '<div class="trk-g" aria-hidden="true">'+['lo','mid','hi'].map(k=>'<i class="g-'+k+(lv===k?' on':'')+'">'+TRK_LV[k]+'</i>').join('')+'</div>';}
+function trkCard(wk,small){
+  const s=weekStats(wk),a=s.all;
+  const head='<div class="between"><b>이번 주 실천도</b>'+(a.n?'<span class="trk-lv lv-'+a.lv+'">'+TRK_LV[a.lv]+' · '+a.pct+'%</span>':'<span class="xs muted">–</span>')+'</div>';
+  const bar='<div class="trk-bar" role="img" aria-label="'+(a.n?'지난 블록 '+a.n+'개 중 '+a.done+'개 끝냄, 실천도 '+TRK_LV[a.lv]:'아직 지난 블록 없음')+'"><i class="lv-'+a.lv+'" style="width:'+a.pct+'%"></i></div>';
+  if(small)return '<div class="card trk">'+head+bar+'<span class="small muted">'+(a.n?'지난 블록 '+a.n+'개 중 '+a.done+'개 끝냈어요 · ':'')+trkMsg(s)+'</span></div>';
+  let rows='';
+  if(a.n&&s.goals.length>0)rows='<div class="trk-rows">'+s.goals.map(g=>'<div class="trk-row"><span class="trk-nm">'+esc(emo(g.name))+'</span><span class="trk-b"><i class="lv-'+g.lv+'" style="width:'+g.pct+'%"></i></span><b class="mono xs">'+g.done+'/'+g.n+'</b></div>').join('')+'</div>';
+  return '<div class="card trk">'+head+bar+trkGauge(a.lv)+'<span class="small">'+(a.n?'지난 블록 '+a.n+'개 중 <b>'+a.done+'개</b> 끝냈어요. ':'')+trkMsg(s)+'</span>'+rows+
+    '<span class="xs muted">상 80% 이상 · 중 50~79% · 하 50% 미만 · 지나간 블록 기준</span></div>';
+}
+
+/* 갑작스런 약속 */
+const EV_WHEN=[['now','지금부터'],['h1','1시간 뒤'],['eve','오늘 저녁 7시'],['tm','내일 오후 2시']];
+const EV_DUR=[[30,'30분'],[60,'1시간'],[120,'2시간'],[180,'3시간']];
+function evState(){return ui.ev||(ui.ev={w:'now',d:60,name:''});}
+function evWhen(w){
+  const wk=getWeek(curKey()),td=dow(today()),nm=nowMin(),r10=m=>Math.ceil(m/10)*10;
+  if(w==='now')return {day:td,start:r10(nm)};
+  if(w==='h1')return {day:td,start:r10(nm+60)};
+  if(w==='eve')return {day:td,start:19*60};
+  return {day:td+1,start:14*60};
+}
+function evCard(){
+  const e=evState();
+  return '<div class="sep"></div><div class="stack"><label class="label" for="qEvt">갑작스런 약속 끼워 넣기</label>'+
+   '<input id="qEvt" class="field" placeholder="예: 친구 만나기" value="'+esc(e.name)+'" enterkeyhint="done">'+
+   '<div class="row-wrap" style="gap:6px">'+EV_WHEN.map(w=>'<button type="button" class="chip'+(e.w===w[0]?' on':'')+'" data-act="ev-w" data-v="'+w[0]+'" aria-pressed="'+(e.w===w[0])+'">'+w[1]+'</button>').join('')+'</div>'+
+   '<div class="row-wrap" style="gap:6px">'+EV_DUR.map(w=>'<button type="button" class="chip'+(e.d===w[0]?' on':'')+'" data-act="ev-d" data-v="'+w[0]+'" aria-pressed="'+(e.d===w[0])+'">'+w[1]+'</button>').join('')+'</div>'+
+   '<button type="button" class="btn primary" data-act="ev-add">약속 넣고 겹치는 건 옮기기</button>'+
+   '<span class="xs muted">시간이 고정되고, 겹치는 블록은 가까운 빈 시간으로 자동으로 옮겨요.</span></div>';
+}
+function trkAct(a,d){
+  if(a==='ev-w'||a==='ev-d'){const e=evState(),el=document.getElementById('qEvt');if(el)e.name=el.value;
+    if(a==='ev-w')e.w=d.v;else e.d=Number(d.v);render();return true;}
+  if(a==='ev-add'){
+    const e=evState(),el=document.getElementById('qEvt'),name=((el&&el.value)||e.name||'').trim()||'약속';
+    const wk=getWeek(curKey()),t=evWhen(e.w);
+    if(t.day>6){toast('이번 주 안에서만 넣을 수 있어요');return true;}
+    if(t.start+e.d>1440){toast('자정을 넘어요. 시간을 줄여 주세요');return true;}
+    const r=placeEvent(wk,{day:t.day,start:t.start,dur:e.d,title:name});
+    if(r.err){toast(r.err);return true;}
+    let moved=0,stuck=0;
+    for(const c of conflicts(wk)){if(c.with!==r.b.title)continue;const fx=conflictFix(wk,c.b);if(fx){c.b.day=fx.day;c.b.start=fx.start;moved++;}else stuck++;}
+    wk.blocks.sort((x,y)=>x.day-y.day||x.start-y.start);
+    ui.ev=null;ui.sheet=null;if(ui.tab==='week')ui.dayView=t.day;
+    toast(DAYS[t.day]+'요일 '+hm(t.start)+' 약속을 넣었어요'+(moved?' · 블록 '+moved+'개 옮김':'')+(stuck?' · '+stuck+'개는 직접 옮겨 주세요':''));
+    commit();return true;}
+  return false;
 }
 
 /* ---------- boot ---------- */
