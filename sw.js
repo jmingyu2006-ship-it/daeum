@@ -1,6 +1,6 @@
 // 앱 파일을 저장해 두고, 온라인이면 항상 새 버전을 먼저 가져옵니다.
-const V='daeum-v4';
-const CORE=['./','index.html','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png'];
+const V='daeum-v5';
+const CORE=['./','index.html','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','fonts/Galmuri11.woff2','fonts/Galmuri11-Bold.woff2','fonts/GalmuriMono11.woff2'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
