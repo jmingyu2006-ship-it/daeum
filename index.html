@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
 <meta name="theme-color" content="#F2F4F9" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0E111A" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="다음 주">
@@ -1016,6 +1016,156 @@ p.rt-hint{margin:0;background:var(--warn-soft);padding:10px 12px;border-radius:1
 :root[data-theme="dark"] .rt-g{background:var(--sunk)}
 :root[data-theme="dark"] .rt-pot{background:linear-gradient(transparent 70%,color-mix(in srgb,var(--ok) 14%,var(--sunk)) 70%),var(--sunk)}
 
+/* ================= readability pass: bigger type, stronger secondary text, roomier targets ================= */
+:root{--muted:#4D566F}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--muted:#A9B1C7}}
+:root[data-theme="dark"]{--muted:#A9B1C7}
+body{font-size:16px;line-height:1.6}
+#app{gap:20px;padding-block:0 150px}
+.small{font-size:14.5px;line-height:1.6}
+.xs{font-size:13px;line-height:1.5}
+h1{font-size:26px;line-height:1.3}
+h2{font-size:19px}
+.label{font-size:14px;color:var(--fg);font-weight:700}
+.card{padding:18px;gap:12px}
+.btn{min-height:50px;font-size:15.5px}
+.btn.sm{min-height:42px;font-size:14.5px;padding:0 14px}
+.chip,.sheet .chip{min-height:42px;font-size:14.5px;padding:0 15px}
+.link{font-size:14.5px;min-height:42px}
+.field{min-height:52px;font-size:16px}
+.tabs button{font-size:12.5px;min-height:58px;gap:3px}
+.tabs button svg{width:24px;height:24px}
+.fab{width:60px;height:60px}
+.top{min-height:58px}
+.save-state{font-size:12.5px}
+.ag{min-height:60px;padding:10px 14px}
+.ag-m b{font-size:16.5px}
+.ag-t{font-size:13px;flex-basis:46px}
+.ag-past{align-self:flex-start;margin-bottom:-4px}
+.section-title h2{font-size:20px}
+.now-title{font-size:25px}
+.now-meta,.now-if{font-size:15px}
+.wg-head button b{font-size:16px}
+.wg-head button{font-size:13px}
+.g-body>p,.msg.me p{font-size:16px;line-height:1.65}
+.today-hd{display:flex;flex-direction:column;gap:4px}
+.today-hd h1{font-size:25px}
+
+/* ================= first run ================= */
+.onb-w{padding-top:6px}
+.onb-guide .bubble{margin-bottom:22px;font-weight:600}
+.onb-h{font-size:27px;letter-spacing:-.9px;line-height:1.3}
+.ex{display:flex;flex-direction:column;align-items:stretch;gap:6px;background:var(--surface);border-radius:22px;padding:16px}
+.ex-me{align-self:flex-end;background:var(--accent);color:var(--on-accent);padding:9px 14px;border-radius:18px 18px 6px 18px;font-weight:600}
+.ex-arrow{align-self:center;color:var(--muted);font-size:18px;line-height:1}
+.ex-plan{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:16px;background:var(--accent-soft);color:var(--accent-text)}
+.ex-plan b{font-size:18px;letter-spacing:-.4px;color:var(--fg)}
+.paths{display:flex;flex-direction:column;gap:10px}
+.path{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;width:100%;border:0;border-radius:20px;padding:16px 18px;cursor:pointer;font:inherit;
+  background:var(--surface);color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line),0 3px 0 var(--line)}
+.path b{font-size:17.5px;letter-spacing:-.4px}
+.path span{font-size:14.5px;color:var(--muted)}
+.path.main{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 0 var(--accent-edge)}
+.path.main span{color:inherit;opacity:.85}
+.path:active{transform:translateY(3px);box-shadow:none}
+.onb-store{text-align:center}
+.first-card{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border-radius:24px;padding:18px;box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--accent) 35%,var(--line))}
+.first-card .stack{flex:1;min-width:0;gap:8px}
+.first-card .row-wrap{gap:4px 14px}
+
+/* ================= add sheet ================= */
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:16px;background:var(--sunk)}
+.seg2 button{min-height:44px;border:0;border-radius:12px;background:transparent;font:700 15.5px var(--font);color:var(--muted);cursor:pointer}
+.seg2 button.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 0 var(--line)}
+.add-modes{display:flex;flex-direction:column;gap:6px}
+.add-modes button{text-align:left;min-height:48px;padding:0 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font:600 15.5px var(--font);color:var(--fg);cursor:pointer}
+.add-modes button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-text)}
+.add-modes button.on:before{content:"● ";color:var(--accent)}
+.add-dates{display:flex;flex-wrap:wrap;gap:6px}
+.add-pick{position:relative;overflow:hidden}
+.add-pick input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.add-time{display:flex;align-items:center;gap:10px}
+.add-time .label{flex-shrink:0}
+.add-time .field{max-width:160px;font-size:18px;font-weight:700}
+.add-move{gap:10px;align-items:flex-start}
+.add-err{margin:0;padding:10px 12px;border-radius:12px;background:var(--warn-soft);color:var(--warn-text);font-size:14.5px}
+
+/* ================= change summary ================= */
+.chg{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:20px;background:color-mix(in srgb,var(--ok) 12%,var(--surface));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--ok) 40%,transparent)}
+.chg ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;font-size:14.5px}
+.chg li.warn{color:var(--warn-text)}
+.chg .row{gap:8px}
+
+/* ================= week navigation, inbox ================= */
+.wk-nav{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:8px}
+.wk-nav .wk-t{display:flex;flex-direction:column;align-items:center;text-align:center}
+.wk-nav .icon-btn{width:48px;height:48px;font-size:26px;font-weight:700}
+.wk-back{align-self:center;margin-top:-10px}
+.ibx-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.ibx-row .grow{display:flex;flex-direction:column}
+.ibx-row b{font-size:16px}
+
+/* ================= import review ================= */
+.imp-more summary{cursor:pointer;min-height:42px;display:flex;align-items:center;color:var(--accent-text);font-weight:600;font-size:14.5px}
+.imp-row{display:flex;gap:10px;padding:12px;border-radius:16px;background:var(--sunk)}
+.imp-row.off{opacity:.55}
+.imp-on input{width:24px;height:24px;margin-top:12px}
+.imp-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.imp-name{min-height:44px;font-weight:700}
+.imp-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.imp-days button{min-height:36px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font:700 13.5px var(--font);color:var(--muted);cursor:pointer;padding:0}
+.imp-days button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.imp-time{display:flex;align-items:center;gap:6px}
+.imp-time .field{min-height:44px;padding:6px 8px;font-weight:700}
+.imp-st{font-size:13.5px;font-weight:600;color:var(--muted)}
+.imp-st.ok{color:var(--ok)}
+.imp-st.warn{color:var(--warn-text)}
+.imp-flag{font-size:13px;font-weight:600;color:var(--warn-text);background:var(--warn-soft);padding:4px 8px;border-radius:8px;align-self:flex-start}
+.imp-mode{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.imp-mode button{min-height:40px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font:600 14px var(--font);color:var(--fg);cursor:pointer}
+.imp-mode button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-text)}
+.imp-img{width:100%;border-radius:14px;border:1px solid var(--line)}
+.care-file{position:relative;overflow:hidden}
+.care-file input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+/* ================= guide ================= */
+.g-fail{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:10px 12px;border-radius:14px;background:var(--warn-soft);color:var(--warn-text)}
+.g-slow{display:flex;align-items:center;gap:10px;margin-top:6px}
+.ai-note{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 16px;border-radius:18px;background:var(--accent-soft);color:var(--accent-text)}
+.ai-note b{color:var(--fg)}
+
+/* ================= records ================= */
+.trk-seg{display:flex;gap:3px;height:14px}
+.trk-seg i{display:block;border-radius:5px;min-width:6px}
+.trk-seg i.d{background:var(--ok)}
+.trk-seg i.s{background:color-mix(in srgb,var(--warn-text) 45%,var(--surface))}
+.trk-seg i.u{background:repeating-linear-gradient(-45deg,var(--line) 0 3px,transparent 3px 6px);box-shadow:inset 0 0 0 1.5px var(--line)}
+.trk-seg i.l{background:var(--sunk)}
+.trk-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;text-align:center}
+.trk-facts span{display:flex;flex-direction:column;font-size:13px;color:var(--muted)}
+.trk-facts b{font-size:21px;color:var(--fg);font-feature-settings:"tnum"}
+.trk-b i{background:var(--ok)}
+.opt-list{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:0;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;cursor:pointer}
+.opt b{font-size:15.5px}.opt span{font-size:13.5px;color:var(--muted)}
+.opt.on{border-color:var(--accent);background:var(--accent-soft)}
+.opt.on b{color:var(--accent-text)}
+body.gm-hide .pf-stats,body.gm-hide .pf-badges{display:none}
+
+/* ================= settings ================= */
+.tgl{width:54px;height:32px;border-radius:999px;border:0;background:var(--line);position:relative;cursor:pointer;flex-shrink:0;padding:0}
+.tgl i{position:absolute;left:3px;top:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:left .15s}
+.tgl.on{background:var(--accent)}
+.tgl.on i{left:25px}
+.help summary{cursor:pointer;min-height:40px;display:flex;align-items:center}
+.help-q{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-top:1px solid var(--line)}
+.care-restore{box-shadow:inset 0 0 0 2px var(--accent)}
+
+/* ================= keyboard open: input sits right above the keyboard ================= */
+body.kb .tabs,body.kb .fab{display:none}
+body.kb .g-compose{bottom:calc(var(--kb,0px) + env(safe-area-inset-bottom,0px))}
+body.kb.g-tab #app{padding-bottom:110px}
+
 </style>
 
 <div id="splash" aria-hidden="true">
@@ -1206,10 +1356,6 @@ const store={mode:'memory',ref:null,timer:null,ready:null,
   }
 };
 function setSaveState(t){const el=document.getElementById('saveState');if(el)el.textContent=t;}
-function pruneWeeks(){
-  const keys=Object.keys(S.weeks).sort();
-  while(keys.length>10){const k=keys.shift();S.xpBank+=weekXP(S.weeks[k]).sum;delete S.weeks[k];}
-}
 function commit(){store.save();render();}
 function toast(t){ui.toast=t;renderOverlay();clearTimeout(toast.tm);toast.tm=setTimeout(()=>{ui.toast='';renderOverlay();},2600);}
 
@@ -1745,27 +1891,6 @@ function ribbon(wk,d){
   return '<div class="rib-wrap"><div class="between"><span class="small"><b class="mono" style="font-size:15px">'+done.length+' / '+bl.length+'</b> 블록 채움</span><span class="xs muted mono">'+durLabel(done.reduce((a,b)=>a+b.dur,0))+' / '+durLabel(bl.reduce((a,b)=>a+b.dur,0))+'</span></div>'+
     '<div class="rib" aria-hidden="true">'+bl.map(b=>'<i class="k-'+b.kind+' st-'+blockState(b,mode)+'" style="flex-grow:'+b.dur+'"></i>').join('')+'</div></div>';
 }
-function blkSheet(){
-  const wk=S.weeks[ui.sd.k];const b=wk&&wk.blocks.find(x=>x.id===ui.sd.id);if(!b)return '';
-  const mode=modeFor(wk,b.day),k=wk.key,id=b.id,isToday=mode==='today';
-  const A=(a,label,extra,cls)=>'<button type="button" class="btn '+(cls||'')+'" data-act="'+a+'" data-k="'+k+'" data-id="'+id+'"'+(extra||'')+'>'+label+'</button>';
-  const more=[];
-  if(isToday&&!b.done&&b.start>nowMin())more.push(A('blk-start','지금 시작'));
-  if(isToday&&!b.done)more.push(A('blk-later','오늘 나중으로'));
-  if(!b.done&&mode!=='past'&&b.day<6)more.push(A('blk-otherday','다른 날로'));
-  more.push(A('blk-lock',b.lock?'시간 고정 풀기':'시간 고정하기'));
-  more.push(A('blk-remove','블록 빼기','','danger'));
-  return '<div class="grab"></div>'+
-    '<div class="row" style="gap:8px"><span class="dot k-'+b.kind+'"></span><span class="label">'+DAYS[b.day]+'요일 · '+KIND[b.kind]+(isGuard(wk,b)?' · 지키는 선':'')+(b.lock?' · 시간 고정':'')+(goalById(b.goalId)?' · '+esc(goalById(b.goalId).name):'')+'</span></div>'+
-    '<input id="bTitle" class="field title-field" data-field="blk-title" data-k="'+k+'" data-id="'+id+'" value="'+esc(b.title)+'" aria-label="블록 이름" enterkeyhint="done">'+
-    '<div class="between"><span class="big-time">'+hm(b.start)+'–'+hm(b.start+b.dur)+'</span><span class="muted small">'+durLabel(b.dur)+'</span></div>'+
-    (b.first?'<div class="first-act"><span class="label">첫 행동</span><p>'+esc(b.first)+'</p></div>':(b.ifthen&&!b.done?'<p class="ifthen">'+esc(b.ifthen)+'</p>':''))+(b.reason?'<p class="why">'+(b.goalId?'<b>제안 이유</b> · ':'')+esc(b.reason)+'</p>':'')+
-    A('blk-done',b.done?'끝낸 표시 취소':'끝냈어요','',b.done?'block':'primary block')+
-    '<div class="nudge"><span class="xs muted">시작</span>'+[-30,-10,10,30].map(v=>A('blk-shift',(v>0?'+':'−')+Math.abs(v)+'분',' data-v="'+v+'"','sm')).join('')+'</div>'+
-    '<div class="nudge"><span class="xs muted">길이</span>'+A('blk-len','−10분',' data-v="-10"','sm')+A('blk-len','+10분',' data-v="10"','sm')+A('blk-len','−30분',' data-v="-30"','sm')+A('blk-len','+30분',' data-v="30"','sm')+'</div>'+
-    '<div class="row-wrap">'+Object.keys(KIND).map(x=>'<button type="button" class="chip'+(b.kind===x?' on':'')+'" data-act="blk-kind" data-v="'+x+'" data-k="'+k+'" data-id="'+id+'"><span class="dot k-'+x+'"></span>'+KIND[x]+'</button>').join('')+'</div>'+
-    '<div class="grid2">'+more.join('')+'</div>';
-}
 function gapSheet(){
   const g=ui.sd,wk=S.weeks[g.k];if(!wk)return '';
   const s=gapStart(g,wk),len=g.e-s,c=gapCands(wk),ai=ui.gapAI,n=ui.gapNew;
@@ -1996,35 +2121,6 @@ function guideAct(a,d){
 /* ---------- timetable import: capture (AI) or .ics ---------- */
 const FX_IMPORT_ACCEPT='image/*';
 const CAM_SVG='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"></rect><circle cx="12" cy="13" r="3.5"></circle><path d="M8 6l1.5-2h5L16 6"></path></svg>';
-function importCard(){
-  const busy=ui.busy.fxai;
-  return '<div class="imp"><label class="imp-btn'+(busy?' is-busy':'')+'"><input type="file" accept="image/*" multiple data-field="fx-import" aria-label="시간표·근무표 캡처 고르기"'+(busy?' disabled':'')+'>'+
-    '<span class="imp-ic" aria-hidden="true">'+CAM_SVG+'</span><span class="grow"><b>'+(busy?'읽는 중이에요…':'캡처로 한 번에 가져오기')+'</b><span class="xs muted">학교·학원 시간표, 근무표, 캘린더 화면 캡처</span></span></label>'+
-    '<div class="paste-zone" contenteditable="true" data-paste="fixed" role="textbox" aria-label="캡처 붙여넣기">사진 선택이 안 열리면, 캡처를 복사한 뒤 여기를 길게 눌러 붙여넣기</div>'+
-    '<label class="imp-ics">캘린더 파일(.ics)로 가져오기<input type="file" data-field="fx-import"></label>'+
-    (busy?'<span class="small muted">'+esc(ui.fxStage||'읽는 중이에요. 길게는 30초쯤 걸려요.')+'</span>':'')+(ui.err.fxai?'<p class="small" style="color:var(--warn-text)">'+esc(ui.err.fxai)+'</p>':'')+'</div>';
-}
-function parseICS(txt){
-  const BY={MO:0,TU:1,WE:2,TH:3,FR:4,SA:5,SU:6},out=[],once={};
-  txt=String(txt).replace(/\r?\n[ \t]/g,'');
-  const evs=txt.split('BEGIN:VEVENT').slice(1).map(e=>e.split('END:VEVENT')[0]);
-  const prop=(e,k)=>{const m=new RegExp('^'+k+'(?:;[^:\\n]*)?:(.*)$','m').exec(e);return m?m[1].trim():'';};
-  const toLocal=v=>{const m=/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?(Z)?)?/.exec(v);if(!m||m[4]==null)return null;
-    const d=m[7]?new Date(Date.UTC(+m[1],m[2]-1,+m[3],+m[4],+m[5])):new Date(+m[1],m[2]-1,+m[3],+m[4],+m[5]);return d;};
-  for(const e of evs){
-    const st=toLocal(prop(e,'DTSTART')),en=toLocal(prop(e,'DTEND'));if(!st||!en||en<=st)continue;
-    const start=st.getHours()*60+st.getMinutes(),end=Math.min(1440,start+Math.round((en-st)/6e4));
-    const label=(prop(e,'SUMMARY').replace(/\\,/g,',').replace(/\\n/g,' ')||'고정 일정').slice(0,12);
-    const rr=prop(e,'RRULE');
-    if(/FREQ=WEEKLY/.test(rr)){
-      const bd=/BYDAY=([^;]+)/.exec(rr);
-      const days=bd?bd[1].split(',').map(x=>BY[x.replace(/^[-+\d]+/,'')]).filter(x=>x!=null):[dow(st)];
-      out.push({days,start,end,label});
-    }else{const k=label+'|'+dow(st)+'|'+start+'|'+end;once[k]=(once[k]||0)+1;}
-  }
-  for(const k in once)if(once[k]>=2){const p=k.split('|');out.push({days:[Number(p[1])],start:Number(p[2]),end:Number(p[3]),label:p[0]});}
-  return out;
-}
 function mergeItems(items){
   const m={};
   for(const it of items){const k=it.label+'|'+it.start+'|'+it.end;if(!m[k])m[k]={days:[],start:it.start,end:it.end,label:it.label};for(const d of it.days)if(!m[k].days.includes(d))m[k].days.push(d);}
@@ -2049,36 +2145,7 @@ async function readTimetableAI(imgs){
   else if(!res&&code&&ui.err.fxai)ui.err.fxai+=' ('+code+')';
   return res?normFxItems(res).map(x=>Object.assign(x,{start:Math.round(x.start/5)*5,end:Math.round(x.end/5)*5})):null;
 }
-async function importFiles(files){
-  files=Array.from(files||[]);if(!files.length)return null;
-  const ics=files.filter(f=>/\.ics$/i.test(f.name||'')||f.type==='text/calendar'),imgs=files.filter(f=>/^image\//.test(f.type)||/\.(png|jpe?g|heic|webp)$/i.test(f.name||''));
-  if(!ics.length&&!imgs.length){ui.err.fxai='사진이나 .ics 파일만 읽을 수 있어요.';render();return null;}
-  ui.fxStage='';
-  ui.err.fxai='';ui.busy.fxai=true;render();
-  let items=[],how=[];
-  for(const f of ics){try{const r=parseICS(await f.text());if(r.length){items=items.concat(r);how.push('캘린더 파일');}}catch(e){}}
-  if(imgs.length){const r=await readTimetable(imgs);ui.busy.fxai=true;if(r&&r.length){items=items.concat(r);how.push('캡처');}}
-  ui.busy.fxai=false;
-  items=mergeItems(items);
-  const ok=applyFxItems(items,how.join('·')+'에서 '+items.length+'개 일정을 읽었어요. 시간이 틀린 카드는 눌러서 고치세요.');
-  if(!ok&&!ui.err.fxai)ui.err.fxai=imgs.length?'캡처에서 시간표를 찾지 못했어요. 시간표 전체가 보이게 다시 캡처해 주세요.':'파일에서 매주 반복되는 일정을 찾지 못했어요.';
-  commit();
-  return ok?items:null;
-}
 function itemLine(it){return it.label+' '+it.days.map(d=>DAYS[d]).join('·')+' '+hm(it.start)+'–'+hm(it.end);}
-async function guideImport(files){
-  const g=guideState();files=Array.from(files||[]);if(!files.length||ui.busy.guide)return;
-  g.msgs.push({id:uid(),role:'me',text:files.length>1?'시간표 '+files.length+'장을 올렸어요':'시간표를 올렸어요'});
-  ui.busy.guide=true;ui.gScroll=true;render();
-  const items=await importFiles(files);
-  ui.busy.guide=false;
-  if(items){
-    const wk=gWeek();
-    g.msgs.push({id:uid(),role:'guide',text:'시간표에서 '+items.length+'개를 읽어 고정 일정으로 넣었어요. '+items.slice(0,6).map(itemLine).join(', ')+(items.length>6?' 외 '+(items.length-6)+'개':'')+'. 이제 '+(wk.key===curKey()?'이번 주 남은 날':'다음 주')+'에 '+freeHours(wk)+'시간이 비어 있어요. 이번 달 목표를 말해 주면 그 사이에 블록을 깔아 드릴게요.',chips:['한 달에 3kg 빼고 싶어','과제 마감부터 넣어 줘','시간이 틀린 게 있어']});
-  }else g.msgs.push({id:uid(),role:'guide',text:ui.err.fxai||'시간표를 읽지 못했어요. 다시 올려 주세요.',chips:['고정 일정 직접 넣을래']});
-  ui.gScroll=true;commit();
-}
-
 /* ---------- shared view pieces ---------- */
 function chips(key,list,multi){
   const p=S.profile;const cur=p[key];
@@ -2966,6 +3033,7 @@ function placeProposed(wk,list,maxN){
     if(!ok){start=slotIn(wk,day,dur,WIN.any,extra);if(start<0)start=findIn(tmp,day,dur,'any',minS);if(start<0)continue;}
     const b={id:uid(),day,start,dur,title:String(x.title||'블록').slice(0,40),kind:dur>=40?'deep':'light',why:String(x.why||'').slice(0,120),first:String(x.first||'').slice(0,160),
       check:x.check!=null?String(x.check).slice(0,40):checkFor(day,start),checked:false,off:false,goalName:x.goal?String(x.goal).slice(0,16):''};
+    if(!S.setup.fixed.length&&!b.check)b.check='등록된 일정이 없어서 비어 보이는 시간이에요. 이때 괜찮아요?';
     extra.push({id:b.id,day,start,dur});out.push(b);if(out.length>=(maxN||8))break;
   }
   return out.sort((a,b)=>a.day-b.day||a.start-b.start);
@@ -3068,7 +3136,7 @@ async function aiTurn(text){
     '- event: 특정 요일·시각의 약속을 말하면 그대로 넣는다(시간 고정). 목표 대화 중이 아니면 type은 event.',
     '- 지난주 점검(context.check)이면 지난 기록을 근거로 방법을 바꿀지 묻거나 이번 주 안을 propose. 체크 안 된 블록을 안 한 것으로 단정하지 않는다.',
     '- 말투: '+toneRule()+' 평가·훈계 금지. 한국어. say는 1~3문장.',
-    leadRules(),
+    leadRules(),ptypeRule(),
     '데이터: '+JSON.stringify({now:wk.key===curKey()?DAYS[dow(today())]+'요일 '+hm(nowMin()):'다음 주를 계획하는 중',weekDates:weekDates(wk.key).slice(gT0(wk)),
       freeSlots:freeSlots(wk),lifeTime:life,fixed:fxGroups().map(x=>x.days.map(dd=>DAYS[dd]).join('')+' '+hm(x.start)+'–'+hm(x.end)+' '+x.label),existingBlocks:existing,
       goals:goalMemory(),routines:rtList().map(r=>rtWhen(rtAnchor(r).l)+' '+r.name),draft:d?{name:d.name,purpose:d.purpose,prefs:d.prefs,avoid:d.avoid,stage:d.stage}:null,check:d&&d.stage==='check'?{goal:d.name,lastWeek:lastWeekLine(goalById(d.goalId))}:null}),
@@ -3132,7 +3200,7 @@ const AVA=guideAva('idle');
 function msgHtml(m,idx){
   if(m.role==='me')return '<div class="msg me"><p>'+esc(m.text)+'</p></div>';
   const ms=guideState().msgs,last=idx===ms.length-1,busy=ui.busy.guide;
-  let h='<div class="msg guide">'+AVA+'<div class="g-body">'+(m.label?'<span class="g-label">'+esc(m.label)+'</span>':'')+'<p>'+esc(m.text)+(m.sub?'<span class="g-sub">'+esc(m.sub)+'</span>':'')+'</p>'+(m.fail?'<span class="xs muted">AI 연결이 안 돼서 기본 규칙으로 답했어요 · '+esc(m.fail)+'</span>':'');
+  let h='<div class="msg guide">'+AVA+'<div class="g-body">'+(m.label?'<span class="g-label">'+esc(m.label)+'</span>':'')+'<p>'+esc(m.text)+(m.sub?'<span class="g-sub">'+esc(m.sub)+'</span>':'')+'</p>'+(m.fail?guideFailLine(m):'');
   if(m.options&&m.options.length&&last&&!busy)h+='<div class="g-opts">'+m.options.map(o=>'<button type="button" class="chip opt" data-act="g-chip" data-v="'+esc(o)+'">'+esc(o)+'</button>').join('')+'</div>';
   const p=m.prop;
   if(p){const tt=propTotal(p);
@@ -3249,7 +3317,7 @@ function nowCard(wk){
       '<div class="now-act two">'+(can?'<button type="button" class="btn primary" data-act="blk-start" data-k="'+k+'" data-id="'+up.id+'">지금 시작</button>':'<button type="button" class="btn primary" data-act="blk" data-k="'+k+'" data-id="'+up.id+'">자세히</button>')+'<button type="button" class="btn" data-act="blk-alt" data-k="'+k+'" data-id="'+up.id+'">다르게 하기</button></div></section>'+firstActHtml(up);
   }
   const g=it.gaps.find(g=>g.start<=Math.ceil((n+1)/10)*10&&g.end>n);
-  if(g&&n<s.dayEnd)return '<section class="now-card has-guide">'+guideImg('idle',64,'now-guide')+'<span class="now-tag"><i class="calm"></i>지금은 빈 시간</span><h2 class="now-title">'+durLabel(g.end-Math.max(n,g.start))+'이 비어 있어요</h2><p class="now-if">비워 둬도 괜찮아요. 하고 싶은 게 있으면 넣어요.</p>'+nextLine+
+  if(g&&n<s.dayEnd)return '<section class="now-card has-guide">'+guideImg('idle',64,'now-guide')+'<span class="now-tag"><i class="calm"></i>지금은 빈 시간</span><h2 class="now-title">'+durLabel(g.end-Math.max(n,g.start))+(S.setup.fixed.length?'이 비어 있어요':'이 비어 보여요')+'</h2><p class="now-if">비워 둬도 괜찮아요. 하고 싶은 게 있으면 넣어요.</p>'+nextLine+
     '<div class="now-act two"><button type="button" class="btn primary" data-act="gap" data-k="'+k+'" data-d="'+t+'" data-s="'+g.start+'" data-e="'+g.end+'">이 시간에 넣기</button><button type="button" class="btn" data-act="rest-mark" data-s="'+g.start+'" data-e="'+g.end+'">쉬기</button></div></section>';
   if(nx)return '<section class="now-card"><span class="now-tag"><i class="calm"></i>숨 고르기</span><h2 class="now-title">곧 다음 일정이에요</h2>'+nextLine+'</section>';
   const left=it.bl.filter(b=>!b.done&&b.src!=='rest'&&!b.lock).length;
@@ -3377,13 +3445,14 @@ function finishOnb(){
 function viewMe(){
   const p=S.profile;
   const out=['<div class="between"><h1>설정</h1><button type="button" class="btn sm" data-act="me-close">프로필로</button></div>'];
-  out.push('<div class="card line"><h2>생활 리듬</h2><p class="small muted">길잡이는 이 시간 안에서만 제안해요.</p><div class="grid2">'+timeBtn('p-wake',p.wake,'하루 시작')+timeBtn('p-sleep',p.sleep,'하루 끝')+'</div>'+
+  out.push('<div class="card line"><h2>생활 리듬</h2><p class="small muted">일어난 뒤 1시간과 자기 전 1시간은 준비 시간으로 비워 두고, 그 사이('+hm(S.setup.dayStart)+'–'+hm(S.setup.dayEnd)+')에서만 제안해요.</p><div class="grid2">'+timeBtn('p-wake',p.wake,'하루 시작')+timeBtn('p-sleep',p.sleep,'하루 끝')+'</div>'+
     '<label class="row small" for="lifeBuf2"><input type="checkbox" id="lifeBuf2" data-field="life-buf"'+(S.setup.lifeBuffer!==false?' checked':'')+'>고정 일정이 오후에 끝나면 1시간은 귀가·식사로 비워 두기</label>'+
     '<div class="between"><span class="small">통학·출퇴근 편도 '+p.commute+'분</span><div class="stepper"><button type="button" class="icon-btn" data-act="p-commute" data-v="-10" aria-label="줄이기">−</button><button type="button" class="icon-btn fill" data-act="p-commute" data-v="10" aria-label="늘리기">+</button></div></div></div>');
+  out.push(changeCard());
   out.push('<div class="card line"><h2>매주 반복되는 일정</h2>'+fixedEditor()+'</div>');
   out.push('<div class="card line"><h2>길잡이</h2><label class="label" for="pName2">부르는 이름 (선택)</label><input id="pName2" class="field" data-field="p-name" value="'+esc(p.name)+'" placeholder="이름이나 별명">'+
     '<span class="label">말투</span>'+chips('tone',OPT.tone)+'<button type="button" class="btn" data-act="tab" data-tab="memory">길잡이가 기억하는 것 보기</button></div>');
-  out.push(leadCard());
+  out.push(leadCard());out.push(growthCard());out.push(safeCard());out.push(notifyCard());out.push(helpCard());
   out.push(aiCard());
   out.push('<details class="card line"><summary style="font-weight:700;cursor:pointer;min-height:32px">선택 정보</summary><p class="small muted">빠른 추가 버튼 순서와 길잡이의 말에 참고만 해요. 비워 둬도 돼요.</p>'+
     '<span class="label">나이대</span>'+chips('age',OPT.age)+'<span class="label">하는 일</span>'+chips('role',OPT.role)+'</details>');
@@ -3399,9 +3468,8 @@ function bannerHtml(){
 function sheetHtml(){
   if(!ui.sheet)return '';
   let inner='',label='';
-  if(ui.sheet==='quick'){label='빠르게 추가';
-    inner='<div class="grab"></div><div class="stack"><label class="label" for="qTodo">할 일 바로 넣기</label><div class="row"><input id="qTodo" class="field" placeholder="예: 은행 가기 금요일까지" enterkeyhint="done" data-field="q-todo"><button type="button" class="btn primary" data-act="quick-todo">넣기</button></div><span class="xs muted">가장 가까운 빈 시간에 넣어요.</span></div>'+
-      ''+evCard()+'<div class="sep"></div><button type="button" class="btn" data-act="quick-ask">길잡이에게 말하기</button>';}
+  if(ui.sheet==='quick'){label='추가하기';inner=addSheet();}
+  else if(ui.sheet==='imp'){label='가져온 일정 확인';inner=impSheet();}
   else if(ui.sheet==='blk'){label='블록';inner=blkSheet();}
   else if(ui.sheet==='gap'){label='빈 시간 채우기';inner=gapSheet();}
   else if(ui.sheet==='time'){label=ui.sd.l;inner=timeSheet();}
@@ -3412,7 +3480,7 @@ function sheetHtml(){
   return '<div class="scrim" data-act="sheet-close"></div><div class="sheet'+(anim?' anim':'')+'" role="dialog" aria-modal="true" aria-label="'+label+'"><div class="inner">'+inner+'</div></div>';
 }
 function render(){
-  ensureV11();gameS();pxApply();
+  ensureV11();gameS();pxApply();careTick();
   const main=document.getElementById('main');
   const onb=!S.profile.done;
   document.body.classList.toggle('onb',onb);
@@ -3473,7 +3541,7 @@ function demoState(){
 /* ---------- actions (new) → falls through to the original handler ---------- */
 function act(a,d){
   const g=guideState();
-  if(gameAct(a,d))return;if(trkAct(a,d))return;if(rtAct(a,d))return;
+  if(careAct(a,d))return;if(gameAct(a,d))return;if(trkAct(a,d))return;if(rtAct(a,d))return;
   if(leadAct(a,d))return;
   if(a==='alt-rest'||a==='rest-mark')markRest();
   switch(a){
@@ -3901,10 +3969,10 @@ function viewProfile(){
     '<div class="stat"><span class="pf-ic">'+pxImg(SPR.i_flame,18)+'</span><b>'+Math.max(G.best,si.n)+'일</b><span class="xs muted">최고 기록</span></div></div>');
   out.push(rtGarden());
   out.push(trkCard(getWeek(curKey())));
-  out.push('<div class="card"><div class="between"><h2>이번 주 기록</h2><span class="xs muted">오늘 +'+todayXp()+' XP</span></div>'+weekStrip()+'<p class="xs muted">블록 하나를 끝내거나 쉼을 기록한 날은 불꽃이 켜져요. 기록이 끊겨도 XP는 줄지 않아요.</p></div>');
+  out.push('<div class="card"><div class="between"><h2>이번 주 불꽃</h2><span class="xs muted">오늘 +'+todayXp()+' XP</span></div>'+weekStrip()+'<p class="xs muted">블록 하나를 끝내거나 쉼을 기록한 날은 불꽃이 켜져요. 기록이 끊겨도 XP는 줄지 않아요.</p></div>');
   out.push('<div class="g-nudge pf-say">'+guideAva(si.todayOn?'happy':'idle')+'<div class="grow"><p>'+esc(guideLine())+'</p></div></div>');
   out.push('<div class="card"><h2>배지</h2><div class="pf-badges">'+badgeList().map(b=>'<div class="pf-badge'+(b.on?' on':'')+'">'+pxImg(SPR[b.on?'i_'+b.i:'i_lock'],24)+'<b>'+b.n+'</b><span>'+b.s+'</span></div>').join('')+'</div></div>');
-  if(T)out.push('<div class="card"><h2>'+esc(T.name)+'이면 이렇게 짜요</h2><p class="small">'+esc(T.desc)+'</p><p class="small muted">'+esc(T.how)+'</p>'+
+  if(T)out.push('<div class="card"><h2>'+esc(T.name)+'의 계획 성향</h2><p class="small">'+esc(T.desc)+'</p><p class="small muted">길잡이가 AI로 계획을 제안할 때 이 성향을 참고해요: '+esc(T.how)+' 정확한 시간은 내 일정과 대화를 따라요.</p>'+
     '<div class="row-wrap" style="gap:8px"><button type="button" class="btn sm" data-act="pq-redo">유형 다시 정하기</button><button type="button" class="btn sm" data-act="pq-gender">'+(G.gender==='m'?'여자':'남자')+' 캐릭터로 바꾸기</button></div></div>');
   return out.join('');
 }
@@ -3946,7 +4014,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.16-2';
+const APP_VER='2026.10.16-3';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -4381,7 +4449,7 @@ function rtStats(r){
   return {s,pct:Math.round(s*100),reps,chain,prevMiss,gap,stage:s<.05?0:s<.2?1:s<.45?2:s<.7?3:s<.9?4:5};
 }
 const RT_STAGE=['씨앗','새싹','떡잎','자라는 중','봉오리','꽃 핌'];
-const RT_STAGE_SAY=['처음 몇 번이 가장 크게 자라요.','싹이 났어요. 같은 때에 반복할수록 빨리 커요.','뿌리를 내리는 중이에요.','생각 안 해도 손이 가기 시작하는 단계예요.','거의 다 왔어요. 꾸준함만 남았어요.','이제 거의 자동으로 하는 습관이에요.'];
+const RT_STAGE_SAY=['처음 몇 번의 기록이 식물을 가장 크게 키워요.','싹이 났어요. 같은 때에 이어 갈수록 잘 자라요.','떡잎이 났어요. 기록이 쌓이고 있어요.','쑥쑥 자라는 중이에요.','봉오리가 맺혔어요. 꾸준히 이어 온 기록이에요.','꽃이 피었어요. 오래 이어 온 기록이에요.'];
 /* 12×12 pixel plant, drawn per stage */
 const RT_ART=(()=>{
   const base=['..ssssssss..','.pppppppppp.','..pppppppp..','...PPPPPP...'];
@@ -4441,19 +4509,19 @@ function rtDots(r){
 }
 function viewRoutine(){
   const list=rtList(),out=['<div class="between"><h1>루틴</h1><button type="button" class="btn sm" data-act="tab" data-tab="today">오늘로</button></div>'];
-  out.push('<p class="small muted rt-lead">이미 하는 일 뒤에 작은 행동 하나를 붙여요. 같은 때에 반복할수록 식물이 자라고, 한 번 빠져도 다음에 하면 이어져요.</p>');
+  out.push('<p class="small muted rt-lead">이미 하는 일 뒤에 작은 행동 하나를 붙여요. 같은 때에 기록을 이어 갈수록 식물이 자라고, 한 번 빠져도 다음에 하면 이어져요.</p><p class="xs muted rt-note">식물 성장은 기록을 바탕으로 앱이 계산한 값이에요. 실제 습관이 얼마나 자동으로 됐는지 재는 수치는 아니에요.</p>');
   for(const r of list){
     const st=rtStats(r),a=rtAnchor(r);
     out.push('<section class="rt-card"><div class="rt-card-top"><div class="rt-pot">'+rtPlant(st.stage,72)+'</div><div class="grow"><span class="xs muted">'+esc(rtWhen(a.l))+'</span><b class="rt-name">'+esc(r.name)+'</b>'+
       (r.tiny?'<span class="small muted">바쁜 날엔 '+esc(r.tiny)+'</span>':'')+'</div><button type="button" class="icon-btn plain" data-act="rt-del" data-id="'+r.id+'" aria-label="'+esc(r.name)+' 루틴 지우기">×</button></div>'+
-      '<div class="rt-meter"><div class="between"><span class="small"><b>'+RT_STAGE[st.stage]+'</b> · 습관 굳기</span><span class="rt-pct"><b>'+st.pct+'</b>%</span></div><div class="rt-bar"><i style="width:'+Math.max(2,st.pct)+'%"></i></div><span class="xs muted">'+RT_STAGE_SAY[st.stage]+'</span></div>'+
+      '<div class="rt-meter"><div class="between"><span class="small"><b>'+RT_STAGE[st.stage]+'</b> · 식물 성장</span><span class="rt-pct"><b>'+st.pct+'</b>%</span></div><div class="rt-bar"><i style="width:'+Math.max(2,st.pct)+'%"></i></div><span class="xs muted">'+RT_STAGE_SAY[st.stage]+'</span></div>'+
       '<div class="between rt-meta"><span class="small">'+(st.chain?'<b>'+st.chain+'번째</b> 이어가는 중':'오늘부터 시작')+'</span><span class="xs muted">'+(r.days.length===7?'매일':r.days.map(d=>DAYS[d]).join(''))+' · 지금까지 '+st.reps+'번</span></div>'+
       rtDots(r)+(st.gap!=null&&st.gap>=3?'<p class="rt-hint">'+st.gap+'일째 쉬었어요. 쉰 시간이 길어질수록 다시 잡기 어려워져요. 오늘은 최소 버전만 해 볼까요?</p>':'')+'</section>');
   }
   out.push(rtForm());
   out.push('<details class="card rt-why"><summary><b>왜 이렇게 만들었나요?</b></summary><ul class="small">'+
     '<li><b>"언제 하고 나면"을 먼저 정해요.</b> 상황과 행동을 미리 묶어 둔 계획(실행 의도)은 94개 연구에서 목표 달성을 중간 이상 크기로 높였어요. (Gollwitzer & Sheeran, 2006)</li>'+
-    '<li><b>식물은 처음에 빨리 자라고 점점 천천히 자라요.</b> 습관이 자동으로 되는 데 평균 66일이 걸렸고, 초반 반복의 효과가 가장 컸어요. (Lally 외, 2010)</li>'+
+    '<li><b>식물은 처음에 빨리 자라고 점점 천천히 자라요.</b> 한 연구에서 습관이 자동으로 되는 데 평균 66일(사람마다 18~254일)이 걸렸고, 초반 반복의 효과가 가장 컸어요. 그 모양을 빌려 식물이 자라게 했을 뿐, 퍼센트가 내 습관을 진단하는 건 아니에요. (Lally 외, 2010)</li>'+
     '<li><b>한 번 빠져도 끊기지 않아요.</b> 한 번 놓친 건 습관 형성에 거의 영향이 없었어요. 다만 자주 빠지면 덜 굳어요. 그래서 두 번 연속만 피하도록 했어요. (Lally 외, 2010)</li>'+
     '<li><b>끊긴 기록을 이어 붙일 수 있어요.</b> 연속 기록이 끊겼다고 보이면 그만두기 쉬운데, 복구할 수 있으면 그 효과가 줄었어요. (Silverman & Barasch, 2023)</li>'+
     '<li><b>오래 쉬면 알려 줘요.</b> 마지막으로 한 뒤 지난 시간이 습관 유지의 큰 예측 변수였어요. 같은 요일에 하는 것도 도움이 됐어요. (Buyalskaya 외, 2023)</li>'+
@@ -4512,6 +4580,700 @@ function rtGarden(){
   return '<section class="card rt-garden"><div class="between"><h2>루틴 정원</h2><button type="button" class="link" data-act="tab" data-tab="routine">관리</button></div><div class="rt-garden-row">'+
     l.map(r=>{const st=rtStats(r);return '<div class="rt-g">'+rtPlant(st.stage,56)+'<b>'+esc(r.name)+'</b><span class="xs muted">'+RT_STAGE[st.stage]+' · '+st.pct+'%</span></div>';}).join('')+'</div></section>';
 }
+/* ================= care.js — 신뢰·통제감·첫 경험 (2026.10 리뷰 반영) ================= */
+
+/* ---------- 1. 기록은 지우지 않는다: 오래된 주는 가볍게만 줄여서 보관 ---------- */
+function pruneWeeks(){
+  const keys=Object.keys(S.weeks).sort(),keep=new Set(keys.slice(-12));
+  for(const k of keys){if(keep.has(k))continue;const w=S.weeks[k];if(!w||w.compact)continue;
+    w.suggestions=[];w.notes=[];w.question=null;w.answer='';w.review=null;
+    w.cards=(w.cards||[]).map(c=>({id:c.id,title:c.title,minutes:c.minutes,kind:c.kind}));w.compact=1;}
+}
+store.save=function(){
+  if(S.demo)return;
+  clearTimeout(this.timer);setSaveState('저장 중');
+  this.timer=setTimeout(async()=>{
+    await this.ready;pruneWeeks();const data=clone(S);
+    try{
+      if(this.mode==='db'&&this.ref)await this.ref.set(data);
+      else if(this.mode==='local')localStorage.setItem('daeum-ju-v1',JSON.stringify(data));
+      setSaveState(this.mode==='memory'?'이 창에서만 유지':'저장됨');
+      if(ui.saveFail){ui.saveFail=null;render();}
+    }catch(e){
+      ui.saveFail=/quota/i.test(String((e&&e.name)||e))?'quota':'fail';setSaveState('저장 안 됨');render();
+    }
+  },700);
+};
+let careStorePersist=null;
+try{if(navigator.storage&&navigator.storage.persist){navigator.storage.persisted().then(p=>p||navigator.storage.persist()).then(p=>{careStorePersist=!!p;}).catch(()=>{});}}catch(e){}
+
+function backupBlob(){return new Blob([JSON.stringify({app:'daeum',v:1,at:new Date().toISOString(),state:S})],{type:'application/json'});}
+function doBackup(){
+  try{
+    const a=document.createElement('a');a.href=URL.createObjectURL(backupBlob());a.download='다음주-백업-'+dkey()+'.json';
+    document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);
+    S.lastBackup=dkey();commit();toast('백업 파일을 저장했어요. 휴대폰의 다운로드 폴더에 있어요');
+  }catch(e){toast('백업 파일을 만들지 못했어요');}
+}
+async function readRestore(file){
+  try{
+    const j=JSON.parse(await file.text()),st=j&&j.state?j.state:j;
+    const d=migrate(clone(st));
+    if(!d||!d.weeks||!d.setup){toast('다음 주 백업 파일이 아니에요');return;}
+    ui.restore={d,at:j&&j.at?String(j.at).slice(0,10):'',weeks:Object.keys(d.weeks).length,fixed:(d.setup.fixed||[]).length};render();
+  }catch(e){toast('파일을 읽지 못했어요. 다음 주에서 받은 .json 백업 파일인지 확인해 주세요');}
+}
+function storeWhere(){
+  if(store.mode==='db')return 'Claude 계정에 저장돼요. 같은 계정으로 열면 이어서 볼 수 있어요.';
+  if(store.mode==='local')return '이 휴대폰의 이 브라우저(또는 설치한 앱) 안에만 저장돼요. 다른 기기와 자동으로 이어지지 않고, 앱을 지우거나 사이트 데이터를 지우면 기록도 지워져요.';
+  return '지금은 이 창을 닫으면 사라져요. 브라우저 설정에서 사이트 저장을 허용해 주세요.';
+}
+function safeCard(){
+  const lb=S.lastBackup,r=ui.restore;
+  if(r)return '<section class="card care-restore"><h2>백업에서 되살릴까요?</h2><p class="small">'+(r.at?esc(r.at)+'에 만든 ':'')+'백업이에요. 주간 기록 '+r.weeks+'주, 반복 일정 '+r.fixed+'칸이 들어 있어요.</p>'+
+    '<p class="small" style="color:var(--warn-text)">지금 기록은 이 백업으로 바뀌어요. 혹시 모르니 지금 기록을 먼저 백업해 두는 걸 권해요.</p>'+
+    '<div class="grid2"><button type="button" class="btn" data-act="bk-save">지금 기록 백업</button><button type="button" class="btn primary" data-act="bk-restore-yes">되살리기</button></div><button type="button" class="btn ghost" data-act="bk-restore-no">취소</button></section>';
+  return '<section class="card care-safe"><h2>내 기록 지키기</h2><p class="small muted">'+storeWhere()+'</p>'+
+    '<p class="small">지난 기록은 자동으로 지우지 않아요. 휴대폰을 바꾸거나 앱을 지우기 전에는 백업 파일을 받아 두세요.</p>'+
+    '<div class="grid2"><button type="button" class="btn primary" data-act="bk-save">백업 파일 받기</button><label class="btn care-file">백업에서 되살리기<input type="file" accept="application/json,.json" data-field="bk-restore"></label></div>'+
+    '<span class="xs muted">'+(lb?'마지막 백업: '+esc(lb):'아직 백업한 적이 없어요')+'</span></section>';
+}
+function saveFailCard(){
+  if(!ui.saveFail)return '';
+  return '<div class="card warn"><b>'+(ui.saveFail==='quota'?'저장 공간이 부족해서 마지막 변경을 저장하지 못했어요':'마지막 변경을 저장하지 못했어요')+'</b><span class="small">지금 백업 파일을 받아 두면 기록을 지킬 수 있어요.</span><button type="button" class="btn sm" data-act="bk-save">백업 파일 받기</button></div>';
+}
+/* 끝난 반복 일정(캘린더 파일의 종료일)은 날짜가 지나면 정리 */
+function fxExpire(){
+  const t=dkey(),gone=S.setup.fixed.filter(f=>f.until&&f.until<t);
+  if(!gone.length)return;
+  S.setup.fixed=S.setup.fixed.filter(f=>!(f.until&&f.until<t));
+  ui.change={title:'끝난 반복 일정을 정리했어요',lines:Array.from(new Set(gone.map(f=>f.label))).map(l=>({t:l+' (종료일 지남)'})),undo:null};
+  store.save();
+}
+
+/* ---------- 2. 가져오기: 바로 덮어쓰지 않고, 비교한 뒤 고르게 ---------- */
+function parseICS(txt){
+  const BY={MO:0,TU:1,WE:2,TH:3,FR:4,SA:5,SU:6},items=[],events=[],once={};let ended=0,past=0,far=0;
+  txt=String(txt).replace(/\r?\n[ \t]/g,'');
+  const evs=txt.split('BEGIN:VEVENT').slice(1).map(e=>e.split('END:VEVENT')[0]);
+  const prop=(e,k)=>{const m=new RegExp('^'+k+'(?:;[^:\\n]*)?:(.*)$','m').exec(e);return m?m[1].trim():'';};
+  const toLocal=v=>{const m=/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?(Z)?)?/.exec(v);if(!m||m[4]==null)return null;
+    return m[7]?new Date(Date.UTC(+m[1],m[2]-1,+m[3],+m[4],+m[5])):new Date(+m[1],m[2]-1,+m[3],+m[4],+m[5]);};
+  const ymd=s=>s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8);
+  const tk=dkey(),horizon=iso(addDays(today(),56));
+  for(const e of evs){
+    if(/^STATUS:CANCELLED/m.test(e))continue;
+    const st=toLocal(prop(e,'DTSTART'));let en=toLocal(prop(e,'DTEND'));
+    if(!st)continue;
+    if(!en){const du=/PT(?:(\d+)H)?(?:(\d+)M)?/.exec(prop(e,'DURATION'));en=du?new Date(st.getTime()+((+du[1]||0)*60+(+du[2]||0))*6e4):null;}
+    if(!en||en<=st)continue;
+    const start=st.getHours()*60+st.getMinutes(),end=Math.min(1440,start+Math.round((en-st)/6e4));
+    const label=(prop(e,'SUMMARY').replace(/\\,/g,',').replace(/\\n/g,' ').replace(/\\;/g,';')||'일정').slice(0,14);
+    const rr=prop(e,'RRULE');
+    if(/FREQ=WEEKLY/.test(rr)){
+      const bd=/BYDAY=([^;]+)/.exec(rr);
+      const days=bd?bd[1].split(',').map(x=>BY[x.replace(/^[-+\d]+/,'')]).filter(x=>x!=null):[dow(st)];
+      let until=null;const u=/UNTIL=(\d{8})/.exec(rr);if(u)until=ymd(u[1]);
+      const c=/COUNT=(\d+)/.exec(rr);
+      if(c&&!until){const iv=/INTERVAL=(\d+)/.exec(rr);until=iso(addDays(st,7*Math.ceil(+c[1]/Math.max(1,days.length))*(iv?+iv[1]:1)-1));}
+      if(until&&until<tk){ended++;continue;}
+      items.push({days,start,end,label,until:until||null,src:'ics'});
+    }else if(!rr){
+      const k=label+'|'+dow(st)+'|'+start+'|'+end;(once[k]=once[k]||[]).push({st,end:en});
+    }
+  }
+  for(const k in once){
+    const p=k.split('|'),list=once[k];
+    if(list.length>=3){const last=list.map(x=>iso(x.st)).sort().pop();if(last<tk){ended++;continue;}items.push({days:[Number(p[1])],start:Number(p[2]),end:Number(p[3]),label:p[0],until:last,src:'ics'});continue;}
+    for(const x of list){const ds=iso(x.st);if(ds<tk){past++;continue;}if(ds>horizon){far++;continue;}
+      events.push({title:p[0],date:ds,key:iso(mondayOf(x.st)),day:dow(x.st),start:Number(p[2]),dur:Math.max(10,Math.round((x.end-x.st)/6e4))});}
+  }
+  return {items,events,ended,past,far};
+}
+function impMerge(items){
+  const m={};
+  for(const it of items){const k=it.label+'|'+it.start+'|'+it.end+'|'+(it.until||'');
+    if(!m[k])m[k]={days:[],start:it.start,end:it.end,label:it.label,until:it.until||null,src:it.src||'img'};
+    for(const d of it.days)if(!m[k].days.includes(d))m[k].days.push(d);}
+  return Object.values(m).map(x=>Object.assign(x,{days:x.days.sort((a,b)=>a-b)}));
+}
+async function importFiles(files){
+  files=Array.from(files||[]);if(!files.length)return null;
+  const ics=files.filter(f=>/\.ics$/i.test(f.name||'')||f.type==='text/calendar'),imgs=files.filter(f=>/^image\//.test(f.type)||/\.(png|jpe?g|heic|webp)$/i.test(f.name||''));
+  if(!ics.length&&!imgs.length){ui.err.fxai='사진이나 .ics 파일만 읽을 수 있어요.';render();return null;}
+  ui.fxStage='';ui.err.fxai='';ui.busy.fxai=true;render();
+  let items=[],events=[],ended=0,past=0,far=0,how=[];
+  for(const f of ics){try{const r=parseICS(await f.text());items=items.concat(r.items);events=events.concat(r.events);ended+=r.ended;past+=r.past;far+=r.far;how.push('캘린더 파일');}catch(e){}}
+  if(imgs.length){const r=await readTimetable(imgs);if(r&&r.length){items=items.concat(r.map(x=>Object.assign(x,{src:'img'})));how.push('캡처');}}
+  ui.busy.fxai=false;
+  items=impMerge(items);
+  if(!items.length&&!events.length){
+    ui.err.fxai=imgs.length?'캡처에서 시간표를 찾지 못했어요. 시간표 전체가 보이게 다시 캡처해 주세요.':ended?'파일의 반복 일정이 모두 이미 끝난 일정이에요.':'파일에서 가져올 일정을 찾지 못했어요.';
+    render();return null;}
+  if(ui.imp&&ui.imp.img)try{URL.revokeObjectURL(ui.imp.img);}catch(e){}
+  ui.imp={items:items.map(it=>Object.assign(it,{on:impStatus(it).k!=='dup',mode:'add'})),events:events.map(e=>Object.assign(e,{on:true})),
+    how:Array.from(new Set(how)).join('·'),ended,past,far,img:imgs[0]?URL.createObjectURL(imgs[0]):null,showImg:false};
+  ui.sheet='imp';ui.sheetAnim=true;render();
+  return {pending:true,n:items.length+events.length};
+}
+function impStatus(it){
+  const hits=[];let same=0;
+  for(const d of it.days){
+    const ov=S.setup.fixed.filter(f=>f.dow===d&&f.start<it.end&&f.end>it.start);
+    if(ov.some(f=>f.label===it.label&&f.start===it.start&&f.end===it.end)){same++;continue;}
+    for(const f of ov)hits.push(DAYS[d]+' '+f.label);
+  }
+  if(same===it.days.length&&it.days.length)return {k:'dup'};
+  if(hits.length)return {k:'clash',w:Array.from(new Set(hits)).slice(0,3)};
+  return {k:'new'};
+}
+function impUnsure(it){const du=it.end-it.start;return it.src==='img'&&(du<30||du>300||it.start<6*60||it.end>23*60);}
+function hmIn(m){return pad(Math.floor(m/60)%24)+':'+pad(m%60);}
+function impSheet(){
+  const im=ui.imp;if(!im)return '';
+  const rows=im.items.map((it,i)=>{
+    const st=impStatus(it),uns=impUnsure(it);
+    return '<div class="imp-row'+(it.on?'':' off')+'">'+
+      '<label class="imp-on"><input type="checkbox" data-field="imp-on" data-i="'+i+'"'+(it.on?' checked':'')+' aria-label="'+esc(it.label)+' 가져오기"></label>'+
+      '<div class="imp-main"><input class="field imp-name" data-field="imp-label" data-i="'+i+'" value="'+esc(it.label)+'" aria-label="일정 이름" maxlength="14">'+
+      '<div class="imp-days">'+DAYS.map((x,d)=>'<button type="button" class="'+(it.days.includes(d)?'on':'')+'" data-act="imp-day" data-i="'+i+'" data-d="'+d+'" aria-pressed="'+it.days.includes(d)+'">'+x+'</button>').join('')+'</div>'+
+      '<div class="imp-time"><input type="time" class="field" data-field="imp-s" data-i="'+i+'" value="'+hmIn(it.start)+'" aria-label="시작"><span>–</span><input type="time" class="field" data-field="imp-e" data-i="'+i+'" value="'+hmIn(it.end)+'" aria-label="끝"></div>'+
+      (it.until?'<span class="xs muted">'+esc(it.until.slice(5).replace('-','월 '))+'일까지 반복하고, 그다음엔 자동으로 정리해요</span>':'')+
+      (uns?'<span class="imp-flag">캡처에서 읽은 시간이 애매해요. 원본과 비교해 주세요</span>':'')+
+      (st.k==='dup'?'<span class="imp-st">이미 같은 일정이 있어요</span>':st.k==='clash'?'<span class="imp-st warn">기존 일정과 겹쳐요: '+esc(st.w.join(', '))+'</span>'+
+        '<div class="imp-mode"><button type="button" class="'+(it.mode!=='replace'?'on':'')+'" data-act="imp-mode" data-i="'+i+'" data-v="add">둘 다 두기</button><button type="button" class="'+(it.mode==='replace'?'on':'')+'" data-act="imp-mode" data-i="'+i+'" data-v="replace">기존 것 바꾸기</button></div>':
+        '<span class="imp-st ok">새로 추가돼요</span>')+
+      '</div></div>';}).join('');
+  const evs=im.events.map((e,i)=>'<div class="imp-row'+(e.on?'':' off')+'"><label class="imp-on"><input type="checkbox" data-field="imp-ev" data-i="'+i+'"'+(e.on?' checked':'')+' aria-label="'+esc(e.title)+' 가져오기"></label>'+
+    '<div class="imp-main"><b>'+esc(e.title)+'</b><span class="small">'+md(fromIso(e.date))+'('+DAYS[e.day]+') '+hm(e.start)+'–'+hm(e.start+e.dur)+'</span><span class="imp-st ok">약속으로 넣어요 · 시간 고정</span></div></div>').join('');
+  const on=im.items.filter(x=>x.on&&x.days.length).length+im.events.filter(x=>x.on).length;
+  const notes=[im.ended?'이미 끝난 반복 일정 '+im.ended+'개':'',im.past?'지난 약속 '+im.past+'개':'',im.far?'8주보다 먼 약속 '+im.far+'개':''].filter(Boolean);
+  return '<div class="grab"></div><div class="stack"><h2>가져온 일정 확인</h2><p class="small muted">'+esc(im.how||'파일')+'에서 읽었어요. 반영하기 전에는 내 일정이 바뀌지 않아요. 틀린 칸은 바로 고쳐 주세요.</p>'+
+    (im.img?'<button type="button" class="btn sm" data-act="imp-img">'+(im.showImg?'원본 캡처 접기':'원본 캡처와 비교하기')+'</button>'+(im.showImg?'<img class="imp-img" src="'+im.img+'" alt="올린 캡처 원본">':''):'')+
+    (rows?'<span class="label">매주 반복되는 일정 '+im.items.length+'개</span>'+rows:'')+(evs?'<span class="label">날짜가 정해진 약속 '+im.events.length+'개</span>'+evs:'')+
+    (notes.length?'<span class="xs muted">'+notes.join(', ')+'는 가져오지 않았어요.</span>':'')+
+    '<div class="grid2"><button type="button" class="btn" data-act="imp-cancel">취소</button><button type="button" class="btn primary" data-act="imp-apply"'+(on?'':' disabled')+'>'+on+'개 반영하기</button></div></div>';
+}
+function impApply(){
+  const im=ui.imp;if(!im)return;
+  const snapFx=clone(S.setup.fixed),touched={};const lines=[];
+  for(const it of im.items){
+    if(!it.on||!it.days.length||it.end<=it.start)continue;
+    const gid='g'+uid();let n=0;
+    for(const d of it.days){
+      if(it.mode==='replace')S.setup.fixed=S.setup.fixed.filter(f=>!(f.dow===d&&f.start<it.end&&f.end>it.start));
+      if(S.setup.fixed.some(f=>f.dow===d&&f.label===it.label&&f.start===it.start&&f.end===it.end))continue;
+      const f={id:uid(),gid,dow:d,start:it.start,end:it.end,label:it.label,clearAfter:false};if(it.until)f.until=it.until;
+      S.setup.fixed.push(f);n++;
+    }
+    if(n)lines.push({t:it.label+' · '+it.days.map(d=>DAYS[d]).join('')+' '+hm(it.start)+'–'+hm(it.end)+(it.mode==='replace'?' (기존 것 바꿈)':'')});
+  }
+  for(const e of im.events){
+    if(!e.on)continue;const wk=getWeek(e.key);
+    if(!touched[e.key])touched[e.key]=clone(wk.blocks);
+    putBlock(wk,e.day,e.start,e.dur,{title:e.title,kind:'event',src:'event',lock:true},'캘린더 파일에서 가져온 약속이에요.');
+    lines.push({t:e.title+' · '+md(fromIso(e.date))+' '+hm(e.start)});
+  }
+  if(im.img)try{URL.revokeObjectURL(im.img);}catch(e){}
+  ui.imp=null;ui.sheet=null;
+  ui.change={title:lines.length+'개를 가져왔어요',lines,undo:{fixed:snapFx,weeks:touched}};
+  ui.fxUndo=null;
+  if(S.setup.fixed.length)award('setup',10,'고정 일정을 넣었어요',false);
+  toast(lines.length+'개를 반영했어요');commit();
+}
+async function guideImport(files){
+  const g=guideState();files=Array.from(files||[]);if(!files.length||ui.busy.guide)return;
+  g.msgs.push({id:uid(),role:'me',text:files.length>1?'캡처 '+files.length+'장을 올렸어요':'캡처를 올렸어요'});
+  ui.busy.guide=true;ui.gScroll=true;render();
+  const r=await importFiles(files);ui.busy.guide=false;
+  if(r&&r.pending)g.msgs.push({id:uid(),role:'guide',text:r.n+'개를 읽었어요. 확인 화면에서 시간이 맞는지 보고 반영해 주세요. 반영하기 전에는 일정이 바뀌지 않아요.',chips:[]});
+  else g.msgs.push({id:uid(),role:'guide',text:ui.err.fxai||'캡처를 읽지 못했어요. 다시 올려 주세요.',chips:['고정 일정 직접 넣을래']});
+  ui.gScroll=true;commit();
+}
+function importCard(){
+  const busy=ui.busy.fxai;
+  return '<div class="imp"><label class="imp-btn'+(busy?' is-busy':'')+'"><input type="file" accept="image/*" multiple data-field="fx-import" aria-label="시간표·근무표 캡처 고르기"'+(busy?' disabled':'')+'>'+
+    '<span class="imp-ic" aria-hidden="true">'+CAM_SVG+'</span><span class="grow"><b>'+(busy?'읽는 중이에요…':'캡처로 가져오기')+'</b><span class="xs muted">시간표·근무표 캡처를 읽고, 반영 전에 확인해요</span></span></label>'+
+    (busy?'<span class="small muted">'+esc(ui.fxStage||'읽는 중이에요. 길게는 30초쯤 걸려요.')+'</span>':'')+(ui.err.fxai?'<p class="small" style="color:var(--warn-text)">'+esc(ui.err.fxai)+'</p>':'')+
+    '<details class="imp-more"><summary>가져오기가 안 되나요?</summary><div class="stack"><span class="small muted">사진 선택이 안 열리면 캡처를 복사한 뒤 아래 칸을 길게 눌러 붙여넣어 보세요.</span>'+
+    '<div class="paste-zone" contenteditable="true" data-paste="fixed" role="textbox" aria-label="캡처 붙여넣기">여기를 길게 눌러 붙여넣기</div>'+
+    '<label class="btn sm imp-ics">캘린더 파일(.ics)로 가져오기<input type="file" data-field="fx-import"></label>'+
+    '<span class="xs muted">캘린더 파일은 매주 반복 일정(종료일 포함)과 앞으로 8주 안의 약속을 가져와요.</span></div></details></div>';
+}
+
+/* ---------- 3. 추가하기: 알아서 / 날짜·시간 직접 / 할 일로만, 약속은 날짜·시각 직접 ---------- */
+function dateOf(ds){const d=fromIso(ds);return {key:iso(mondayOf(d)),day:dow(d)};}
+function dayName(ds){const t=dkey(),d=fromIso(ds),diff=Math.round((d-fromIso(t))/864e5);return diff===0?'오늘':diff===1?'내일':diff===2?'모레':md(d)+'('+DAYS[dow(d)]+')';}
+function addDefaults(tab){
+  const n=nowMin(),late=n>=22*60+30;
+  const t=late?'10:00':hmIn(Math.min(23*60,Math.ceil((n+20)/60)*60));
+  return {tab:tab||'todo',mode:'auto',date:late?iso(addDays(today(),1)):dkey(),time:t,dur:60,durSet:false,move:true,title:'',err:''};
+}
+function addState(){return ui.add||(ui.add=addDefaults());}
+function addKeep(){const a=addState(),g=id=>{const el=document.getElementById(id);return el?el.value:null;};
+  const t=g('addTitle'),d=g('addDate'),h=g('addTime');if(t!=null)a.title=t;if(d)a.date=d;if(h)a.time=h;return a;}
+function addPastErr(a){const m=parseHm(a.time);if(m==null)return '시각을 골라 주세요.';if(a.date<dkey())return '이미 지난 날짜예요.';if(a.date===dkey()&&m<=nowMin())return '이미 지난 시각이에요. 시각을 다시 골라 주세요.';return '';}
+function addSheet(){
+  const a=addState(),ev=a.tab==='ev';
+  const dates=[0,1,2].map(i=>iso(addDays(today(),i)));
+  const dateRow='<div class="add-dates">'+dates.map(ds=>'<button type="button" class="chip'+(a.date===ds?' on':'')+'" data-act="add-date" data-v="'+ds+'">'+dayName(ds)+'</button>').join('')+
+    '<label class="chip add-pick'+(dates.includes(a.date)?'':' on')+'">'+(dates.includes(a.date)?'다른 날':dayName(a.date))+'<input type="date" id="addDate" value="'+a.date+'" min="'+dkey()+'" data-field="add-date"></label></div>';
+  const durRow=(list)=>'<div class="row-wrap">'+list.map(m=>'<button type="button" class="chip'+(a.dur===m?' on':'')+'" data-act="add-dur" data-v="'+m+'">'+durLabel(m)+'</button>').join('')+'</div>';
+  const timeRow='<div class="add-time"><label class="label" for="addTime">몇 시에</label><input type="time" id="addTime" class="field" value="'+a.time+'" data-field="add-time" step="300"></div>';
+  const past=(ev||a.mode==='at')?addPastErr(a):'';
+  let body='';
+  if(ev){
+    body='<div class="stack"><label class="label" for="addTitle">약속 이름</label><input id="addTitle" class="field" placeholder="예: 친구 만나기" value="'+esc(a.title)+'" maxlength="24" enterkeyhint="done"></div>'+
+      '<div class="stack"><span class="label">언제</span>'+dateRow+timeRow+'</div><div class="stack"><span class="label">얼마나</span>'+durRow([30,60,90,120,180])+'</div>'+
+      '<label class="row small add-move"><input type="checkbox" data-field="add-move"'+(a.move?' checked':'')+'>겹치는 할 일은 가까운 빈 시간으로 옮기기</label>'+
+      '<span class="xs muted">옮긴 내용은 바로 보여 드리고, 한 번에 되돌릴 수 있어요. 시간이 고정된 일정은 옮기지 않아요.</span>';
+  }else{
+    const M=[['auto','알아서 빈 시간에'],['at','날짜·시간 정하기'],['keep','할 일로만 두기']];
+    body='<div class="stack"><label class="label" for="addTitle">할 일</label><input id="addTitle" class="field" placeholder="예: 은행 가기, 보고서 쓰기 1시간" value="'+esc(a.title)+'" maxlength="30" enterkeyhint="done"></div>'+
+      '<div class="add-modes" role="radiogroup" aria-label="언제 할지">'+M.map(m=>'<button type="button" role="radio" aria-checked="'+(a.mode===m[0])+'" class="'+(a.mode===m[0]?'on':'')+'" data-act="add-mode" data-v="'+m[0]+'">'+m[1]+'</button>').join('')+'</div>'+
+      (a.mode==='auto'?'<p class="small muted">이번 주 안에서 가장 가까운 빈 시간을 찾아 넣어요. "금요일까지"처럼 쓰면 그 전에 넣어요.</p><div class="stack"><span class="label">얼마나</span>'+durRow([30,60,90,120])+'</div>':
+       a.mode==='at'?'<div class="stack"><span class="label">언제</span>'+dateRow+timeRow+'</div><div class="stack"><span class="label">얼마나</span>'+durRow([30,60,90,120])+'</div>':
+       '<p class="small muted">시간표에는 넣지 않고 보관함에 둬요. 이번 주 화면의 보관함에서 언제든 시간을 찾을 수 있어요.</p>');
+  }
+  const label=ev?'약속 넣기':a.mode==='keep'?'보관함에 두기':a.mode==='at'?'이 시간에 넣기':'빈 시간에 넣기';
+  return '<div class="grab"></div><div class="seg2" role="tablist"><button type="button" role="tab" aria-selected="'+!ev+'" class="'+(ev?'':'on')+'" data-act="add-tab" data-v="todo">할 일</button><button type="button" role="tab" aria-selected="'+ev+'" class="'+(ev?'on':'')+'" data-act="add-tab" data-v="ev">약속</button></div>'+
+    body+((past||a.err)?'<p class="add-err">'+esc(past||a.err)+'</p>':'')+
+    '<button type="button" class="btn primary block" data-act="add-save"'+(past?' disabled':'')+'>'+label+'</button>'+
+    '<button type="button" class="btn ghost block" data-act="quick-ask">길잡이에게 말로 부탁하기</button>';
+}
+function guessKind(t){return /운동|헬스|러닝|산책|요가|수영/.test(t)?'out':/공부|과제|보고서|코딩|작성|시험|독서|읽기/.test(t)?'deep':'light';}
+function snapWeeks(keys){const o={};for(const k of keys){const w=S.weeks[k];if(w)o[k]=clone(w.blocks);}return o;}
+function addSave(){
+  const a=addKeep();a.err='';
+  const title=(a.title||'').trim();
+  if(!title){a.err=a.tab==='ev'?'약속 이름을 적어 주세요.':'할 일을 적어 주세요.';renderOverlay();const el=document.getElementById('addTitle');if(el)el.focus();return;}
+  if(a.tab==='ev'||a.mode==='at'){
+    const pe=addPastErr(a);if(pe){a.err=pe;renderOverlay();return;}
+    const {key,day}=dateOf(a.date),wk=getWeek(key),start=parseHm(a.time),dur=a.dur;
+    if(start+dur>1440){a.err='자정을 넘어요. 시간을 줄이거나 시각을 당겨 주세요.';renderOverlay();return;}
+    const snap=snapWeeks([key]);
+    if(a.tab==='ev'){
+      const r=placeEvent(wk,{day,start,dur,title:title.slice(0,24)});
+      if(r.err){a.err=r.err;renderOverlay();return;}
+      const lines=[],stuck=[];
+      for(const c of conflicts(wk)){if(c.with!==r.b.title)continue;
+        if(!a.move){stuck.push(c.b.title);continue;}
+        const fx=conflictFix(wk,c.b);
+        if(fx){lines.push({t:c.b.title,from:DAYS[c.b.day]+' '+hm(c.b.start),to:DAYS[fx.day]+' '+hm(fx.start)});c.b.day=fx.day;c.b.start=fx.start;}else stuck.push(c.b.title);}
+      wk.blocks.sort((x,y)=>x.day-y.day||x.start-y.start);
+      ui.change={title:dayName(a.date)+' '+hm(start)+'에 \''+r.b.title+'\' 약속을 넣었어요',lines,stuck,undo:{weeks:snap}};
+    }else{
+      const hit=S.setup.fixed.find(f=>f.dow===day&&start<f.end&&start+dur>f.start)||wk.blocks.find(x=>x.day===day&&x.dur>0&&start<x.start+x.dur&&start+dur>x.start);
+      if(hit&&!a.force){a.err='그 시간엔 "'+(hit.label||hit.title)+'"이(가) 있어요. 그래도 넣으려면 한 번 더 눌러 주세요.';a.force=true;renderOverlay();return;}
+      const b=putBlock(wk,day,start,dur,{title,kind:guessKind(title)},'직접 정한 시간에 넣었어요');
+      ui.change={title:dayName(a.date)+' '+hm(start)+'에 \''+b.title+'\'을(를) 넣었어요',lines:[],undo:{weeks:snap}};
+    }
+    if(ui.tab==='week'){ui.wk=key;ui.dayView=day;}
+    ui.add=null;ui.sheet=null;commit();return;
+  }
+  if(a.mode==='keep'){inboxAdd(title,null,a.durSet?a.dur:null);ui.add=null;ui.sheet=null;toast('보관함에 뒀어요. 이번 주 화면에서 볼 수 있어요');commit();return;}
+  const wk=getWeek(curKey()),snap=snapWeeks([wk.key]);
+  const card=parseLine(title,wk.key);if(a.durSet)card.minutes=a.dur;wk.cards.push(card);
+  const b=quickPlace(wk,card);
+  if(b){ui.change={title:dayName(iso(addDays(fromIso(wk.key),b.day)))+' '+hm(b.start)+'에 '+b.title+'을(를) 넣었어요',lines:[],undo:{weeks:snap}};}
+  else{inboxAdd(card.title,null,card.minutes);toast('이번 주엔 맞는 빈 시간이 없어서 보관함에 뒀어요');}
+  ui.add=null;ui.sheet=null;commit();
+}
+
+/* ---------- 4. 보관함: 시간을 정하지 않은 할 일 / 다음 주로 넘긴 일 ---------- */
+function inbox(){if(!Array.isArray(S.inbox))S.inbox=[];return S.inbox;}
+function inboxAdd(title,key,dur,extra){inbox().push(Object.assign({id:uid(),title:String(title).slice(0,40),key:key||null,dur:dur||null,at:dkey()},extra||{}));}
+function inboxFor(key){return inbox().filter(x=>!x.key||x.key<=key);}
+function inboxCard(wk){
+  const list=inboxFor(wk.key),later=inbox().filter(x=>x.key&&x.key>wk.key);
+  if(!list.length&&!later.length)return '';
+  return '<section class="card ibx"><div class="between"><h2>보관함</h2><span class="xs muted">시간을 아직 정하지 않은 일</span></div>'+
+    list.map(x=>'<div class="ibx-row"><div class="grow"><b>'+esc(x.title)+'</b><span class="xs muted">'+(x.key?'다음 주로 넘긴 일':'보관한 할 일')+(x.dur?' · '+durLabel(x.dur):'')+'</span></div>'+
+      '<button type="button" class="btn sm primary" data-act="ibx-place" data-id="'+x.id+'" data-k="'+wk.key+'">빈 시간 찾기</button><button type="button" class="icon-btn plain" data-act="ibx-del" data-id="'+x.id+'" aria-label="'+esc(x.title)+' 지우기">×</button></div>').join('')+
+    (later.length?'<span class="xs muted">다음 주로 넘긴 일 '+later.length+'개는 다음 주 화면에 있어요.</span>':'')+'</section>';
+}
+
+/* ---------- 5. 바뀐 내용 보여 주고 한 번에 되돌리기 ---------- */
+function changeCard(){
+  const c=ui.change;if(!c)return '';
+  const ln=(c.lines||[]).map(l=>'<li>'+esc(l.t)+(l.from?': '+esc(l.from)+' → <b>'+esc(l.to)+'</b>':'')+'</li>').join('');
+  const st=(c.stuck||[]).length?'<li class="warn">옮길 곳을 찾지 못한 일: '+esc(c.stuck.join(', '))+' (겹친 채로 두었어요)</li>':'';
+  return '<section class="chg" role="status"><b>'+esc(c.title)+'</b>'+((ln||st)?'<ul>'+ln+st+'</ul>':'')+
+    '<div class="row">'+(c.undo?'<button type="button" class="btn sm" data-act="ch-undo">전체 되돌리기</button>':'')+'<button type="button" class="btn sm ghost" data-act="ch-ok">확인</button></div></section>';
+}
+function changeUndo(){
+  const u=ui.change&&ui.change.undo;if(!u)return;
+  if(u.fixed)S.setup.fixed=u.fixed;
+  for(const k in (u.weeks||{}))if(S.weeks[k])S.weeks[k].blocks=u.weeks[k];
+  if(u.inbox)S.inbox=u.inbox;
+  ui.change=null;toast('되돌렸어요');commit();
+}
+
+/* ---------- 6. 주 이동: 지난주 · 이번 주 · 다음 주 ---------- */
+function wkKey(){return ui.wk||curKey();}
+function wkLabel(k){const c=curKey();if(k===c)return '이번 주';if(k===iso(addDays(fromIso(c),7)))return '다음 주';if(k===iso(addDays(fromIso(c),-7)))return '지난주';
+  const diff=Math.round((fromIso(k)-fromIso(c))/(7*864e5));return diff>0?diff+'주 뒤':(-diff)+'주 전';}
+function wkNav(k){
+  const s=fromIso(k);
+  return '<div class="wk-nav"><button type="button" class="icon-btn" data-act="wk-go" data-v="-1" aria-label="지난주 보기">‹</button>'+
+    '<div class="wk-t"><h1>'+wkLabel(k)+'</h1><span class="small muted">'+md(s)+' – '+md(addDays(s,6))+'</span></div>'+
+    '<button type="button" class="icon-btn" data-act="wk-go" data-v="1" aria-label="다음 주 보기">›</button></div>'+
+    (k!==curKey()?'<button type="button" class="btn sm wk-back" data-act="wk-go" data-v="0">이번 주로 돌아가기</button>':'');
+}
+function viewWeek(){
+  const k=wkKey(),cur=k===curKey(),wk=S.weeks[k]||(k>curKey()?getWeek(k):Object.assign(newWeek(k,null),{_tmp:1})),p=openProp();
+  if(ui.dayView==null)ui.dayView=cur?dow(today()):0;
+  const dv=ui.dayView,out=[wkNav(k)];
+  out.push(saveFailCard());out.push(changeCard());
+  if(p&&p.key===wk.key)out.push('<div class="pp-bar"><div class="stack" style="gap:2px"><b>'+esc(p.name)+' · 제안 확인 중</b><span class="small muted">점선 블록을 눌러 근거와 다른 시간을 볼 수 있어요.</span></div><div class="grid2"><button type="button" class="btn primary" data-act="pp-start">제안 확정</button><button type="button" class="btn" data-act="pp-view">제안 전체 보기</button></div></div>');
+  if(wk._tmp&&!cur)out.push('<div class="card dashed"><span class="small muted">이 주에는 남은 기록이 없어요.</span></div>');
+  for(const c of conflicts(wk).slice(0,2))out.push('<div class="card warn"><b>시간이 겹쳐요</b><span class="small">'+DAYS[c.b.day]+'요일 '+esc(c.b.title)+' · '+esc(c.with)+'. 블록을 눌러 옮길 수 있어요.</span></div>');
+  out.push(weekGrid(wk,dv,'day'));
+  out.push('<div class="stack"><div class="section-title"><h2>'+DAYS[dv]+'요일 '+md(addDays(fromIso(k),dv))+(cur&&dv===dow(today())?' · 오늘':'')+'</h2>'+tlToggle()+'</div>'+dayView(wk,dv)+assumeLine()+'</div>');
+  if(!wk._tmp)out.push(inboxCard(wk));
+  const left=(wk.overflow||[]).concat(wk.deferred||[]).filter(o=>o.src!=='guide');
+  if(left.length)out.push('<div class="card dashed"><b class="small">이번 주에 자리를 못 찾은 것</b><span class="small muted">'+left.map(o=>esc(o.title)).join(', ')+' · 빈 칸을 누르면 바로 넣을 수 있어요.</span></div>');
+  if(growthMode()!=='hide'&&!wk._tmp)out.push(trkCard(wk));
+  return out.join('');
+}
+
+/* ---------- 7. 길잡이: 기다림·멈추기·다시 보내기·입력 보존·개인정보 안내 ---------- */
+function guideSend(text){
+  text=String(text||'').trim();if(!text||ui.busy.guide)return;
+  if(!S.aiNoticeOk){S.aiNoticeOk=dkey();}
+  guideState().msgs.push({id:uid(),role:'me',text:text.slice(0,300)});
+  ui.gDraft='';ui.busy.guide=true;ui.gSlow=false;ui.gCancel=false;ui.gScroll=true;render();
+  clearTimeout(guideSend.tm);guideSend.tm=setTimeout(()=>{if(ui.busy.guide){ui.gSlow=true;render();}},8000);
+  guideReply(text).finally(()=>{clearTimeout(guideSend.tm);ui.busy.guide=false;ui.gSlow=false;ui.gScroll=true;render();});
+}
+async function guideReply(text){
+  aiErr=null;ui.gCancel=false;
+  if(/알아서\s*(좀\s*)?(짜|계획|정해|해)|이번\s*주\s*(전체\s*)?(계획|일정)?\s*(짜|만들)/.test(text)){
+    const okW=await aiWeekTurn().catch(()=>false);if(ui.gCancel){guideCancelled(text);return;}
+    if(!okW){localWeekTurn();guideMarkFail(text);}ui.gScroll=true;commit();return;}
+  const ok=await aiTurn(text).catch(()=>false);
+  if(ui.gCancel){guideCancelled(text);return;}
+  if(!ok){localTurn(text);guideMarkFail(text);}
+  ui.gScroll=true;commit();
+}
+function guideMarkFail(text){
+  const gm=guideState().msgs,lm=gm[gm.length-1];
+  if(lm&&lm.role==='guide'&&!(window.claude&&window.claude.use)&&(aiErr||aiOff)){lm.fail=aiErr?aiErrText(aiErr):'AI를 쓸 수 없는 상태';lm.retry=text;}
+}
+function guideCancelled(text){pushGuide({text:'멈췄어요. 보내려던 말은 입력창에 다시 넣어 뒀어요.'});ui.gDraft=text;ui.gScroll=true;commit();}
+function guideFailLine(m){
+  return '<div class="g-fail"><span class="small">AI 연결이 잠깐 안 돼서 기본 규칙으로 답했어요. "토요일 2시 친구 약속"처럼 말하면 AI 없이도 바로 넣을 수 있어요.</span>'+
+    (m.retry?'<button type="button" class="btn sm" data-act="g-retry" data-t="'+esc(m.retry)+'">다시 보내기</button>':'')+(devMode()?'<span class="xs muted">'+esc(m.fail)+'</span>':'')+'</div>';
+}
+function guideBusyHtml(){
+  return '<div class="msg guide">'+guideAva('think')+'<div class="g-body"><p class="typing"><i></i><i></i><i></i><span class="sr">생각하는 중</span></p>'+
+    (ui.gSlow?'<div class="g-slow"><span class="small muted">조금 오래 걸리고 있어요. 기다리거나 멈출 수 있어요.</span><button type="button" class="btn sm" data-act="g-cancel">멈추기</button></div>':'')+'</div></div>';
+}
+function aiNoticeCard(){
+  if(S.aiNoticeOk)return '';
+  return '<section class="ai-note"><b>길잡이 답은 AI가 만들어요</b><span class="small">답을 만들 때 대화 내용과 함께 내 일정·목표·루틴 이름이 AI 서버로 보내져요. 기록 자체는 이 기기에만 저장되고, 설정에서 언제든 지울 수 있어요. 민감한 개인정보는 적지 않는 걸 권해요.</span>'+
+    '<button type="button" class="btn sm" data-act="ai-note-ok">알겠어요</button></section>';
+}
+function viewGuide(){
+  const g=guideState();
+  if(!g.msgs.length){const it=introMsg();g.msgs.push({id:uid(),role:'guide',text:it.text,chips:it.chips});}
+  const out=['<div class="g-top"><div class="row g-hd" style="gap:10px;align-items:flex-end">'+guideImg(ui.busy.guide?'think':'idle',52,'bob')+'<div class="stack" style="gap:2px"><h1>길잡이</h1><span class="small muted">해보고 싶은 걸 말하면 방법과 시간까지 같이 정해요</span></div></div>'+
+    '<div class="row g-links"><button type="button" class="link" data-act="tab" data-tab="memory">기억하는 것</button><button type="button" class="link" data-act="g-reset">새 대화</button></div></div>'];
+  if(ui.gResetAsk)out.push('<div class="card soft"><b>대화만 지울까요?</b><span class="small">지금까지의 대화만 지워요. 길잡이가 기억하는 목표와 내가 말한 선호는 그대로 남아요. 그건 \'기억하는 것\'에서 따로 지울 수 있어요.</span><div class="grid2"><button type="button" class="btn" data-act="g-reset-no">취소</button><button type="button" class="btn primary" data-act="g-reset-yes">대화 지우기</button></div></div>');
+  out.push(leadSwitch());
+  out.push('<div class="thread">'+g.msgs.map(msgHtml).join('')+(ui.busy.guide?guideBusyHtml():'')+'</div>');
+  out.push(leadBtn());out.push(aiNoticeCard());
+  out.push('<div class="g-compose"><div class="inner"><label class="btn g-att"><input type="file" accept="image/*" multiple data-field="g-import" aria-label="시간표나 일정 캡처 올리기">'+CAM_SVG+'</label>'+
+    '<input id="gText" class="field" data-field="g-text" placeholder="해보고 싶은 걸 말해 보세요" enterkeyhint="send" autocomplete="off" value="'+esc(ui.gDraft||'')+'">'+
+    '<button type="button" class="btn primary" data-act="g-send"'+(ui.busy.guide?' disabled':'')+' aria-label="보내기">'+SEND_SVG+'</button></div></div>');
+  return out.join('');
+}
+const SEND_SVG='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+function introMsg(){
+  const wk=gWeek(),h=freeHours(wk),when=wk.key===curKey()?'이번 주 남은 날':'다음 주',noFx=!S.setup.fixed.length;
+  const text=noFx?'해보고 싶은 일을 말해 주세요. 방법을 같이 정하고, 이번 주에 넣을 시간까지 제안할게요. 아직 시간표가 없어서, 시간을 고를 땐 그 시간이 정말 괜찮은지 꼭 물어볼게요. 수업·근무 캡처를 카메라 버튼으로 올리면 더 정확해져요.':
+    '해보고 싶은 일을 말해 주세요. 등록된 일정 기준으로 '+when+'에 '+h+'시간쯤 비어 보여요. 방법을 같이 정하고, 그 안에서 시간을 제안할게요.';
+  return {text,chips:S.setup.lead?['이번 주 알아서 짜줘','운동을 다시 시작하고 싶어','책을 20분씩 세 번 읽고 싶어']:['운동을 다시 시작하고 싶어','두 달 뒤 여행에서 영어로 대화하고 싶어','책을 20분씩 세 번 읽고 싶어']};
+}
+
+/* ---------- 8. 성장 기록 보기 방식: 기본(사실만) / 자세히 / 숨기기 ---------- */
+function growthMode(){return (S.setup&&S.setup.growth)||'basic';}
+function weekStats(wk){
+  const nm=nowMin();
+  const own=wk.blocks.filter(b=>b.dur>0&&b.kind!=='event'&&b.src!=='rest'&&!b.lock);
+  const ended=b=>{const m=modeFor(wk,b.day);return m==='past'||(m==='today'&&b.start+b.dur<=nm);};
+  const past=own.filter(b=>b.done||ended(b));
+  const done=past.filter(b=>b.done),skip=past.filter(b=>!b.done&&b.skip),unrec=past.filter(b=>!b.done&&!b.skip);
+  const recorded=done.length+skip.length,pct=recorded?Math.round(done.length/recorded*100):0;
+  const lv=!recorded?'':pct>=80?'hi':pct>=50?'mid':'lo';
+  const goals=[];const ids=Array.from(new Set(past.map(b=>b.goalId||'')));
+  for(const id of ids){const g=id?goalById(id):null,ps=past.filter(b=>(b.goalId||'')===id);goals.push({name:g?g.name:'기타 할 일',n:ps.length,done:ps.filter(b=>b.done).length});}
+  goals.sort((a,b)=>b.n-a.n);
+  return {all:{n:recorded,done:done.length,pct,lv},done:done.length,skip:skip.length,unrec:unrec.length,left:own.length-past.length,total:own.length,goals};
+}
+function trkCard(wk,small){
+  const mode=growthMode();if(mode==='hide')return '';
+  const s=weekStats(wk);
+  if(small)return '';
+  const seg=(n,c)=>n?'<i class="'+c+'" style="flex:'+n+'"></i>':'';
+  const bar=s.total?'<div class="trk-seg" role="img" aria-label="끝냄 '+s.done+'개, 못 함 '+s.skip+'개, 기록 안 함 '+s.unrec+'개, 남은 블록 '+s.left+'개">'+seg(s.done,'d')+seg(s.skip,'s')+seg(s.unrec,'u')+seg(s.left,'l')+'</div>':'';
+  const lvTag=mode==='full'&&s.all.lv?'<span class="trk-lv lv-'+s.all.lv+'">'+TRK_LV[s.all.lv]+' · '+s.all.pct+'%</span>':'';
+  const facts='<div class="trk-facts"><span><b>'+s.done+'</b>끝냄</span><span><b>'+s.skip+'</b>못 함</span><span><b>'+s.unrec+'</b>기록 안 함</span><span><b>'+s.left+'</b>남음</span></div>';
+  const msg=!s.total?'아직 이번 주 블록이 없어요.':s.done?'이번 주에 '+s.done+'개를 끝냈어요.'+(s.unrec?' 기록 안 한 블록은 \'못 함\'으로 세지 않아요.':''):s.unrec?'지난 블록에 기록이 아직 없어요. 했는지 눌러서 남겨 두면 다음 계획이 쉬워져요.':'첫 블록을 끝내면 여기에 쌓여요.';
+  const rows=mode==='full'&&s.goals.length?'<div class="trk-rows">'+s.goals.map(g=>'<div class="trk-row"><span class="trk-nm">'+esc(emo(g.name))+'</span><span class="trk-b"><i style="width:'+(g.n?Math.round(g.done/g.n*100):0)+'%"></i></span><b class="xs">'+g.done+'/'+g.n+'</b></div>').join('')+'</div>':'';
+  return '<section class="card trk"><div class="between"><h2>이번 주 블록 기록</h2>'+lvTag+'</div>'+bar+facts+'<span class="small muted">'+msg+'</span>'+
+    (s.unrec&&wk.key===curKey()?'<button type="button" class="btn sm" data-act="close-day">지난 블록 기록하기</button>':'')+rows+
+    (mode==='full'?'<span class="xs muted">상·중·하는 기록한 블록(끝냄+못 함) 중 끝낸 비율이에요. 상 80% 이상 · 중 50~79% · 하 50% 미만</span>':'')+'</section>';
+}
+function trkStrip(){return '';}
+function streakLine(){
+  if(growthMode()!=='full')return '';
+  const si=dayStreak();
+  if(si.todayOn)return '<button type="button" class="streak-line on" data-act="tab" data-tab="profile">'+pxImg(SPR.i_flame,16)+'<span>연속 <b>'+si.n+'일</b> · 오늘 몫 완료</span></button>';
+  return si.n?'<button type="button" class="streak-line" data-act="tab" data-tab="profile">'+pxImg(SPR.i_flame_off,16)+'<span>연속 '+si.n+'일 · 쉬었다 다시 해도 기록은 남아요</span></button>':'';
+}
+function headerGame(){
+  if(growthMode()==='hide'||!gameS().log.length)return '';
+  const si=dayStreak(),li=lvlInfo(xpTotal());
+  return '<button type="button" class="hd-chip" data-act="tab" data-tab="profile" aria-label="연속 '+si.n+'일, 레벨 '+li.l+', 프로필 보기">'+pxImg(SPR[si.todayOn?'i_flame':'i_flame_off'],16)+'<b class="mono">'+si.n+'</b><span class="hd-sep"></span>'+pxImg(SPR.i_star,16)+'<b class="mono">'+li.l+'</b></button>';
+}
+function growthCard(){
+  const m=growthMode(),O=[['basic','기본','끝낸 개수 같은 사실만'],['full','자세히','상·중·하, 연속 기록까지'],['hide','숨기기','기록 카드와 배지를 감춰요']];
+  return '<div class="card"><h2>성장 기록 보기</h2><p class="small muted">기록은 평가가 아니라 다음 계획을 위한 참고예요. 부담되면 숨겨도 돼요.</p><div class="opt-list">'+
+    O.map(o=>'<button type="button" class="opt'+(m===o[0]?' on':'')+'" data-act="growth-set" data-v="'+o[0]+'" aria-pressed="'+(m===o[0])+'"><b>'+o[1]+'</b><span>'+o[2]+'</span></button>').join('')+'</div></div>';
+}
+
+/* ---------- 9. 오늘 화면: 지금 할 일 → 다음 → 남은 일정 → 루틴 → 기록 ---------- */
+function isFirstUse(wk){return !goalsArr().length&&!wk.blocks.some(b=>b.dur>0&&b.src!=='rest')&&!rtList().length&&!inbox().length;}
+function firstCard(){
+  return '<section class="first-card">'+guideImg('happy',72,'bob')+'<div class="stack"><h2>하고 싶은 일 하나만 말해 주세요</h2><p class="small">내 일정에 맞는 첫 실행 계획을 만들어 드려요. 시간표가 없어도 괜찮아요.</p>'+
+    '<button type="button" class="btn primary block" data-act="tab" data-tab="guide">첫 계획 만들기</button>'+
+    '<div class="row-wrap"><button type="button" class="link" data-act="add-open" data-v="todo">할 일 바로 넣기</button><button type="button" class="link" data-act="add-open" data-v="ev">약속 넣기</button><button type="button" class="link" data-act="me">시간표 넣기</button></div></div></section>';
+}
+function lateCard(wk){
+  const tm=addDays(today(),1),tk=iso(mondayOf(tm)),tw=S.weeks[tk],td=dow(tm);
+  const first=tw?dayItems(tw,td,'future'):dayItems(wk,td,'future');
+  const items=first.fx.filter(f=>f.t==='fixed').map(f=>({s:f.start,l:f.label})).concat(first.bl.map(b=>({s:b.start,l:b.title}))).sort((a,b)=>a.s-b.s).slice(0,3);
+  return '<section class="now-card has-guide">'+guideImg('sleep',64,'now-guide')+'<span class="now-tag"><i class="calm"></i>오늘은 여기까지</span><h2 class="now-title">내일 할 일 하나 정해 볼까요?</h2>'+
+    (items.length?'<div class="now-next"><span class="xs">내일</span><span>'+items.map(x=>'<b class="mono">'+hm(x.s)+'</b> '+esc(x.l)).join(' · ')+'</span></div>':'<p class="now-if">내일은 아직 비어 있어요.</p>')+
+    '<div class="now-act two"><button type="button" class="btn primary" data-act="add-open" data-v="todo" data-when="tomorrow">내일 할 일 넣기</button><button type="button" class="btn" data-act="tab" data-tab="guide">길잡이와 정하기</button></div></section>';
+}
+function viewToday(){
+  const t=today(),td=dow(t),wk=getWeek(curKey()),n=nowMin(),noFx=!S.setup.fixed.length;
+  const free=dayItems(wk,td,'today').gaps.reduce((a,g)=>a+g.end-g.start,0);
+  const first=isFirstUse(wk),late=n>=S.setup.dayEnd-30||n<4*60;
+  const h1=late?'오늘은 여기까지예요':first?'무엇부터 해 볼까요?':free>=30?(noFx?'등록된 일정 기준으로 '+durLabel(free)+' 비어 보여요':'오늘 '+durLabel(free)+' 비어 있어요'):'오늘은 여유가 거의 없어요';
+  const out=['<div class="today-hd"><span class="small muted">'+md(t)+' '+DAYS[td]+'요일</span><h1>'+h1+'</h1>'+streakLine()+'</div>'];
+  out.push(saveFailCard());out.push(changeCard());
+  if(first&&!late)out.push(firstCard());else if(late)out.push(lateCard(wk));else out.push(nowCard(wk));
+  if(ui.proposals){
+    if(!ui.proposals.length)out.push('<div class="card soft"><b>정리할 블록이 없어요.</b><button type="button" class="btn sm" data-act="close-done">닫기</button></div>');
+    for(const p of ui.proposals){const b=wk.blocks.find(x=>x.id===p.id);if(!b)continue;
+      out.push('<div class="card line"><span class="xs muted">끝낸 표시가 없는 블록</span><p>'+moveCopy(esc(b.title),p.to)+'</p><div class="row-wrap">'+
+        '<button type="button" class="btn sm primary" data-act="blk-done" data-k="'+wk.key+'" data-id="'+b.id+'">했어요</button><button type="button" class="btn sm" data-act="blk-skip" data-k="'+wk.key+'" data-id="'+b.id+'">못 했어요</button>'+
+        (p.to?'<button type="button" class="btn sm" data-act="move-accept" data-id="'+b.id+'">옮기기</button>':'')+'<button type="button" class="btn sm" data-act="move-next" data-id="'+b.id+'">다음 주로</button></div></div>');}
+  }
+  if(!first||wk.blocks.length||S.setup.fixed.some(f=>f.dow===td))
+    out.push('<div class="stack"><div class="section-title"><h2>오늘 일정</h2>'+tlToggle()+'</div>'+dayView(wk,td)+(ui.tlView==='tl'?'<div class="row-wrap xs muted" style="gap:12px">'+Object.keys(KIND).map(k=>'<span class="row" style="gap:5px"><span class="dot k-'+k+'"></span>'+KIND[k]+'</span>').join('')+'</div>':'')+assumeLine()+'</div>');
+  if(!first)out.push(rtSection());
+  if(!first)out.push(nudgeCard(wk));
+  if(!first)out.push(rtFresh());
+  if(wk.blocks.length&&!ui.proposals&&new Date().getHours()>=19&&!late)out.push('<button type="button" class="btn block" data-act="close-day">하루 정리하기</button>');
+  return out.join('');
+}
+/* 오늘 목록에서 지난 일정은 접어 두기 */
+const _dayAgendaFull=dayAgenda;
+function dayAgendaToday(wk,d){
+  const html=_dayAgendaFull(wk,d);
+  if(modeFor(wk,d)!=='today'||ui.showPast)return html;
+  const tmp=document.createElement('div');tmp.innerHTML=html;const list=tmp.querySelector('.ag-list');if(!list)return html;
+  const n=nowMin();let hid=0;
+  for(const el of Array.from(list.children)){const t=(el.querySelector('.ag-t')||{}).innerText||'';const m=/(\d\d):(\d\d)\s*$/.exec(t.replace(/\n/g,' '));
+    if(m&&(+m[1])*60+(+m[2])<=n&&!el.classList.contains('st-now')){el.remove();hid++;}}
+  return (hid?'<button type="button" class="link ag-past" data-act="show-past">지난 일정 '+hid+'개 보기</button>':'')+tmp.innerHTML;
+}
+function dayView(wk,d){return ui.tlView==='tl'?timelineHtml(wk,d):dayAgendaToday(wk,d);}
+
+/* ---------- 10. 첫 화면: 결과 먼저, 두 갈래 시작 ---------- */
+function viewOnb(){
+  const step=ONB[ui.onb];
+  if(step==='welcome'){
+    return '<div class="stack-lg onb-w">'+
+      '<div class="onb-guide">'+guideImg('happy',88,'bob')+'<div class="bubble">안녕하세요, 저는 길잡이예요!</div></div>'+
+      '<h1 class="onb-h">하고 싶은 일을 말하면, 내 일정에 맞는 첫 실행 계획을 만들어 드려요</h1>'+
+      '<div class="ex"><span class="ex-me">운동을 다시 시작하고 싶어</span><span class="ex-arrow" aria-hidden="true">↓</span>'+
+      '<div class="ex-plan"><span class="xs">이번 주 실행 계획</span><b>화·목 저녁 8시, 20분 걷기</b><span class="small">첫 행동: 운동화 신고 현관 나가기</span></div></div>'+
+      '<p class="small muted">\'다음 주\'는 다음 한 주를 미리 짜 두는 앱이에요. 오늘 할 일부터 다음 주 계획까지 한곳에서 봐요.</p>'+
+      '<div class="paths"><button type="button" class="path main" data-act="onb-goal"><b>해보고 싶은 일부터 말하기</b><span>시간표 없이 바로 시작해요</span></button>'+
+      '<button type="button" class="path" data-act="onb-fixed"><b>내 시간표부터 넣기</b><span>수업·근무를 먼저 넣으면 시간이 더 정확해요</span></button></div>'+
+      '<button type="button" class="btn ghost" data-act="demo">예시 화면부터 둘러보기</button>'+
+      '<p class="xs muted onb-store">기록은 이 기기에만 저장돼요. 설정에서 백업 파일을 받을 수 있어요.</p></div>';
+  }
+  const body='<div class="row" style="gap:10px;align-items:flex-end">'+guideImg('think',56,'bob')+'<h1>매주 반복되는 일정부터 넣어요</h1></div><div class="why-box">수업·근무·학원처럼 매주 같은 일정이에요. 몇 개만 넣어도 되고, 나머지는 쓰면서 추가해도 돼요.</div>'+fixedEditor();
+  return '<div class="stack-lg">'+changeCard()+body+'<button type="button" class="link" data-act="onb-next" style="align-self:center">나중에 넣을게요</button></div>'+
+    '<div class="onb-bar"><div class="inner"><button type="button" class="btn" data-act="onb-prev">이전</button><button type="button" class="btn primary" data-act="onb-next">오늘 화면으로</button></div></div>';
+}
+
+/* ---------- 11. 블록 시트: 끝냄 / 못 함 / 기록 안 함을 구분 ---------- */
+function blkSheet(){
+  const wk=S.weeks[ui.sd.k];const b=wk&&wk.blocks.find(x=>x.id===ui.sd.id);if(!b)return '';
+  const mode=modeFor(wk,b.day),k=wk.key,id=b.id,isToday=mode==='today',over=mode==='past'||(isToday&&b.start+b.dur<=nowMin());
+  const A=(a,label,extra,cls)=>'<button type="button" class="btn '+(cls||'')+'" data-act="'+a+'" data-k="'+k+'" data-id="'+id+'"'+(extra||'')+'>'+label+'</button>';
+  const more=[];
+  if(isToday&&!b.done&&b.start>nowMin())more.push(A('blk-start','지금 시작'));
+  if(isToday&&!b.done)more.push(A('blk-later','오늘 나중으로'));
+  if(!b.done&&mode!=='past'&&b.day<6)more.push(A('blk-otherday','다른 날로'));
+  if(!b.done)more.push(A('move-next','다음 주로'));
+  more.push(A('blk-lock',b.lock?'시간 고정 풀기':'시간 고정하기'));
+  more.push(A('blk-remove','블록 빼기','','danger'));
+  const state=b.done?'끝냈어요':b.skip?'못 했다고 기록했어요':over?'아직 기록하지 않았어요':'';
+  return '<div class="grab"></div>'+
+    '<div class="row" style="gap:8px"><span class="dot k-'+b.kind+'"></span><span class="label">'+DAYS[b.day]+'요일 · '+KIND[b.kind]+(isGuard(wk,b)?' · 지키는 선':'')+(b.lock?' · 시간 고정':'')+(goalById(b.goalId)?' · '+esc(goalById(b.goalId).name):'')+'</span></div>'+
+    '<input id="bTitle" class="field title-field" data-field="blk-title" data-k="'+k+'" data-id="'+id+'" value="'+esc(b.title)+'" aria-label="블록 이름" enterkeyhint="done">'+
+    '<div class="between"><span class="big-time">'+hm(b.start)+'–'+hm(b.start+b.dur)+'</span><span class="muted small">'+durLabel(b.dur)+'</span></div>'+
+    (state?'<span class="small muted">'+state+'</span>':'')+
+    (b.first?'<div class="first-act"><span class="label">첫 행동</span><p>'+esc(b.first)+'</p></div>':(b.ifthen&&!b.done?'<p class="ifthen">'+esc(b.ifthen)+'</p>':''))+(b.reason?'<p class="why">'+(b.goalId?'<b>제안 이유</b> · ':'')+esc(b.reason)+'</p>':'')+
+    '<div class="grid2">'+A('blk-done',b.done?'끝냄 취소':'끝냈어요','',b.done?'':'primary')+(b.done?'':A('blk-skip',b.skip?'못 함 취소':'못 했어요'))+'</div>'+
+    '<div class="nudge"><span class="xs muted">시작</span>'+[-30,-10,10,30].map(v=>A('blk-shift',(v>0?'+':'−')+Math.abs(v)+'분',' data-v="'+v+'"','sm')).join('')+'</div>'+
+    '<div class="nudge"><span class="xs muted">길이</span>'+A('blk-len','−10분',' data-v="-10"','sm')+A('blk-len','+10분',' data-v="10"','sm')+A('blk-len','−30분',' data-v="-30"','sm')+A('blk-len','+30분',' data-v="30"','sm')+'</div>'+
+    '<div class="row-wrap">'+Object.keys(KIND).map(x=>'<button type="button" class="chip'+(b.kind===x?' on':'')+'" data-act="blk-kind" data-v="'+x+'" data-k="'+k+'" data-id="'+id+'"><span class="dot k-'+x+'"></span>'+KIND[x]+'</button>').join('')+'</div>'+
+    '<div class="grid2">'+more.join('')+'</div>';
+}
+
+/* ---------- 12. 설정: 시작 알림, 도움말·문의 ---------- */
+function notifyCard(){
+  const ok='Notification' in window,perm=ok?Notification.permission:'denied',on=!!S.setup.notify&&perm==='granted';
+  return '<div class="card"><div class="between"><h2>시작 알림</h2><button type="button" class="tgl'+(on?' on':'')+'" data-act="notify-set" aria-pressed="'+on+'" aria-label="시작 알림"'+(ok?'':' disabled')+'><i></i></button></div>'+
+    '<p class="small muted">블록과 약속이 시작할 때 알려 드려요. 지금은 앱이 열려 있거나 잠깐 다른 앱으로 넘어갔을 때만 울려요. 앱을 완전히 닫으면 울리지 않아요.</p>'+
+    (!ok?'<span class="xs muted">이 브라우저는 알림을 지원하지 않아요.</span>':perm==='denied'?'<span class="xs muted">알림이 막혀 있어요. 휴대폰 설정 → 앱(또는 브라우저) → 알림에서 허용해 주세요.</span>':'')+'</div>';
+}
+function helpCard(){
+  const Q=[['기록은 어디에 저장되나요?',storeWhere()+' 설정의 "내 기록 지키기"에서 백업 파일을 받을 수 있어요.'],
+    ['길잡이가 "기본 규칙으로 답했어요"라고 해요','인터넷 연결이 잠깐 끊겼거나 AI 서버가 바쁜 경우예요. 잠시 뒤 "다시 보내기"를 눌러 주세요. AI 없이도 "토요일 2시 친구 약속", "책 20분씩 세 번 읽기" 같은 말은 바로 처리해요.'],
+    ['시간표를 잘못 읽었어요','반영하기 전 확인 화면에서 요일과 시간을 고칠 수 있어요. 반영한 뒤라면 "전체 되돌리기"를 누르거나, 설정 → 매주 반복되는 일정에서 고쳐 주세요.'],
+    ['다음 주 일정은 어떻게 넣나요?','+ 버튼 → 약속(또는 할 일 → 날짜·시간 정하기)에서 날짜를 고르면 돼요. 이번 주 화면 위의 › 버튼으로 다음 주를 미리 볼 수 있어요.'],
+    ['기록하지 않은 블록은 어떻게 되나요?','"못 했어요"로 세지 않아요. 블록을 눌러 끝냈어요 또는 못 했어요를 남겨 두면 다음 계획이 정확해져요.']];
+  return '<details class="card help"><summary><b>도움말·문의</b></summary>'+Q.map(q=>'<div class="help-q"><b>'+esc(q[0])+'</b><span class="small muted">'+esc(q[1])+'</span></div>').join('')+
+    '<a class="btn" href="https://github.com/jmingyu2006-ship-it/daeum/issues" target="_blank" rel="noopener">오류 제보·의견 남기기</a><span class="xs muted">GitHub 페이지로 이동해요. 글을 남기려면 GitHub 계정이 필요해요.</span></details>';
+}
+let careNotified={};
+setInterval(()=>{try{
+  if(!S.setup||!S.setup.notify||!('Notification' in window)||Notification.permission!=='granted')return;
+  const wk=S.weeks[curKey()];if(!wk)return;const td=dow(today()),n=nowMin(),k=dkey();
+  for(const b of wk.blocks){if(b.day!==td||b.done||b.dur<=0||b.src==='rest')continue;
+    const key=k+b.id;if(careNotified[key])continue;
+    if(b.start<=n&&n<b.start+3){careNotified[key]=1;const body=hm(b.start)+'–'+hm(b.start+b.dur)+(b.first?' · '+b.first:'');
+      const show=r=>r&&r.showNotification?r.showNotification(b.title,{body,icon:'icons/icon-192.png',badge:'icons/favicon.png',tag:key}):new Notification(b.title,{body});
+      if(navigator.serviceWorker&&navigator.serviceWorker.ready)navigator.serviceWorker.ready.then(show).catch(()=>{try{new Notification(b.title,{body});}catch(e){}});else show(null);}
+  }}catch(e){}},30000);
+
+/* ---------- 13. 뒤로 가기: 시트 닫기 → 상위 화면 → 오늘 ---------- */
+const careHist={pushed:false,ignore:false};
+function careAway(){return !!(ui.sheet||ui.cele||ui.imp||(ui.tab&&ui.tab!=='today')||(ui.onb>0&&!S.profile.done));}
+function careHistSync(){
+  try{const away=careAway();
+    if(away&&!careHist.pushed){history.pushState({daeum:1},'');careHist.pushed=true;}
+    else if(!away&&careHist.pushed){careHist.ignore=true;careHist.pushed=false;history.back();}
+  }catch(e){}
+}
+window.addEventListener('popstate',()=>{
+  if(careHist.ignore){careHist.ignore=false;return;}
+  careHist.pushed=false;
+  if(ui.cele)ui.cele=null;
+  else if(ui.sheet){ui.sheet=null;ui.add=null;if(ui.imp){ui.imp=null;}}
+  else if(!S.profile.done&&ui.onb>0)ui.onb--;
+  else if({proposal:1,memory:1,me:1,routine:1}[ui.tab])ui.tab={proposal:'week',memory:'guide',me:'profile',routine:'today'}[ui.tab];
+  else if(ui.tab!=='today'){ui.tab='today';}
+  render();
+});
+
+/* ---------- 14. 키보드가 입력창을 가리지 않게 ---------- */
+let careMaxH=0;
+function careKb(){
+  const vv=window.visualViewport,h=vv?vv.height:window.innerHeight;careMaxH=Math.max(careMaxH,h,window.innerHeight);
+  const a=document.activeElement,typing=!!a&&(a.tagName==='INPUT'&&!/checkbox|radio|file|button|range|color/.test(a.type)||a.tagName==='TEXTAREA'||a.isContentEditable);
+  const open=typing&&h<careMaxH-140;
+  document.body.classList.toggle('kb',open);
+  if(vv)document.documentElement.style.setProperty('--kb',Math.max(0,window.innerHeight-vv.height-vv.offsetTop)+'px');
+}
+document.addEventListener('focusin',()=>setTimeout(careKb,250));
+document.addEventListener('focusout',()=>setTimeout(careKb,150));
+if(window.visualViewport){window.visualViewport.addEventListener('resize',careKb);window.visualViewport.addEventListener('scroll',careKb);}
+window.addEventListener('resize',careKb);
+
+/* ---------- 15. 성향은 AI 제안에 실제로 반영 ---------- */
+function ptypeRule(){const G=gameS(),T=G&&PTYPE[G.ptype];return T?'- 사용자 계획 성향: '+T.name+'('+T.tag+'). '+T.how+' 블록 길이와 간격을 정할 때 참고한다.':'';}
+
+/* ---------- 16. 매 렌더 전 점검 ---------- */
+function careTick(){
+  inbox();
+  if(ui.fxExpDay!==dkey()){ui.fxExpDay=dkey();fxExpire();}
+  document.body.classList.toggle('gm-hide',growthMode()==='hide');
+  setTimeout(careHistSync,0);
+}
+
+/* ---------- 17. 동작 ---------- */
+function careAct(a,d){
+  switch(a){
+    case 'bk-save':doBackup();return true;
+    case 'bk-restore-yes':{const r=ui.restore;if(!r)return true;S=r.d;S.demo=false;ui.restore=null;ui.tab='today';ui.wk=null;toast('백업에서 되살렸어요');commit();return true;}
+    case 'bk-restore-no':ui.restore=null;render();return true;
+    case 'imp-day':{const it=ui.imp&&ui.imp.items[+d.i];if(!it)return true;const x=+d.d;it.days=it.days.includes(x)?it.days.filter(y=>y!==x):it.days.concat([x]).sort((p,q)=>p-q);renderOverlay();return true;}
+    case 'imp-mode':{const it=ui.imp&&ui.imp.items[+d.i];if(it){it.mode=d.v;renderOverlay();}return true;}
+    case 'imp-img':if(ui.imp){ui.imp.showImg=!ui.imp.showImg;renderOverlay();}return true;
+    case 'imp-cancel':if(ui.imp&&ui.imp.img)try{URL.revokeObjectURL(ui.imp.img);}catch(e){}ui.imp=null;ui.sheet=null;toast('가져오지 않았어요. 일정은 그대로예요');render();return true;
+    case 'imp-apply':impApply();return true;
+    case 'sheet':ui.add=addDefaults();return false;
+    case 'add-open':{ui.add=addDefaults(d.v);if(d.when==='tomorrow'){ui.add.mode='at';ui.add.date=iso(addDays(today(),1));ui.add.time='10:00';}ui.sheet='quick';ui.sheetAnim=true;renderOverlay();setTimeout(()=>{const el=document.getElementById('addTitle');if(el)el.focus();},80);return true;}
+    case 'add-tab':{const x=addKeep();x.tab=d.v;x.err='';x.force=false;renderOverlay();return true;}
+    case 'add-mode':{const x=addKeep();x.mode=d.v;x.err='';x.force=false;renderOverlay();return true;}
+    case 'add-date':{const x=addKeep();x.date=d.v;x.err='';x.force=false;renderOverlay();return true;}
+    case 'add-dur':{const x=addKeep();x.dur=+d.v;x.durSet=true;x.force=false;renderOverlay();return true;}
+    case 'add-save':addSave();return true;
+    case 'ibx-del':S.inbox=inbox().filter(x=>x.id!==d.id);commit();return true;
+    case 'ibx-place':{const x=inbox().find(y=>y.id===d.id);if(!x)return true;const wk=getWeek(d.k||curKey()),snap=snapWeeks([wk.key]),before=clone(inbox());
+      const card=parseLine(x.title,wk.key);if(x.dur)card.minutes=x.dur;wk.cards.push(card);const b=quickPlace(wk,card);
+      if(!b){toast('이 주엔 맞는 빈 시간이 없어요. 블록 사이 빈 칸을 눌러 직접 넣을 수 있어요');return true;}
+      if(x.goalId)b.goalId=x.goalId;S.inbox=inbox().filter(y=>y.id!==x.id);
+      ui.change={title:DAYS[b.day]+'요일 '+hm(b.start)+'에 '+b.title+'을(를) 넣었어요',lines:[],undo:{weeks:snap,inbox:before}};ui.dayView=b.day;commit();return true;}
+    case 'move-next':{let wk=null,b=null;for(const k in S.weeks){const f=S.weeks[k].blocks.find(x=>x.id===d.id);if(f){wk=S.weeks[k];b=f;break;}}
+      if(!b)return true;const nk=iso(addDays(fromIso(wk.key),7));
+      wk.blocks=wk.blocks.filter(x=>x.id!==b.id);inboxAdd(b.title,nk,b.dur,{goalId:b.goalId||null});
+      ui.proposals=(ui.proposals||null)&&ui.proposals.filter(x=>x.id!==d.id);ui.sheet=null;
+      toast('다음 주 보관함으로 옮겼어요. 이번 주 화면에서 › 를 누르면 보여요');commit();return true;}
+    case 'blk-skip':{const wk=S.weeks[d.k],b=wk&&wk.blocks.find(x=>x.id===d.id);if(!b)return true;b.skip=!b.skip;if(b.skip)b.done=false;
+      if(ui.proposals)ui.proposals=ui.proposals.filter(x=>x.id!==b.id);ui.sheet=null;toast(b.skip?'못 했다고 남겼어요. 괜찮아요, 다음 계획에 참고할게요':'기록을 지웠어요');commit();return true;}
+    case 'ch-undo':changeUndo();return true;
+    case 'ch-ok':ui.change=null;render();return true;
+    case 'wk-go':{const v=+d.v;ui.wk=v===0?null:iso(addDays(fromIso(wkKey()),7*v));if(ui.wk===curKey())ui.wk=null;ui.dayView=ui.wk?0:dow(today());render();return true;}
+    case 'show-past':ui.showPast=true;render();return true;
+    case 'g-retry':guideSend(d.t);return true;
+    case 'g-cancel':ui.gCancel=true;try{ui.ctl.guide&&ui.ctl.guide.abort();}catch(e){}return true;
+    case 'g-reset':ui.gResetAsk=true;render();return true;
+    case 'g-reset-no':ui.gResetAsk=false;render();return true;
+    case 'g-reset-yes':{const g=guideState();g.msgs=[];g.draft=null;ui.gResetAsk=false;commit();return true;}
+    case 'ai-note-ok':S.aiNoticeOk=dkey();commit();return true;
+    case 'growth-set':S.setup.growth=d.v;commit();return true;
+    case 'notify-set':{if(!('Notification' in window))return true;
+      if(S.setup.notify&&Notification.permission==='granted'){S.setup.notify=false;commit();return true;}
+      Notification.requestPermission().then(p=>{S.setup.notify=p==='granted';toast(p==='granted'?'시작할 때 알려 드릴게요':'알림 허용이 필요해요');commit();});return true;}
+    case 'onb-goal':finishOnb();ui.tab='guide';render();window.scrollTo(0,0);return true;
+    case 'onb-fixed':ui.onb=1;window.scrollTo(0,0);render();return true;
+  }
+  return false;
+}
+document.addEventListener('change',e=>{
+  const el=e.target,f=el&&el.dataset&&el.dataset.field;if(!f)return;
+  const stop=()=>{e.stopImmediatePropagation();};
+  if(f==='bk-restore'){stop();const fs=Array.from(el.files||[]);el.value='';if(fs[0])readRestore(fs[0]);return;}
+  if(f==='imp-on'||f==='imp-ev'){stop();const L=f==='imp-on'?ui.imp.items:ui.imp.events,x=L[+el.dataset.i];if(x){x.on=el.checked;renderOverlay();}return;}
+  if(f==='imp-label'){stop();const x=ui.imp.items[+el.dataset.i];if(x)x.label=el.value.trim().slice(0,14)||x.label;return;}
+  if(f==='imp-s'||f==='imp-e'){stop();const x=ui.imp.items[+el.dataset.i],m=parseHm(el.value);if(x&&m!=null){if(f==='imp-s')x.start=m;else x.end=m;renderOverlay();}return;}
+  if(f==='add-date'){stop();const x=addKeep();if(el.value)x.date=el.value;x.err='';renderOverlay();return;}
+  if(f==='add-time'){stop();const x=addKeep();x.time=el.value;x.err='';x.force=false;renderOverlay();return;}
+  if(f==='add-move'){stop();addState().move=el.checked;return;}
+},true);
+document.addEventListener('input',e=>{const el=e.target;if(!el)return;if(el.id==='gText')ui.gDraft=el.value;else if(el.id==='addTitle'){addState().title=el.value;}},true);
 
 /* ---------- boot ---------- */
 getSample().then(sm=>sm&&sm.limits?sm.limits():null).then(c=>{if(c&&c.images){ui.imgOK=true;ui.imgTypes=(c.images.mediaTypes||[]).join(',');render();}}).catch(()=>{});
