@@ -1,9 +1,22 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#F2F4F9">
+<meta name="theme-color" content="#F2F4F9" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0E111A" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="다음 주">
+<link rel="apple-touch-startup-image" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1320x2868.png">
+<link rel="apple-touch-startup-image" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1206x2622.png">
+<link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1290x2796.png">
+<link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1179x2556.png">
+<link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1284x2778.png">
+<link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1170x2532.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1242x2688.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="icons/splash/splash-828x1792.png">
+<link rel="apple-touch-startup-image" media="(device-width: 360px) and (device-height: 780px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1080x2340.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="icons/splash/splash-750x1334.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="icons/splash/splash-1242x2208.png">
+<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="icons/splash/splash-640x1136.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <style>html,body{margin:0;background:#F2F4F9}@media(prefers-color-scheme:dark){html,body{background:#0E111A}}</style>
@@ -1005,6 +1018,37 @@ p.rt-hint{margin:0;background:var(--warn-soft);padding:10px 12px;border-radius:1
 
 </style>
 
+<div id="splash" aria-hidden="true">
+<style>
+#splash{position:fixed;inset:0;z-index:100;background:#4150DE;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding-bottom:6vh;transition:opacity .32s ease,transform .32s ease;cursor:pointer;-webkit-user-select:none;user-select:none}
+#splash.out{opacity:0;transform:translateY(-14px);pointer-events:none}
+.sp-stage{position:relative;width:224px;height:200px}
+.sp-box{position:absolute;left:42px;top:131px;width:140px;height:62px;border-radius:15px;background:#FFC53D;box-shadow:0 5px 0 #D99A12}
+.sp-clip{position:absolute;left:0;right:0;top:0;height:160px;overflow:hidden}
+.sp-guy{position:absolute;left:32px;top:30px;width:160px;height:130px;animation:sp-up .5s steps(5,end) .12s both}
+.sp-guy img{position:absolute;inset:0;width:160px;height:130px;image-rendering:pixelated;image-rendering:crisp-edges}
+.sp-guy .b{opacity:0;animation:sp-blink .16s steps(1,end) .95s 1}
+.sp-name{font:800 30px/1.2 'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',system-ui,sans-serif;color:#fff;letter-spacing:-1px;margin-top:4px}
+.sp-days{display:flex;gap:6px}
+.sp-days i{width:20px;height:8px;border-radius:4px;background:rgba(255,255,255,.22);animation:sp-fill .2s ease both}
+.sp-days i:nth-child(1){animation-delay:.35s}.sp-days i:nth-child(2){animation-delay:.45s}.sp-days i:nth-child(3){animation-delay:.55s}.sp-days i:nth-child(4){animation-delay:.65s}.sp-days i:nth-child(5){animation-delay:.75s}.sp-days i:nth-child(6){animation-delay:.85s}.sp-days i:nth-child(7){animation-delay:.95s}
+@keyframes sp-up{from{transform:translateY(130px)}to{transform:none}}
+@keyframes sp-blink{0%,100%{opacity:1}}
+@keyframes sp-fill{to{background:#FFC53D}}
+@media (prefers-reduced-motion:reduce){.sp-guy,.sp-guy .b{animation:none}.sp-days i{animation:none;background:#FFC53D}#splash{transition:opacity .2s}}
+</style>
+<div class="sp-stage"><div class="sp-box"></div><div class="sp-clip"><div class="sp-guy"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAaCAYAAADWm14/AAABAUlEQVR42mNgGOmAkVQNUtJW//HJP3t6jJFmDuib/f8/AwMDw9mL2OVfPLvOwMDAwLB3nRbR5jJRy+fkqmUa6DQw4A5gIUUxrrinmwOWRNoRpU46bAhFwYA7gJHc7EMJQC6sMNKAY+BRqloGK5xg4PrJFPyJcP9668FRF2R7GcOjY8qkXrIMz8krhrOnbjvLSHI2JNdidP3IDiEqF9AiMeIykxGX4qcH26jqAGn7KqxVNfHlgLI9g7R9FfXUkeoAaRlrqqoberUhsWmC1LSD3wGbHyPYvrKkeY1IvSyUpGpKfE6cAwj4eoW2AgMDAwNDxNUHJOulOASeHmyDhwIlZQYArBZMRhBsZUkAAAAASUVORK5CYII=" alt=""><img class="b" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAaCAYAAADWm14/AAABAklEQVR42mNgGOmAkVQNUtJW//HJP3t6jJFmDuib/f8/AwMDw9mL2OVfPLvOwMDAwLB3nRbR5jJRy+fkqmUa6DQw4A5gIUUxrrinmwOWRNoRpU46bAhFwYA7gJHc7EMJQC6sMNKAY+BRqloGK5xg4PrJFPyJcP9668FRF2R7GcOjY8qkXrIMz8krhrOnbjvLSHI2JNdidP3IDiEqF9AiMeIykxGX4qcH26jqAGn7KqxV9dAoiKTtq/DyiVVDdl3w9GAbioHYoocYNRRVRsQYSE66we+AzY8RbF9Z0kwmUi8LJamaUt8TdgABX6/QVmBgYGBgiLj6gGS9FIcAcqKjpMwAADt4VqALNJ9fAAAAAElFTkSuQmCC" alt=""></div></div></div>
+<b class="sp-name">다음 주</b>
+<div class="sp-days"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<script>(function(){var el=document.getElementById('splash'),t0=Date.now(),done=false,ready=false,
+rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,MIN=rm?450:1300,metas=[].slice.call(document.querySelectorAll('meta[name=theme-color]')),olds=metas.map(function(m){return m.content;});
+try{if(sessionStorage.getItem('daeum-splash')){el.parentNode.removeChild(el);window.__splashReady=function(){};return;}sessionStorage.setItem('daeum-splash','1');}catch(e){}
+metas.forEach(function(m){m.content='#4150DE';});
+function hide(){if(done)return;done=true;metas.forEach(function(m,i){m.content=olds[i];});el.classList.add('out');setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},400);}
+function tryHide(){var w=MIN-(Date.now()-t0);if(w<=0)hide();else setTimeout(hide,w);}
+window.__splashReady=function(){if(ready)return;ready=true;tryHide();};
+el.addEventListener('click',hide);setTimeout(hide,3500);})();</script>
+</div>
 <div id="app">
   <header class="top">
     <span class="brand"><i aria-hidden="true"><b></b><b></b><b></b><b></b></i>다음 주</span>
@@ -3902,7 +3946,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.16-1';
+const APP_VER='2026.10.16-2';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -4478,7 +4522,7 @@ store.ready=store.init().then(data=>{
   const d=migrate(data);
   if(d){S=d;S.demo=false;ui.tab='today';if(!S.profile.done)ui.onb=1;render();setSaveState(store.mode==='db'?'저장됨':store.mode==='local'?'이 브라우저에 저장됨':'이 창에서만 유지');}
   else{render();setSaveState(store.mode==='memory'?'이 창에서만 유지':'');}
-});
+}).then(()=>{if(window.__splashReady)window.__splashReady();},()=>{if(window.__splashReady)window.__splashReady();});
 })();
 </script>
 
