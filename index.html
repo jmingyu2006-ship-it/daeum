@@ -1930,6 +1930,8 @@ img.art{display:block;height:auto;image-rendering:auto;flex-shrink:0}
 .ex-steps span{font-size:14px;font-weight:650;color:var(--fg)}
 .onb-guide img.art{width:96px}
 
+.g-fail-mini{margin-top:6px;opacity:.75}
+
 </style>
 
 <div id="splash" aria-hidden="true">
@@ -8302,6 +8304,9 @@ demoState=(o=>function(){const s=o();const k=curKey();s.tkMig=1;s.inbox=[];
   return s;})(demoState);
 
 function guideFailLine(m){
+  let ms=[];try{ms=guideState().msgs||[];}catch(e){}
+  let lastF=-1;ms.forEach((x,i)=>{if(x&&x.fail)lastF=i;});
+  if(lastF>=0&&ms[lastF]!==m)return '<div class="g-fail-mini xs muted">기본 규칙으로 답함</div>';
   return '<div class="g-fail"><span class="small">AI 연결이 잠깐 안 돼서 기본 규칙으로 답했어요. 목표 정하기, 할 일 나누기, "뭐부터 해야 할지 모르겠어", "이번 주 바빠졌어" 같은 말은 AI 없이도 도와드려요.</span>'+
     (m.retry?'<button type="button" class="btn sm" data-act="g-retry" data-t="'+esc(m.retry)+'">다시 보내기</button>':'')+'</div>';
 }
