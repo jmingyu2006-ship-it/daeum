@@ -1845,14 +1845,99 @@ body.g-tab .fab{display:none}
 .tabs button.on[data-tab="today"] svg .fillable{fill:currentColor}
 .tabs button.on[data-tab="guide"] svg .fillable{fill:color-mix(in srgb,currentColor 22%,transparent)}
 
+/* ================= 주간 목표 · 할 일 ================= */
+img.art{display:block;height:auto;image-rendering:auto;flex-shrink:0}
+.v3-port img.art{width:84px;margin:4px auto 0}
+.v3-g img.art,.g-ava img.art,.v3-me img.art,.v3-ava img.art,.pf2-ga img.art{width:100%;height:100%;object-fit:cover;object-position:center top}
+.v3-g.big img.art{width:auto;height:100%;max-width:none}
+.v3-gport img.art{width:100%;height:100%;object-fit:cover}
+.v3-pfc img.art{width:118px;margin:0 auto -4px}
+.v3-howg img.art{width:84px;margin-top:4px}
+.st-ava img.art{width:100%;height:100%;object-fit:cover}
+.lk-opt img.art{width:96px}
+.cele img.art{width:150px}
+.brand-mc img.art{width:34px}
+.v3-me{background:transparent;box-shadow:none;border-radius:50%}
+.v3-me img.art{border-radius:50%}
+.sec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:-8px}
+.sec-h h2{font-size:19px;letter-spacing:-.5px}
+.wg-stack{display:flex;flex-direction:column;gap:10px}
+.wg-card{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:14px}
+.wg-card.ach{background:color-mix(in srgb,var(--ok) 8%,var(--surface));border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
+.wg-top{display:flex;align-items:flex-start;gap:12px;border:0;background:transparent;font:inherit;color:var(--fg);text-align:left;cursor:pointer;padding:0}
+.wg-top .grow{display:flex;flex-direction:column;gap:4px;min-width:0}
+.wg-top b{font-size:18px;letter-spacing:-.5px;line-height:1.35}
+.wg-n{width:28px;height:28px;border-radius:9px;background:var(--accent);color:#fff;font-weight:800;display:grid;place-items:center;flex-shrink:0;font-size:14px}
+.wg-n:empty{display:none}
+.wg-crit{font-size:14.5px;line-height:1.5;color:var(--fg)}
+.wg-crit i{font-style:normal;font-size:12px;font-weight:800;color:var(--accent-text);background:var(--accent-soft);border-radius:6px;padding:1px 6px;margin-right:6px}
+.wg-badge{font-size:12px;font-weight:800;color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent);border-radius:8px;padding:3px 8px;white-space:nowrap}
+.wg-prog{display:flex;flex-direction:column;gap:4px}
+.wg-bar{height:8px;border-radius:6px;background:var(--sunk);overflow:hidden}
+.wg-bar i{display:block;height:100%;border-radius:6px;background:var(--accent)}
+.wg-card.ach .wg-bar i{background:var(--ok)}
+.tk-list{display:flex;flex-direction:column;border-top:1px solid var(--line);padding-top:4px}
+.tk-sec{gap:2px}
+.tk-sub{font-size:12.5px;font-weight:800;color:var(--muted);margin:8px 0 2px}
+.tk-sub:first-child{margin-top:0}
+.tk-row{display:flex;align-items:center;gap:10px;min-height:56px;border-bottom:1px solid var(--line)}
+.tk-row:last-of-type{border-bottom:0}
+.tk-row .v3-ck{width:28px;height:28px}
+.tk-m{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:0;background:transparent;font:inherit;color:var(--fg);text-align:left;cursor:pointer;padding:8px 0}
+.tk-m b{font-size:16px;font-weight:650;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tk-m span{font-size:13px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tk-m .tk-bl{color:var(--warn-text);white-space:normal}
+.tk-m .tk-why{white-space:normal;color:var(--muted);font-size:13px}
+.tk-row.st-done .tk-m b{color:var(--muted);text-decoration:line-through}
+.tk-row.wait .tk-m b{color:var(--muted)}
+.tk-row.st-doing .v3-ck{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent);border-color:var(--accent)}
+.tk-pick,.tk-talk{flex-shrink:0;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;font:700 13px var(--font);padding:7px 10px;cursor:pointer;white-space:nowrap}
+.tk-pick.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-text)}
+.tk-talk{border-color:var(--accent);color:var(--accent-text)}
+.tk-add{display:flex;gap:8px;margin-top:8px}.tk-add .field{flex:1;min-height:44px;font-size:15px}
+.wg-ai{align-self:flex-start;margin-top:4px}
+.wg-ask{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:20px;background:var(--lav);border:1.5px solid var(--lav2)}
+.wg-ask .grow{display:flex;flex-direction:column;gap:4px;min-width:0}
+.wg-ask b{font-size:18px;letter-spacing:-.5px;line-height:1.35}
+.wg-ask-in{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.wg-ask-in .field{background:var(--surface)}
+.stuck{border-color:color-mix(in srgb,var(--warn-text) 30%,var(--line))}
+.ts{gap:0}
+.ts-r{display:grid;grid-template-columns:50px 1fr 20px;align-items:center;gap:8px;border:0;border-top:1px solid var(--line);background:transparent;font:inherit;color:var(--fg);text-align:left;min-height:46px;cursor:pointer;padding:0}
+.ts-r .mono{font-size:14px;color:var(--muted)}.ts-r b{font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ts-r.done b{color:var(--muted);text-decoration:line-through}
+.wk-seg{margin-top:-4px}
+.wg-addbtn{border-style:dashed}
+.tk-st{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;border-radius:14px;background:var(--sunk)}
+.tk-st button{min-height:40px;border:0;border-radius:10px;background:transparent;font:700 14px var(--font);color:var(--muted);cursor:pointer}
+.tk-st button.on{background:var(--surface);color:var(--fg);box-shadow:var(--sh1)}
+.tk-st button.on.s-blocked{color:var(--warn-text)}.tk-st button.on.s-done{color:var(--ok)}.tk-st button.on.s-doing{color:var(--accent-text)}
+.tk-why-box{background:var(--sunk);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.tk-why-box p{margin:0}.tk-why-box .link{align-self:flex-start;min-height:32px;padding:0}
+.rv-card{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:20px;background:color-mix(in srgb,var(--sun) 18%,var(--surface));border:1.5px solid color-mix(in srgb,var(--sun) 50%,var(--line))}
+.rv-card .grow{display:flex;flex-direction:column;gap:4px}.rv-card b{font-size:17px;letter-spacing:-.4px}
+.rv-g{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:16px;background:var(--sunk)}
+.rv-g b{font-size:16.5px}.rv-g .field{background:var(--surface)}
+.gp-t{font-size:18px;font-weight:800;letter-spacing:-.4px;line-height:1.35}
+.tp-r{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);cursor:pointer}
+.tp-r input{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:var(--accent)}
+.tp-r .grow{display:flex;flex-direction:column;gap:1px;min-width:0}
+.tp-r b{font-size:15.5px}.tp-r span{font-size:13px;color:var(--muted)}
+.tp-r .tp-m{color:var(--accent-text);font-weight:650}
+.tp-n{width:22px;height:22px;border-radius:7px;background:var(--accent-soft);color:var(--accent-text);font-weight:800;font-size:12.5px;display:grid;place-items:center;flex-shrink:0}
+.tp-r.off{opacity:.45}
+.ex-steps{display:flex;flex-direction:column;gap:4px;padding:4px 2px 0}
+.ex-steps span{font-size:14px;font-weight:650;color:var(--fg)}
+.onb-guide img.art{width:96px}
+
 </style>
 
 <div id="splash" aria-hidden="true">
 <style>
 #splash{position:fixed;inset:0;z-index:100;background:#5B3DF5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;overflow:hidden;transition:opacity .34s ease,transform .34s ease;cursor:pointer;-webkit-user-select:none;user-select:none}
 #splash.out{opacity:0;transform:scale(1.04);pointer-events:none}
-.sp-mc{position:relative;width:220px;height:240px;margin-top:-6px;animation:sp-hop .36s steps(3,end) .75s}
-.sp-mc img{position:absolute;inset:0;width:220px;height:240px;image-rendering:pixelated;image-rendering:crisp-edges}
+.sp-mc{position:relative;width:200px;height:259px;margin-top:-6px;animation:sp-hop .36s steps(3,end) .75s}
+.sp-mc img{position:absolute;inset:0;width:200px;height:254px}
 .sp-mc .h{opacity:0;animation:sp-hi .1s steps(1,end) .75s forwards}
 .sp-mc img:first-child{animation:sp-lo .1s steps(1,end) .75s forwards}
 .sp-name{font:850 34px/1.1 "Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif;color:#fff;letter-spacing:-1.4px}
@@ -1860,7 +1945,7 @@ body.g-tab .fab{display:none}
 @keyframes sp-hi{to{opacity:1}}@keyframes sp-lo{to{opacity:0}}
 @media (prefers-reduced-motion:reduce){.sp-mc,.sp-mc img{animation:none}#splash{transition:opacity .2s}}
 </style>
-<div class="sp-mc"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAwCAYAAABqkJjhAAADHUlEQVR42uWaT0sbQRjGnyyhFgkeW6hhtyK0uLuRlEp7SJubOfgFckiDRXrxC/gh/BSG1oN+AA/2JnoQKqSatFAo+eMqVXpp3fZUsj3ETWcnM7uzs7tNxAHRyfx5f3n2mXdmFoEYi66ajq6aDm5C0VXTqbz85Zy2rhKFVuKCfaIdDurNzgmSgk6TQcmGT91GSgaWhDa0nBNmHuH4umo6dBFRyLUB+XPaupKaRzS+4n4bQ8sBAKy2LfRYecqylA6ap9k5GdStto3aagFrS1PMcQr5CAwth+zDTCC0KGwQNAu2vb2C2ZlpAGBCK7RvXGgRhRaKk5EWKgkLAO3tlXiyBAntqrtQnMSHvd9SKrNgpdMa6WdWQBlYeg4WbG21IJ+HedCub2VgSWi6sGIF5mEOtEeNd3vynk18pxvXM0GaB5vPKp68nGTJZxXsHtso4QyzM9P42jrj9k0FAf/PUprPeOrrOz+HtmhlXGABYPfY9oXlprW61fOdeHOrFmudVpgHG/p4SQZy/w4DxwONnCVclUmleYBhVWXNQ8cKDez6OMjLmwcfoT0t+0Nm854+vCwhum4irS7t/uNY+gRlBingSnk51owgO1869Ij3n/u/F+fQOdoK7O7pQ4xNbNENLYbFOWZA2qdM3zLGujHoTUPq8BNmE+kcbXkgRdR3F5xI/pWyRKW8jLrVQ/PgbfDj5xSjUEWUnTTUyLrV6x87C1WpYEahKrSTSivcfzz/jpnu47qGHnzOU9yFZI0n5y3NiwOnZL+pzHmZ9qeums7a0pSwf0N7mISkr/ms28irIn2Veu6EfbMkDUxfHkmY88sGgGdDY84vG3hwz2Te5wwt5yS+6HiFhBL5fORvL2VLWP/Kbc0xFTKzrO9Ux1PhMO8fxtISyZ/WrDpReRRJZRn/xurh4Zzrf6hKXGF6OwaAPxlVPJDdld4spBUmA47qVVbsiy5tdwN3TFn/3oIsQaj0+sUEgIuhto194E3+gjFqAhv70W10OxQGgPa3H5yWu75tUfwrDUzfGETbRqqwnzq8Nl01nS/d79e1OzfDg1H/ReEvnvcYziYBmHsAAAAASUVORK5CYII=" alt=""><img class="h" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAwCAYAAABqkJjhAAADRUlEQVR42uWaT0sbQRjGn12kFgkee6hhtyIUmmxKSqQ9pM2tHvwCOVhpkV7Eux/Cu3dD7SF+AA/2JvFQqCAmsVBa8scoVXppTUsPxekhjp2dzOzOzG5qxBcWnJ2dmV+efeadmUUgxkg5Hkk5HsF1iJTjkblnP8lh42yg0HZcsI/c95flequKQUGPsIOyFQftmmUCy0Kn3QzR6Ud5/JTjET5UFKI2YK/DxplRP6rj2/TXpN0MAKDT7Cq9VpmyIqXD+qm3qpflTrOL0mIey7PjwnY2+wrSbgbJe4lQaFXYMGgRbHNjAVOTEwAghLZ531BoFYWmC2ORJioLCwDNjYV4sgQLTdWdLozhw/YvI5VFsMZpjfWzaEATWL4PEWxpMW+eh2XQ1LcmsCw0H6KxQvOwBNqnxvq2uWcHvtIN655gRAabTdq+vDzIyCZtbO13MYMjTE1O4EvjSPqsFQb8P2PmYcJXXtn80bdE28MCCwBb+91AWGla2+ucB3b8tlyKtcwrLIPV3l6yA9G/deBkoJGzBFWZVVoGqKuqqB9+LG1g6uMwL1c+/4abKwZCurmi7xlZllCdN8azy80V0doto7VblgKpPMNHkH+101ocHqQxV3wpnHRhwPoKv/vYu0wiSlvRSkeqS8TKrFq9X/hvafap/fyB9PXz0dot+28I2tLJtjw7rudhCkuqS4Q9BOosIuvZ6ctLZ1mmsGF28ClMYa3MqhXku73OOeo7b4Rqsir3qUu3kvl5ZRFEPL6WQbD09R20a1Y6Py+spxkhCFZlJRW98cAsIdtmsq+LvS9SnIUMay+zhEhhy3S2muyXeX+mHI/o+DfwxBEGyR/zRaeRFwX+KPWE6H5ZMgbmD48szPFpDcDjvjbHpzXcveMJz3NpN2N0ooll48tCqdy/8q+XpqHrX20PxxlsZlnZnB9OhXW+PwylJQaaJXpn/j2mcD+Syib+jdXD/TlXvnhE+UijDHyxh/AN9CfhqA/UbRsvFsYKy/YCQ/FtzViBbjt0xTT17w3IEoxKr56OAjjpq1urAK+zJ4JWo1irRLfRzVAYAJpfv0tqbgfWRfGvMTB/qlatu1KFg9SR1aUcj3xqf7so3boeHoz6Lwp/AQSxRmVYOqNgAAAAAElFTkSuQmCC" alt=""></div>
+<div class="sp-mc"><img src="art/g_big.png?v=1" alt=""></div>
 <b class="sp-name">다음 주</b>
 <script>(function(){var el=document.getElementById('splash'),t0=Date.now(),done=false,ready=false,
 rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,MIN=rm?450:1450,metas=[].slice.call(document.querySelectorAll('meta[name=theme-color]')),olds=metas.map(function(m){return m.content;});
@@ -4450,10 +4535,10 @@ async function readTimetable(imgs){
 
 /* ---------- game layer: character, XP, level, streak, badges ---------- */
 const PTYPE={
-  hangro:{name:'항로형',tag:'미리 정하고, 조금씩',say:'미리 정하고, 조금씩 이어 가요',desc:'정해 둔 길을 따라 작은 걸음을 꾸준히 이어 갈 때 힘이 나요.',how:'같은 시간대에 15~30분짜리 짧은 블록을 미리 정해 두고, 밀리면 바로 다음 빈 시간을 제안한다.',tips:[['cal','비슷한 시간에 짧게 나눠요'],['clock','밀리면 다음 빈 시간을 제안해요']],c1:'#262A4A',c2:'#5B3DF5'},
-  deungdae:{name:'등대형',tag:'미리 정하고, 깊게',say:'미리 정해 두고, 한 번에 깊게 해요',desc:'정해 둔 시간에 한 번 깊게 몰입할 때 잘 돼요.',how:'미리 정한 날에 60~90분 집중 블록을 두고, 그 앞뒤는 비워 둔다. 블록 수는 적게.',tips:[['lamp','집중할 긴 시간을 먼저 지켜요'],['rest','앞뒤로 쉬는 틈을 남겨요']],c1:'#6B4120',c2:'#D08A2E'},
-  mulgyeol:{name:'물결형',tag:'상황에 맞춰, 조금씩',say:'그날 흐름에 맞춰 조금씩 해요',desc:'그날 흐름에 맞춰 작게 자주 할 때 오래 가요.',how:'시간을 촘촘히 박지 않고, 빈 시간에 넣기 쉬운 10~20분짜리를 여러 개 준비해 둔다. 하루 1~2개.',tips:[['wave','빈 시간에 넣을 작은 일을 챙겨요'],['undo','틀어져도 다시 맞춰요']],c1:'#1F6B60',c2:'#5FB8A3'},
-  baram:{name:'바람형',tag:'상황에 맞춰, 깊게',say:'꽂히는 날 한 번에 크게 해요',desc:'컨디션 좋은 순간 크게 해내요.',how:'컨디션 좋은 날 한 번에 90분 이상 몰아서 하고, 나머지 날은 비워 둔다. 시작 신호는 짧게.',tips:[['bolt','좋은 날 한 번에 몰아요'],['leaf','나머지 날은 가볍게 비워요']],c1:'#7A2E24',c2:'#F07A62'}
+  hangro:{name:'항로형',tag:'미리 정하고, 조금씩',say:'미리 정하고, 조금씩 이어 가요',desc:'정해 둔 길을 따라 작은 걸음을 꾸준히 이어 갈 때 힘이 나요.',how:'목표를 15~30분이면 끝나는 작은 할 일로 나누고 순서(after)를 분명히 정한다. 밀리면 바로 다음 할 일을 고른다.',tips:[['cal','할 일을 작게 나눠 순서대로 놓아요'],['clock','밀리면 바로 다음 할 일을 골라 드려요']],c1:'#262A4A',c2:'#5B3DF5'},
+  deungdae:{name:'등대형',tag:'미리 정하고, 깊게',say:'미리 정해 두고, 한 번에 깊게 해요',desc:'정해 둔 시간에 한 번 깊게 몰입할 때 잘 돼요.',how:'할 일 수는 적게(3~4개), 각각 결과물이 나오는 큰 단위로 나누고 순서를 정한다.',tips:[['lamp','결과물이 나오는 큰 일을 먼저 지켜요'],['rest','작은 일은 줄이고 핵심만 남겨요']],c1:'#6B4120',c2:'#D08A2E'},
+  mulgyeol:{name:'물결형',tag:'상황에 맞춰, 조금씩',say:'그날 흐름에 맞춰 조금씩 해요',desc:'그날 흐름에 맞춰 작게 자주 할 때 오래 가요.',how:'순서를 꼭 묶지 않고, 그날 상황에 따라 고를 수 있는 10~20분짜리 작은 할 일을 여러 개 만든다.',tips:[['wave','상황 따라 고를 수 있는 작은 일을 여러 개 둬요'],['undo','틀어지면 할 일을 다시 맞춰요']],c1:'#1F6B60',c2:'#5FB8A3'},
+  baram:{name:'바람형',tag:'상황에 맞춰, 깊게',say:'꽂히는 날 한 번에 크게 해요',desc:'컨디션 좋은 순간 크게 해내요.',how:'한 번에 몰아서 끝낼 수 있는 큰 덩어리 2~3개로 나누고, 첫 행동은 아주 짧게 적는다.',tips:[['bolt','기운 날 때 한 번에 끝낼 덩어리를 만들어요'],['leaf','나머지는 가볍게 남겨 둬요']],c1:'#7A2E24',c2:'#F07A62'}
 };
 const QUIZ=[
   {k:'gender',q:'내 캐릭터를 골라 주세요',o:[['m','남자 캐릭터'],['f','여자 캐릭터']]},
@@ -4586,7 +4671,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.18-1';
+const APP_VER='2026.10.18-2';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -7685,6 +7770,555 @@ render=(o=>function(){
   const r=o.apply(this,arguments);
   try{const sc=document.querySelector('.v3g-scroll');if(sc){if(sc.dataset.key===ok)sc.scrollTop=ot;else{const tg=sc.querySelector('.v3g-now')||sc.querySelector('.v3g-b:not(.v3-fx)')||sc.querySelector('.v3g-b');if(tg)sc.scrollTop=Math.max(0,tg.offsetTop-70);}}}catch(e){}
   return r;})(render);
+/* ================= goals.js — 주간 목표 → 실행할 일 → 대화로 다듬기 → 돌아보기 (2026.10.18 방향 재정의)
+   '다음 주'는 주간 목표를 정하고, 길잡이와 대화하며 그 목표에 필요한 할 일을 만들고 조정하는 투두리스트다.
+   시간표·약속은 실제 제약이 있을 때만 쓰는 보조 기능으로 남긴다.
+*/
+
+/* ---------- 0. 캐릭터: 시안 그림 그대로 ---------- */
+var ART_V='1';
+var ART={g_idle:1,g_listen:1,g_think:1,g_happy:1,ga_idle:1,ga_listen:1,ga_think:1,ga_happy:1,u_hangro:1,u_deungdae:1,u_mulgyeol:1,u_baram:1,u_none:1,ua_hangro:1,ua_deungdae:1,ua_mulgyeol:1,ua_baram:1,ua_none:1};
+for(const k in ART)SPR[k]='art/'+k+'.png?v='+ART_V;
+SPR.g_sleep=SPR.g_idle;SPR.ga_sleep=SPR.ga_idle;
+for(const k of ['hangro','deungdae','mulgyeol','baram'])SPR['u_'+k+'_h']=SPR['u_'+k];
+_sprKey=null;
+function pxImg(src,w,cls,alt){
+  const k=sprKey(src);
+  if((ART&&k&&ART[k.replace(/_h$/,'')]!=null)||/^art\//.test(String(src)))return '<img class="art '+(cls||'')+'" src="'+src+'" width="'+w+'" alt="'+esc(alt||'')+'"'+(alt?'':' aria-hidden="true"')+' decoding="async">';
+  if(k&&k.startsWith('i_')&&!isPixel()&&typeof VEC!=='undefined'&&VEC&&VEC[k])return '<span class="vi '+(cls||'')+'" style="width:'+w+'px;height:'+w+'px">'+VEC[k]+'</span>';
+  return '<img class="px '+(cls||'')+'" src="'+src+'" width="'+w+'" alt="'+esc(alt||'')+'"'+(alt?'':' aria-hidden="true"')+'>';
+}
+try{const bm=document.querySelector('.brand-mc');if(bm){bm.innerHTML=BOAT_SVG;bm.classList.add('v3-boat');}}catch(e){}
+
+/* ---------- 1. 데이터 ---------- */
+const TK_ST={todo:'할 일',doing:'진행 중',blocked:'막힘',done:'완료'};
+function wgList(){if(!Array.isArray(S.wgoals))S.wgoals=[];return S.wgoals;}
+function tkList(){if(!Array.isArray(S.tasks))S.tasks=[];tkMigrate();return S.tasks;}
+function tkMigrate(){
+  if(S.tkMig)return;S.tkMig=1;
+  for(const x of (Array.isArray(S.inbox)?S.inbox:[]))S.tasks.push({id:x.id||uid(),key:x.key||curKey(),goalId:null,title:x.title,crit:'',why:'',after:[],due:x.deadline||null,status:x.done?'done':'todo',note:'',subs:x.subs||[],memo:x.memo||'',dur:x.dur||null,order:S.tasks.length,created:x.at||dkey(),doneAt:x.done||null});
+  S.inbox=[];
+}
+function wgOf(key){return wgList().filter(g=>g.key===key&&g.status!=='dropped').sort((a,b)=>(a.prio||0)-(b.prio||0));}
+function wgById(id){return wgList().find(g=>g.id===id)||null;}
+function tkById(id){return tkList().find(t=>t.id===id)||null;}
+function tkOf(gid){return tkList().filter(t=>t.goalId===gid).sort((a,b)=>(a.order||0)-(b.order||0));}
+function tkLoose(key){return tkList().filter(t=>!t.goalId&&(t.key||curKey())<=key&&(t.status!=='done'||(t.key||'')===key)).sort((a,b)=>(a.due||'9')<(b.due||'9')?-1:(a.due||'9')>(b.due||'9')?1:(a.order||0)-(b.order||0));}
+function tkWeek(key){return tkList().filter(t=>t.key===key||(!t.key&&key===curKey()));}
+function tkDepsDone(t){return (t.after||[]).every(id=>{const d=tkById(id);return !d||d.status==='done';});}
+function tkReady(t){return t.status!=='done'&&t.status!=='blocked'&&tkDepsDone(t);}
+function tkWaitingOn(t){return (t.after||[]).map(tkById).filter(d=>d&&d.status!=='done');}
+function wgProg(g){const l=tkOf(g.id);return {n:l.length,d:l.filter(t=>t.status==='done').length};}
+function tkAdd(o){const t=Object.assign({id:uid(),key:curKey(),goalId:null,title:'할 일',crit:'',why:'',after:[],due:null,status:'todo',note:'',subs:[],memo:'',dur:null,order:tkList().length,created:dkey(),doneAt:null},o||{});t.title=String(t.title).slice(0,50);tkList().push(t);return t;}
+function wgAdd(o){const key=o.key||curKey(),g=Object.assign({id:uid(),key,title:'이번 주 목표',crit:'',why:'',prio:wgOf(key).length,status:'active',created:dkey(),review:null},o||{});g.title=String(g.title).slice(0,40);wgList().push(g);return g;}
+/* 할 일을 끝내면: 연결된 시간 블록도 함께, XP는 한 번만 */
+function tkSet(t,st){
+  const was=t.status;if(was===st)return;t.status=st;
+  if(st==='done'){t.doneAt=dkey();t.today=null;award('tk:'+t.id,10,"'"+t.title.slice(0,16)+"' 끝냈어요",true);}
+  else if(was==='done'){t.doneAt=null;revoke('tk:'+t.id);}
+  for(const k in S.weeks)for(const b of S.weeks[k].blocks)if(b.taskId===t.id)b.done=st==='done';
+}
+function tkPlanKey(){return wgOf(curKey()).length||dow(today())<6||nowMin()<18*60?curKey():iso(addDays(fromIso(curKey()),7));}
+
+/* inbox()를 쓰던 곳은 목표 없는 할 일로 */
+function inboxAdd(title,key,dur,extra){extra=extra||{};return tkAdd({title,key:key||curKey(),dur:dur||null,due:extra.deadline||null,goalId:extra.goalId||null,memo:extra.memo||''});}
+function dueCard(){return '';}
+
+/* ---------- 2. 첫 화면: 이번 주에 이루려는 것 · 지금 할 만한 일 · 막힌 것 ---------- */
+function tkRow(t,o){
+  o=o||{};const g=t.goalId&&wgById(t.goalId),w=tkWaitingOn(t),st=t.status;
+  const meta=[o.goal&&g?g.title:'',st==='doing'?'진행 중':'',st==='blocked'?'막힘'+(t.note?': '+t.note:''):'',w.length&&st!=='done'?'먼저: '+w.map(x=>x.title).join(', '):'',t.due?dlTag(t.due):'',t.subs&&t.subs.length?'단계 '+t.subs.filter(s=>s.done).length+'/'+t.subs.length:'',t.today===dkey()&&!o.noToday?'오늘':''].filter(Boolean);
+  return '<div class="tk-row st-'+st+(w.length&&st!=='done'?' wait':'')+'"><button type="button" class="v3-ck'+(st==='done'?' on':'')+'" data-act="tk-done" data-id="'+t.id+'" aria-pressed="'+(st==='done')+'" aria-label="'+esc(t.title)+(st==='done'?' 완료 취소':' 끝냈어요')+'">'+(st==='done'?I3.check:'')+'</button>'+
+    '<button type="button" class="tk-m" data-act="tk-open" data-id="'+t.id+'"><b>'+esc(t.title)+'</b>'+(meta.length?'<span class="'+(st==='blocked'?'tk-bl':'')+'">'+esc(meta.join(' · '))+'</span>':'')+(o.why&&t.why?'<span class="tk-why">'+esc(t.why)+'</span>':'')+'</button>'+
+    (o.pick&&st!=='done'?'<button type="button" class="tk-pick'+(t.today===dkey()?' on':'')+'" data-act="tk-today" data-id="'+t.id+'" aria-pressed="'+(t.today===dkey())+'">'+(t.today===dkey()?'오늘 ✓':'오늘 하기')+'</button>':'')+
+    (o.talk?'<button type="button" class="tk-talk" data-act="tk-talk" data-id="'+t.id+'">이야기하기</button>':'')+'</div>';
+}
+function wgCard(g,o){
+  o=o||{};const p=wgProg(g),pct=p.n?Math.round(p.d/p.n*100):0,ach=g.status==='done';
+  return '<section class="wg-card'+(ach?' ach':'')+'"><button type="button" class="wg-top" data-act="wg-open" data-id="'+g.id+'"><span class="wg-n">'+(o.idx!=null?o.idx+1:'')+'</span><span class="grow"><b>'+esc(g.title)+'</b>'+
+    (g.crit?'<span class="wg-crit"><i>완료 기준</i>'+esc(g.crit)+'</span>':'<span class="wg-crit muted">완료 기준을 정하면 끝났는지 판단하기 쉬워요</span>')+'</span>'+(ach?'<span class="wg-badge">이뤘어요</span>':'')+'</button>'+
+    '<div class="wg-prog"><div class="wg-bar"><i style="width:'+pct+'%"></i></div><span class="xs muted">할 일 '+p.d+'/'+p.n+(p.n&&p.d===p.n&&!ach?' · 기준에 닿았는지 확인해 보세요':'')+'</span></div>'+
+    (o.tasks?'<div class="tk-list">'+tkOf(g.id).map(t=>tkRow(t,{pick:true})).join('')+
+      '<div class="tk-add"><input class="field" id="tkNew_'+g.id+'" placeholder="할 일 추가" maxlength="50" data-field="tk-new" data-g="'+g.id+'" enterkeyhint="done"><button type="button" class="btn sm" data-act="tk-add" data-g="'+g.id+'" data-inp="tkNew_'+g.id+'">추가</button></div>'+
+      '<button type="button" class="link wg-ai" data-act="wg-ai" data-id="'+g.id+'">'+(tkOf(g.id).length?'길잡이와 할 일 다듬기':'길잡이에게 할 일 만들어 달라기')+'</button></div>':'')+'</section>';
+}
+function askCard(key){
+  const nxt=key>curKey();
+  return '<section class="wg-ask">'+'<span class="v3-g big">'+pxImg(SPR.ga_listen,56)+'</span><div class="grow"><b>'+(nxt?'다음 주':'이번 주')+'가 끝났을 때, 무엇이 달라져 있으면 좋겠어요?</b><span class="small muted">막연해도 괜찮아요. 길잡이가 끝났다고 판단할 기준과 필요한 일을 같이 정해요.</span>'+
+    '<div class="wg-ask-in"><input id="wgAsk" class="field" placeholder="예: 발표 준비 좀 끝내고 싶어" maxlength="80" data-field="wg-ask" enterkeyhint="send"><button type="button" class="btn primary" data-act="wg-ask" data-k="'+key+'">이야기하기</button></div></div></section>';
+}
+function focusCard(){
+  const key=curKey(),gs=wgOf(key),doing=tkWeek(key).concat(tkLoose(key)).find(t=>t.status==='doing');
+  const ready=nextTask(key);const t=doing||ready;
+  if(!t)return '';
+  const g=t.goalId&&wgById(t.goalId);
+  return '<section class="v3-now">'+v3Portrait(doing?'think':'idle')+'<div class="v3-now-m"><span class="v3-now-tag">'+(doing?'지금 하는 중':'다음으로 하면 좋은 일')+'</span><b class="v3-now-t">'+esc(t.title)+'</b>'+
+    '<span class="v3-now-meta">'+esc([g?g.title:'',t.crit?'완료: '+t.crit:''].filter(Boolean).join(' · '))+'</span>'+(t.why&&!doing?'<span class="v3-now-l">'+esc(t.why)+'</span>':'')+
+    '<span class="row-wrap" style="gap:12px">'+(doing?'<button type="button" class="link v3-now-alt" data-act="tk-st" data-id="'+t.id+'" data-v="blocked">막혔어요</button>':'<button type="button" class="link v3-now-alt" data-act="tk-alt" data-id="'+t.id+'">다른 일 고르기</button>')+'<button type="button" class="link v3-now-alt" data-act="tk-split" data-id="'+t.id+'">더 작게 나누기</button></span></div>'+
+    (doing?'<button type="button" class="btn primary v3-now-b" data-act="tk-done" data-id="'+t.id+'">끝냈어요</button>':'<button type="button" class="btn primary v3-now-b" data-act="tk-st" data-id="'+t.id+'" data-v="doing">시작</button>')+'</section>';
+}
+function nextTask(key){
+  const gs=wgOf(key).filter(g=>g.status!=='done'),order=g=>gs.findIndex(x=>x.id===g);
+  const c=tkWeek(key).concat(tkLoose(key)).filter(t=>tkReady(t)&&t.status==='todo'&&!(ui.skipTk||[]).includes(t.id));
+  c.sort((a,b)=>((b.today===dkey())-(a.today===dkey()))||((a.due||'9')<(b.due||'9')&&a.due&&a.due<=iso(addDays(today(),1))?-1:0)||((a.goalId?order(a.goalId):99)-(b.goalId?order(b.goalId):99))||((a.order||0)-(b.order||0)));
+  return c[0]||null;
+}
+function todaySched(){
+  const wk=getWeek(curKey()),td=dow(today()),it=dayItems(wk,td,'today'),n=nowMin();
+  const rows=it.fx.filter(f=>f.t==='fixed').map(f=>({s:f.start,e:f.end,l:f.label,a:'fx-open',d:' data-k="'+wk.key+'" data-d="'+td+'" data-id="'+(f.id||'')+'"'}))
+    .concat(it.bl.filter(b=>b.kind==='event'||b.lock||b.taskId||b.src==='guide').map(b=>({s:b.start,e:b.start+b.dur,l:b.title,a:'blk',d:' data-k="'+wk.key+'" data-id="'+b.id+'"',done:b.done})))
+    .concat(adOn(dkey()).map(x=>({s:-1,e:1440,l:x.title,a:'ad-open',d:' data-id="'+x.id+'"'}))).filter(r=>r.e>n||r.s<0).sort((a,b)=>a.s-b.s);
+  if(!rows.length)return '';
+  return '<section class="v3-card ts"><div class="v3-ch"><b>오늘 시간이 정해진 것</b><button type="button" class="link" data-act="v3-sched">시간표</button></div>'+
+    rows.slice(0,5).map(r=>'<button type="button" class="ts-r'+(r.done?' done':'')+'" data-act="'+r.a+'"'+r.d+'><span class="mono">'+(r.s<0?'종일':hm(r.s))+'</span><b>'+esc(r.l)+'</b><span class="v3-chev">'+I3.chev+'</span></button>').join('')+'</section>';
+}
+function viewToday(){
+  const t=today(),key=curKey(),gs=wgOf(key),nk=iso(addDays(fromIso(key),7));
+  const out=['<div class="v3-title"><div class="stack" style="gap:2px"><h1>이번 주</h1><span class="v3-date">'+(t.getMonth()+1)+'월 '+t.getDate()+'일 '+DAYS[dow(t)]+'요일 · '+md(fromIso(key))+'–'+md(addDays(fromIso(key),6))+'</span></div><button type="button" class="v3-ic" data-act="month-open" aria-label="달력">'+I3.cal+'</button></div>'];
+  out.push(otherTabCard());out.push(saveFailCard());out.push(changeCard());
+  out.push(reviewCard());
+  if(ui.proposals)out.push(recCards(getWeek(key)));
+  /* A. 이번 주에 이루려는 것 */
+  out.push('<div class="sec-h"><h2>이번 주에 이루려는 것</h2>'+(gs.length?'<button type="button" class="link" data-act="wg-new" data-k="'+key+'">+ 목표</button>':'')+'</div>');
+  if(!gs.length)out.push(askCard(key));
+  else out.push('<div class="wg-stack">'+gs.map((g,i)=>wgCard(g,{idx:i})).join('')+'</div>');
+  /* B. 지금 진행할 만한 일 */
+  const all=tkWeek(key).concat(tkLoose(key).filter(x=>x.key!==key));
+  const picked=all.filter(x=>x.today===dkey()&&x.status!=='done');
+  const ready=all.filter(x=>tkReady(x)&&x.today!==dkey()).sort((a,b)=>{const o=g=>{const i=gs.findIndex(x=>x.id===g);return i<0?99:i;};return (a.status==='doing'?-1:0)-(b.status==='doing'?-1:0)||o(a.goalId)-o(b.goalId)||(a.order||0)-(b.order||0);});
+  const doneToday=all.filter(x=>x.status==='done'&&x.doneAt===dkey());
+  if(all.length||gs.length){
+    const nm=nowMin();out.push(nm>=S.setup.dayEnd-30||nm<4*60?lateCard(getWeek(key)):focusCard());
+    out.push('<div class="sec-h"><h2>지금 진행할 만한 일</h2><button type="button" class="link" data-act="tk-reco">길잡이 추천</button></div>');
+    out.push('<section class="v3-card tk-sec">'+(picked.length?'<span class="tk-sub">오늘 하기로 한 일</span>'+picked.map(x=>tkRow(x,{goal:true,pick:true,noToday:1})).join(''):'')+
+      (ready.length?(picked.length?'<span class="tk-sub">할 수 있는 일</span>':'')+ready.slice(0,ui.tkMore?40:5).map(x=>tkRow(x,{goal:true,pick:true})).join('')+(ready.length>5&&!ui.tkMore?'<button type="button" class="link" data-act="tk-more">'+(ready.length-5)+'개 더 보기</button>':''):(!picked.length?'<span class="small muted">'+(all.some(x=>x.status!=='done')?'남은 일은 앞 단계나 막힌 점이 풀리기를 기다리고 있어요.':gs.length?'아직 할 일이 없어요. 목표를 눌러 할 일을 만들어 보세요.':'')+'</span>':''))+
+      (doneToday.length?'<span class="tk-sub">오늘 끝낸 일 '+doneToday.length+'</span>'+doneToday.map(x=>tkRow(x,{goal:true})).join(''):'')+
+      '<div class="tk-add"><input class="field" id="tkNew_" placeholder="목표 없이 할 일 적기" maxlength="50" data-field="tk-new" data-g="" enterkeyhint="done"><button type="button" class="btn sm" data-act="tk-add" data-g="" data-inp="tkNew_">추가</button></div></section>');
+  }
+  /* C. 막혔거나 다시 정해야 할 것 */
+  const stuck=all.filter(x=>x.status==='blocked'||(x.due&&x.due<dkey()&&x.status!=='done'));
+  if(stuck.length){
+    out.push('<div class="sec-h"><h2>막혔거나 다시 정할 것</h2></div>');
+    out.push('<section class="v3-card tk-sec stuck">'+stuck.map(x=>tkRow(x,{goal:true,talk:true})).join('')+'</section>');
+  }
+  if(!all.length&&!gs.length){const nm=nowMin();if(nm>=S.setup.dayEnd-30||nm<4*60)out.push(lateCard(getWeek(key)));}
+  out.push(todaySched());
+  if(dow(t)>=5&&!wgOf(nk).length&&gs.length)out.push('<button type="button" class="v3-nudge v3-nudge-btn" data-act="wg-ask-next"><span class="v3-g big">'+pxImg(SPR.g_idle,48)+'</span><div class="grow"><span class="xs muted">길잡이</span><b>다음 주 목표도 미리 정해 볼까요?</b></div><span class="v3-chev">'+I3.chev+'</span></button>');
+  out.push(rtSection());
+  return out.join('');
+}
+
+/* ---------- 3. 이번 주: 목표·할 일 / 시간표 ---------- */
+viewWeek=(_viewWeekSched=>function(){
+  const mode=ui.wkMode||'goals';
+  const seg='<div class="seg2 wk-seg" role="tablist"><button type="button" role="tab" aria-selected="'+(mode==='goals')+'" class="'+(mode==='goals'?'on':'')+'" data-act="wk-mode" data-v="goals">목표·할 일</button><button type="button" role="tab" aria-selected="'+(mode==='sched')+'" class="'+(mode==='sched'?'on':'')+'" data-act="wk-mode" data-v="sched">시간표</button></div>';
+  if(mode==='sched')return _viewWeekSched().replace('<div class="v3-wnav">',seg+'<div class="v3-wnav">');
+  const k=wkKey(),s=fromIso(k),gs=wgOf(k),loose=tkLoose(k),past=k<curKey();
+  const out=['<div class="v3-title"><h1>'+wkLabel(k)+'</h1><div class="row" style="gap:6px"><button type="button" class="v3-ic" data-act="srch" aria-label="찾기">'+I3.search+'</button><button type="button" class="v3-mo" data-act="month-open"><span>월간</span>'+I3.cal+'</button></div></div>',seg,
+    '<div class="v3-wnav"><button type="button" class="v3-arr" data-act="wk-go" data-v="-1" aria-label="지난주">‹</button><b>'+md(s)+' – '+md(addDays(s,6))+'</b><button type="button" class="v3-arr" data-act="wk-go" data-v="1" aria-label="다음 주">›</button></div>'+
+    (k!==curKey()?'<button type="button" class="link v3-back" data-act="wk-go" data-v="0">이번 주로 돌아가기</button>':'')];
+  out.push(changeCard());
+  if(!gs.length&&!past)out.push(askCard(k));
+  for(const g of gs)out.push(wgCard(g,{tasks:true}));
+  if(past&&gs.length)out.push(reviewSummary(k));
+  if(!past)out.push('<button type="button" class="btn block wg-addbtn" data-act="wg-new" data-k="'+k+'">+ 목표 직접 적기</button>');
+  out.push('<section class="v3-card tk-sec"><div class="v3-ch"><b>목표 없는 할 일 <span class="muted">· '+loose.filter(t=>t.status!=='done').length+'</span></b></div>'+
+    loose.map(t=>tkRow(t,{pick:!past})).join('')+(!past?'<div class="tk-add"><input class="field" id="tkNew__l" placeholder="할 일 적기" maxlength="50" data-field="tk-new" data-g="" enterkeyhint="done"><button type="button" class="btn sm" data-act="tk-add" data-g="" data-k="'+k+'" data-inp="tkNew__l">추가</button></div>':'')+'</section>');
+  if(!past)out.push('<button type="button" class="v3-nudge v3-nudge-btn" data-act="v3-plan" data-k="'+k+'"><span class="v3-g big">'+pxImg(SPR.g_idle,48)+'</span><div class="grow"><span class="xs muted">길잡이</span><b>이 주 목표와 할 일 함께 다듬기</b></div><span class="v3-chev">'+I3.chev+'</span></button>');
+  return out.join('');
+})(viewWeek);
+
+/* ---------- 4. 할 일 · 목표 시트 ---------- */
+function tkSheet(){
+  const t=tkById(ui.tkId);if(!t)return '';const g=t.goalId&&wgById(t.goalId),E=ui.tkE||{};
+  const sibs=(t.goalId?tkOf(t.goalId):tkLoose(t.key||curKey())).filter(x=>x.id!==t.id);
+  return '<div class="grab"></div><span class="label">'+(g?esc(g.title):'목표 없는 할 일')+'</span>'+
+    '<input id="tkT" class="field title-field" value="'+esc(E.title!=null?E.title:t.title)+'" maxlength="50" aria-label="할 일">'+
+    '<div class="tk-st" role="group" aria-label="상태">'+['todo','doing','blocked','done'].map(s=>'<button type="button" class="'+(t.status===s?'on':'')+' s-'+s+'" data-act="tk-st" data-id="'+t.id+'" data-v="'+s+'" aria-pressed="'+(t.status===s)+'">'+TK_ST[s]+'</button>').join('')+'</div>'+
+    (t.status==='blocked'?'<label class="stack"><span class="label">무엇이 막혔나요?</span><input id="tkNote" class="field" value="'+esc(E.note!=null?E.note:t.note||'')+'" placeholder="예: 근거 자료를 못 찾았어요, 팀원 답장 기다리는 중" maxlength="80"></label>':'')+
+    '<label class="stack"><span class="label">무엇을 하면 완료인가요?</span><input id="tkC" class="field" value="'+esc(E.crit!=null?E.crit:t.crit||'')+'" placeholder="예: 핵심 주장 3개가 한 문장씩 적혀 있다" maxlength="80"></label>'+
+    '<div class="tk-why-box"><span class="label">왜 필요한 일인가요?</span>'+(t.why?'<p class="small">'+esc(t.why)+'</p>':'<p class="small muted">아직 적힌 이유가 없어요.</p>')+'<button type="button" class="link" data-act="tk-ask-why" data-id="'+t.id+'">'+(t.why?'정말 필요한지 길잡이와 따져 보기':'길잡이에게 물어보기')+'</button></div>'+
+    '<div class="stack"><span class="label">먼저 끝나야 할 일</span><div class="row-wrap">'+(sibs.length?sibs.map(x=>{const on=(t.after||[]).includes(x.id);return '<button type="button" class="chip sm'+(on?' on':'')+'" data-act="tk-dep" data-id="'+t.id+'" data-v="'+x.id+'" aria-pressed="'+on+'">'+esc(x.title.slice(0,18))+'</button>';}).join(''):'<span class="small muted">같은 목표의 다른 할 일이 생기면 고를 수 있어요.</span>')+'</div></div>'+
+    '<div class="stack"><span class="label">실제 마감 <span class="xs muted">· 있을 때만</span></span><div class="add-dates"><button type="button" class="chip'+(t.due?'':' on')+'" data-act="tk-due" data-id="'+t.id+'" data-v="">없음</button><label class="chip add-pick'+(t.due?' on':'')+'">'+(t.due?dayName(t.due)+'까지':'날짜 고르기')+'<input type="date" value="'+(t.due||'')+'" data-field="tk-due" data-id="'+t.id+'"></label></div></div>'+
+    '<span class="label">더 작게 나누기</span>'+subsHtml(t.subs,'tk','',t.id)+
+    '<div class="grid2"><button type="button" class="btn" data-act="tk-split" data-id="'+t.id+'">길잡이와 나누기</button><button type="button" class="btn" data-act="tk-talk" data-id="'+t.id+'">막힌 점 이야기하기</button></div>'+
+    '<button type="button" class="btn primary block" data-act="tk-save" data-id="'+t.id+'">저장</button>'+
+    '<div class="grid2"><button type="button" class="btn" data-act="tk-sched" data-id="'+t.id+'">시간 정해 두기</button><button type="button" class="btn danger" data-act="tk-del" data-id="'+t.id+'">지우기</button></div>';
+}
+function wgSheet(){
+  const g=ui.wgId==='new'?null:wgById(ui.wgId),key=ui.wgKey||curKey();
+  return '<div class="grab"></div><h2>'+(g?'이번 주 목표':wkLabel(key)+' 목표 적기')+'</h2>'+
+    '<label class="stack"><span class="label">이루려는 것</span><input id="wgT" class="field" value="'+esc(g?g.title:'')+'" placeholder="예: 금요일까지 팀에 보여줄 발표 초안 완성" maxlength="40"></label>'+
+    '<label class="stack"><span class="label">완료 기준 · 끝났다고 판단할 상태</span><input id="wgC" class="field" value="'+esc(g?g.crit:'')+'" placeholder="예: 핵심 주장과 근거가 연결된 슬라이드 초안이 있다" maxlength="80"></label>'+
+    '<label class="stack"><span class="label">왜 이번 주에 하나요? <span class="xs muted">· 선택</span></span><input id="wgW" class="field" value="'+esc(g?g.why:'')+'" placeholder="예: 다음 주 월요일 팀 회의 전에 보여 줘야 해서" maxlength="80"></label>'+
+    (g?'<div class="stack"><span class="label">상태</span><div class="row-wrap">'+[['active','진행 중'],['done','이뤘어요'],['partial','일부만']].map(x=>'<button type="button" class="chip'+(g.status===x[0]?' on':'')+'" data-act="wg-st" data-id="'+g.id+'" data-v="'+x[0]+'">'+x[1]+'</button>').join('')+'</div></div>'+
+      '<div class="row-wrap"><button type="button" class="btn sm" data-act="wg-prio" data-id="'+g.id+'" data-v="-1">우선순위 올리기</button><button type="button" class="btn sm" data-act="wg-prio" data-id="'+g.id+'" data-v="1">내리기</button></div>':'')+
+    '<button type="button" class="btn primary block" data-act="wg-save">'+(g?'저장':'목표 정하기')+'</button>'+
+    (g?'<div class="grid2"><button type="button" class="btn" data-act="wg-ai" data-id="'+g.id+'">길잡이와 다듬기</button><button type="button" class="btn danger" data-act="wg-del" data-id="'+g.id+'">내려놓기</button></div>':'<span class="xs muted">막연하면 길잡이와 이야기하며 정해도 돼요.</span>');
+}
+
+/* ---------- 5. 주간 회고 ---------- */
+function reviewKey(){
+  const lk=iso(addDays(fromIso(curKey()),-7)),cur=curKey();
+  const eve=dow(today())===6&&nowMin()>=17*60;
+  if(eve&&wgOf(cur).some(g=>!g.review))return cur;
+  if(wgOf(lk).some(g=>!g.review)&&!S.rvSkip?.[lk])return lk;
+  return null;
+}
+function reviewCard(){
+  const k=reviewKey();if(!k)return '';
+  return '<section class="rv-card"><span class="v3-g big">'+pxImg(SPR.ga_happy,56)+'</span><div class="grow"><span class="xs muted">'+(k===curKey()?'이번 주 돌아보기':'지난주 돌아보기')+'</span><b>목표로 정한 상태에 얼마나 다가갔나요?</b><span class="small muted">체크한 개수보다, 바라던 결과가 나왔는지가 중요해요.</span>'+
+    '<div class="row-wrap"><button type="button" class="btn sm primary" data-act="rv-open" data-k="'+k+'">돌아보기</button><button type="button" class="link" data-act="rv-skip" data-k="'+k+'">이번엔 넘기기</button></div></div></section>';
+}
+function rvSheet(){
+  const k=ui.rvKey,gs=wgOf(k),R=ui.rv||(ui.rv={});
+  return '<div class="grab"></div><h2>'+wkLabel(k)+' 돌아보기</h2><p class="small muted">다음 주를 더 잘 짜기 위한 정리예요. 평가가 아니에요.</p>'+
+    gs.map(g=>{const r=R[g.id]||(R[g.id]={reach:g.review?g.review.reach:'',helped:[],hard:'',carry:tkOf(g.id).filter(t=>t.status!=='done').map(t=>t.id),cont:true});const l=tkOf(g.id),done=l.filter(t=>t.status==='done'),left=l.filter(t=>t.status!=='done');
+      return '<section class="rv-g"><b>'+esc(g.title)+'</b>'+(g.crit?'<span class="small muted">완료 기준: '+esc(g.crit)+'</span>':'')+
+        '<div class="row-wrap">'+[['done','다 이뤘어요'],['partial','일부만'],['not','아직이에요']].map(x=>'<button type="button" class="chip'+(r.reach===x[0]?' on':'')+'" data-act="rv-reach" data-g="'+g.id+'" data-v="'+x[0]+'">'+x[1]+'</button>').join('')+'</div>'+
+        (done.length?'<span class="label">실제로 도움이 된 일</span><div class="row-wrap">'+done.map(t=>'<button type="button" class="chip sm'+(r.helped.includes(t.id)?' on':'')+'" data-act="rv-help" data-g="'+g.id+'" data-v="'+t.id+'">'+esc(t.title.slice(0,18))+'</button>').join('')+'</div>':'')+
+        '<label class="stack"><span class="label">예상보다 어려웠던 점</span><input class="field" data-field="rv-hard" data-g="'+g.id+'" value="'+esc(r.hard)+'" placeholder="예: 근거 찾는 데 시간이 오래 걸렸어요" maxlength="80"></label>'+
+        (left.length&&r.reach!=='done'?'<span class="label">다음 주로 이어갈 일 <span class="xs muted">· 고르지 않은 일은 내려놓아요</span></span><div class="row-wrap">'+left.map(t=>'<button type="button" class="chip sm'+(r.carry.includes(t.id)?' on':'')+'" data-act="rv-carry" data-g="'+g.id+'" data-v="'+t.id+'">'+esc(t.title.slice(0,18))+'</button>').join('')+'</div>'+
+          '<label class="row small"><input type="checkbox" data-field="rv-cont" data-g="'+g.id+'"'+(r.cont?' checked':'')+'>이 목표를 다음 주에도 이어가기</label>':'')+'</section>';}).join('')+
+    '<button type="button" class="btn primary block" data-act="rv-save">정리하고 '+(ui.rvKey===curKey()?'다음 주로 이어가기':'이번 주로 이어가기')+'</button><button type="button" class="btn ghost block" data-act="rv-talk">길잡이와 이야기하며 돌아보기</button>';
+}
+function reviewSummary(k){
+  const gs=wgOf(k);
+  return '<section class="v3-card"><div class="v3-ch"><b>돌아보기</b>'+(gs.some(g=>!g.review)?'<button type="button" class="link" data-act="rv-open" data-k="'+k+'">지금 돌아보기</button>':'')+'</div>'+
+    gs.map(g=>'<span class="small"><b>'+esc(g.title)+'</b> · '+(g.review?({done:'다 이뤘어요',partial:'일부만',not:'아직'})[g.review.reach]||'기록 없음':'아직 돌아보지 않았어요')+(g.review&&g.review.hard?' · 어려웠던 점: '+esc(g.review.hard):'')+'</span>').join('')+'</section>';
+}
+function rvSave(){
+  const k=ui.rvKey,R=ui.rv||{},nk=iso(addDays(fromIso(k),7)),s=trSnap([],{});
+  let carried=0,cont=0;
+  for(const g of wgOf(k)){const r=R[g.id];if(!r)continue;
+    g.review={reach:r.reach||'',helped:r.helped.slice(),hard:r.hard||'',at:dkey()};g.status=r.reach==='done'?'done':r.reach==='partial'?'partial':g.status==='active'?'partial':g.status;
+    const left=tkOf(g.id).filter(t=>t.status!=='done');
+    if(r.reach!=='done'&&left.length){
+      let ng=null;
+      if(r.cont&&!wgOf(nk).some(x=>x.from===g.id)){ng=wgAdd({key:nk,title:g.title,crit:g.crit,why:g.why,from:g.id});cont++;}
+      for(const t of left){if(r.carry.includes(t.id)){t.key=nk;if(ng)t.goalId=ng.id;else t.goalId=null;carried++;}else t.status='done',t.dropped=1;}
+    }
+  }
+  ui.sheet=null;ui.rv=null;
+  toast('돌아봤어요'+(cont?' · 목표 '+cont+'개 이어가요':'')+(carried?' · 할 일 '+carried+'개를 '+(k===curKey()?'다음 주':'이번 주')+'로':''));
+  commit();
+}
+
+/* ---------- 6. 길잡이: 목표 → 완료 기준 → 할 일 → 실행하며 고치기 ---------- */
+function gwkKey(){return gWeek().key;}
+function gRefsTk(key){
+  const gs=wgOf(key),out={goals:[],tasks:[],map:{}};let gi=0,ti=0;
+  const tk=t=>{const r='t'+(++ti);out.map[r]=t.id;return {ref:r,title:t.title,crit:t.crit||'',why:t.why||'',status:TK_ST[t.status],after:(t.after||[]).map(id=>{for(const k in out.map)if(out.map[k]===id)return k;return null;}).filter(Boolean),due:t.due||'',blockNote:t.note||'',today:t.today===dkey()};};
+  for(const g of gs){const r='g'+(++gi);out.map[r]=g.id;out.goals.push({ref:r,title:g.title,crit:g.crit||'',status:g.status,tasks:tkOf(g.id).map(tk)});}
+  out.tasks=tkLoose(key).filter(t=>t.status!=='done').map(tk);
+  return out;
+}
+function gPropTasks(gid,list,say){
+  const g=wgById(gid);
+  pushGuide({text:say||(g?"'"+g.title+"'을(를) 위해 이렇게 해 보면 어떨까요?":'이렇게 나눠 봤어요.'),tprop:{id:uid(),goalId:gid,key:g?g.key:gwkKey(),tasks:list.slice(0,10).map((x,i)=>({title:String(x.title||'').slice(0,50),crit:String(x.crit||'').slice(0,80),why:String(x.why||'').slice(0,100),after:(Array.isArray(x.after)?x.after:[]).map(Number).filter(n=>n>=0&&n<i),due:/^\d{4}-\d{2}-\d{2}$/.test(x.due||'')?x.due:null,on:true})),status:'open'},chips:[]});
+}
+function gPropGoal(o,say){pushGuide({text:say||'이번 주 목표를 이렇게 정해 볼까요?',gprop:{id:uid(),key:o.key||gwkKey(),title:String(o.title||'').slice(0,40),crit:String(o.crit||'').slice(0,80),why:String(o.why||'').slice(0,80),status:'open'},chips:[]});}
+function gApplyTk(edits,map){
+  const s=trSnap([],{}),done=[],fail=[],T=r=>tkById(map[r]),G=r=>wgById(map[r]);
+  const before=clone(tkList());
+  for(const e of (edits||[]).slice(0,8)){
+    const op=String(e.op||''),t=T(String(e.ref||''));
+    if(op==='add'){const g=G(String(e.goal||''));const nt=tkAdd({title:e.title,crit:e.crit||'',why:e.why||'',goalId:g?g.id:null,key:g?g.key:gwkKey(),after:(e.after||[]).map(r=>map[r]).filter(Boolean)});done.push("'"+nt.title+"' 추가");continue;}
+    if(!t){fail.push('대상을 찾지 못했어요');continue;}
+    if(op==='split'&&Array.isArray(e.into)&&e.into.length){let prev=null;const ids=[];for(const x of e.into.slice(0,5)){const nt=tkAdd({title:x.title||x,crit:x.crit||'',why:x.why||'',goalId:t.goalId,key:t.key,after:prev?[prev]:(t.after||[]).slice(),order:(t.order||0)+ids.length*0.01});ids.push(nt.id);prev=nt.id;}
+      for(const o of tkList())if((o.after||[]).includes(t.id))o.after=o.after.filter(x=>x!==t.id).concat([prev]);
+      S.tasks=tkList().filter(x=>x!==t);done.push("'"+t.title+"'을(를) "+ids.length+'단계로 나눔');continue;}
+    if(op==='drop'){S.tasks=tkList().filter(x=>x!==t);for(const o of tkList())o.after=(o.after||[]).filter(x=>x!==t.id);done.push("'"+t.title+"' 내려놓음");continue;}
+    if(op==='done'){tkSet(t,'done');done.push("'"+t.title+"' 완료");continue;}
+    if(op==='block'){t.status='blocked';t.note=String(e.note||t.note||'').slice(0,80);done.push("'"+t.title+"' 막힘으로 표시");continue;}
+    if(op==='unblock'||op==='todo'){t.status='todo';t.note='';done.push("'"+t.title+"' 다시 할 일로");continue;}
+    if(op==='rename'&&e.title){const o=t.title;t.title=String(e.title).slice(0,50);if(e.crit)t.crit=String(e.crit).slice(0,80);done.push("'"+o+"' → '"+t.title+"'");continue;}
+    if(op==='after'){t.after=(e.after||[]).map(r=>map[r]).filter(x=>x&&x!==t.id);done.push("'"+t.title+"' 순서 조정");continue;}
+    if(op==='due'){t.due=/^\d{4}-\d{2}-\d{2}$/.test(e.due||'')?e.due:null;done.push("'"+t.title+"' 마감 "+(t.due?md(fromIso(t.due)):'없음'));continue;}
+    if(op==='today'){t.today=dkey();done.push("'"+t.title+"' 오늘 하기로");continue;}
+    if(op==='later'){const nk=iso(addDays(fromIso(t.key||curKey()),7));t.key=nk;t.today=null;done.push("'"+t.title+"' 다음 주로");continue;}
+    fail.push("'"+t.title+"'에 할 수 없는 요청");
+  }
+  if(done.length)ui.change={title:'길잡이가 할 일을 바꿨어요',lines:done.map(t=>({t})),undo:{tasks:before}};
+  return {done,fail};
+}
+/* 할 일 되돌리기도 그 작업만 */
+const _chgDiff=chgDiff;
+chgDiff=function(v){const u=v.undo;if(!u||u.diff)return v;const T=u.tasks,W=u.wgoals;delete u.tasks;delete u.wgoals;const r=_chgDiff(v);const J=(x,y)=>JSON.stringify(x)===JSON.stringify(y);
+  if(T)r.undo.tasks=trDiffList(T,tkList(),J);if(W)r.undo.wgoals=trDiffList(W,wgList(),J);return r;};
+const _changeUndo=changeUndo;
+changeUndo=function(){const u=ui.change&&ui.change.undo;if(u&&u.diff){if(u.tasks)S.tasks=trUndoList(tkList(),u.tasks);if(u.wgoals)S.wgoals=trUndoList(wgList(),u.wgoals);}_changeUndo();};
+
+async function aiTurn(text){
+  const key=gwkKey(),g=guideState(),R=gRefsTk(key),wk=getWeek(key);FXW=wk;
+  const hist=g.msgs.slice(-14).map(m=>({role:m.role==='me'?'user':'guide',text:m.text+(m.options?' [선택지: '+m.options.join(' / ')+']':'')+(m.tprop?' (할 일 제안 '+m.tprop.status+': '+m.tprop.tasks.map(x=>x.title).join(', ')+')':'')+(m.gprop?' (목표 제안 '+m.gprop.status+': '+m.gprop.title+' / 기준: '+m.gprop.crit+')':'')}));
+  const sched=gRefs(uniq([key,curKey()]));
+  const lw=wgOf(iso(addDays(fromIso(key),-7))).map(x=>({title:x.title,reach:x.review?x.review.reach:'',hard:x.review?x.review.hard:''}));
+  const prompt=["너는 투두리스트 앱 '다음 주'의 길잡이다. 이 앱은 사용자가 주간 목표를 정하고, 너와 대화하며 그 목표에 필요한 할 일을 만들고 실행하며 고쳐 가는 곳이다. 『싯다르타』의 뱃사공처럼 먼저 귀 기울여 듣고, 사용자가 원하는 방향을 확인하고, 스스로 고를 수 있게 돕는다. JSON 하나로만 답하라.",
+    '형식: {"type":"listen|ask|goal|tasks|edit|next|say|event","say":"메시지","options":["짧은 답"],"goal":{"title":"이번 주 목표(25자 이내, 결과 상태로)","crit":"끝났다고 판단할 상태 한 줄","why":"이유(선택)"},"goalRef":"g1","tasks":[{"title":"실행할 일(20자 이내, 동사로)","crit":"완료 기준 한 줄","why":"이 일이 목표에 필요한 이유 한 줄","after":[앞서 끝나야 할 tasks 배열 번호],"due":"YYYY-MM-DD 또는 빈 문자열"}],"edits":[{"ref":"t2","op":"split|drop|done|block|unblock|rename|after|due|today|later|add","into":[{"title":"","crit":""}],"title":"","crit":"","note":"","after":["t1"],"due":"","goal":"g1"}],"ref":"t3","event":{"day":"토","start":"HH:MM","minutes":120,"title":"약속"},"chips":["이어서 누를 짧은 답 2~3개"]}',
+    '규칙:',
+    "- 사용자가 막연한 바람을 말하면(예: 발표 준비 좀 끝내고 싶어) 바로 할 일을 만들지 말고, 이번 주가 끝났을 때 도달할 상태를 묻는다(ask, options에 서로 다른 도달 상태 2~3개. 예: '자료 조사까지', '발표 초안까지', '연습까지'). 숫자가 아니어도 사용자가 끝났다고 판단할 수 있어야 한다.",
+    '- 도달 상태가 정해지면 type goal로 주간 목표와 완료 기준을 제안한다. 사용자가 확정하면(대화에 목표 제안 accepted가 보이면) type tasks로 실행할 일을 제안한다.',
+    '- tasks: 목표를 이루는 데 꼭 필요한 일만 3~7개. 빠뜨린 일을 찾고 불필요한 일은 빼고, 먼저 해야 다음 일이 풀리는 순서로 after를 건다. why에 그 일이 필요한 이유를 쓴다. 날짜는 실제 제약(제출일, 회의)이 있을 때만 due에 쓴다. "언제 할래요?"를 묻지 않는다.',
+    "- 실행 중 대화가 핵심이다. '뭐부터 해야 할지 모르겠어' → type next로 목표에 가장 영향이 큰 '지금 할 수 있는' 일 하나(ref)를 고르고 이유를 say에. '막막해' → edit op split으로 바로 시작할 수 있는 단위(3~4개)로 나눈다. '이거까지 해야 해?' → 목표 달성에 필요한지 판단해 say로 답하고 필요 없으면 edit op drop을 제안이 아니라 사용자가 동의할 때 적용한다(동의 전이면 type say와 chips ['빼 줘','남겨 둘래']). '일이 커졌어' → 범위를 줄이거나 다른 방법(rename/split/drop). '이번 주 바빠졌어' → 남길 일과 미룰 일을 나눠 edit op later로 미루고, 필요하면 완료 기준을 낮추자고 say로 제안. '방향이 맞나?' → 결과물을 목표와 완료 기준에 비교해 다음 할 일을 고친다.",
+    "- 사용자가 '자료를 더 찾아야 할까요?'처럼 물을 때, 이미 충분하면 '지금은 자료보다 주장 정리가 먼저예요'처럼 근거를 들어 다른 다음 행동을 권한다.",
+    '- edit은 실제로 바꿀 때만. 앱이 바뀐 결과를 따로 보여 주므로 say에는 짧은 한마디만. 막힌 일(blockNote)이 있으면 그 이유를 먼저 다룬다.',
+    '- listen: 고민·망설임·지침을 말하면 바로 계획하지 않고 판단 없이 되짚고 한 가지만 묻는다. chips ["조금 더 이야기할래","그럼 이번 주 목표를 정해 볼래"].',
+    '- event: 특정 날짜·시각의 약속을 말할 때만(시간 고정). 이미 지난 시각이거나 자정을 넘으면 넣지 말고 묻는다.',
+    '- 이미 있는 약속·반복 일정·시간 블록(schedule의 ref, b나 f로 시작)을 옮기거나 취소해 달라고 하면 type edit, edits에 ref와 op(move|cancel), day, start, minutes. f(반복 일정)는 이번 회차만 바뀐다.',
+    '- 결과를 보장하지 않는다. 평가·훈계 금지. 말투: '+toneRule()+' 한국어. say는 1~3문장.',
+    ptypeRule(),
+    '데이터: '+JSON.stringify({today:md(today())+' '+DAYS[dow(today())]+'요일',planningWeek:wkLabel(key)+' '+md(fromIso(key))+'–'+md(addDays(fromIso(key),6)),weekGoals:R.goals,tasksWithoutGoal:R.tasks,lastWeek:lw,
+      fixedSchedule:fxGroups().map(x=>x.days.map(dd=>DAYS[dd]).join('')+' '+hm(x.start)+'–'+hm(x.end)+' '+x.label).slice(0,12),schedule:sched.map(r=>({ref:r.ref,week:wkLabel(r.k),day:DAYS[r.day],time:hm(r.start)+'–'+hm(r.start+r.dur),title:r.title,kind:r.rec?'반복 일정':r.fixed?'약속':'시간 블록'})).slice(0,30),focus:ui.gctx||null}),
+    '대화: '+JSON.stringify(hist)].join('\n');
+  const res=await runAI('guide',(sample,signal)=>sample.json(prompt,{signal,cache:false}),true);
+  ui.gctx=null;
+  if(!res||typeof res!=='object'||!res.say)return false;
+  const say=String(res.say).slice(0,520),chips=(Array.isArray(res.chips)?res.chips:[]).map(String).slice(0,3),opts=(Array.isArray(res.options)?res.options:[]).map(String).slice(0,3);
+  if(res.type==='goal'&&res.goal&&res.goal.title){gPropGoal({key,title:res.goal.title,crit:res.goal.crit,why:res.goal.why},say);return true;}
+  if(res.type==='tasks'&&Array.isArray(res.tasks)&&res.tasks.length){const gid=R.map[res.goalRef]||(wgOf(key)[0]||{}).id||null;gPropTasks(gid,res.tasks,say);return true;}
+  if(res.type==='edit'&&Array.isArray(res.edits)&&res.edits.length&&res.edits.every(e=>/^[bf]\d/.test(String(e.ref||'')))){gEditMsg(gApplyEdits(res.edits,sched),say);return true;}
+  if(res.type==='edit'&&Array.isArray(res.edits)&&res.edits.length){const r=gApplyTk(res.edits.filter(e=>!/^[bf]\d/.test(String(e.ref||''))),R.map);
+    pushGuide({text:r.done.length?say:(r.fail[0]||'바꿀 일을 찾지 못했어요.'),sub:r.done.length?'· '+r.done.join('\n· ')+(r.fail.length?'\n바꾸지 못한 것: '+r.fail.join(', '):''):'',chips:r.done.length?['되돌리기','이번 주 보기']:chips});return true;}
+  if(res.type==='next'&&res.ref&&R.map[res.ref]){const t=tkById(R.map[res.ref]);if(t){pushGuide({text:say,next:t.id,chips:chips});return true;}}
+  if(res.type==='listen'){g.listen=1;pushGuide({text:say,options:opts,chips:chips.length?chips:['조금 더 이야기할래','그럼 이번 주 목표를 정해 볼래']});return true;}
+  if(res.type==='event'&&res.event){const e=res.event,day=DIDX[String(e.day||'').charAt(0)],st=parseHm(e.start);
+    if(day!=null&&st!=null){let tw=wk;if(tw.key===curKey()&&day<dow(today()))tw=getWeek(iso(addDays(fromIso(curKey()),7)));
+      const r=placeEvent(tw,{day,start:st,dur:clamp(Number(e.minutes)||120,10,720),title:String(e.title||'약속').slice(0,20)});
+      if(r.err){pushGuide({text:r.err});return true;}ui.lastEvent={k:tw.key,id:r.b.id};pushGuide({text:say,sub:wkLabel(tw.key)+' '+DAYS[day]+'요일 '+hm(st)+' · 시간 고정',chips:['1시간이면 돼','취소']});return true;}}
+  if(res.type==='ask'){pushGuide({text:say,options:opts});return true;}
+  pushGuide({text:say,chips});return true;
+}
+/* AI 없이도: 목표 정하기 → 완료 기준 → 할 일 템플릿, 다음 할 일 추천, 막막하면 나누기 */
+const GT={
+  pres:{re:/발표|ppt|슬라이드|프레젠/i,ask:'이번 주가 끝났을 때 어디까지 되어 있으면 좋겠어요?',o:['자료 조사까지','발표 초안까지','발표 연습까지'],
+    crit:{'자료 조사까지':'핵심 주장마다 근거 자료가 한두 개씩 정리돼 있다','발표 초안까지':'핵심 주장과 근거가 연결된 슬라이드 초안이 있다','발표 연습까지':'처음부터 끝까지 시간 안에 말해 봤다'},
+    tasks:[['발표에서 답할 질문 한 문장 정하기','조사와 발표의 범위를 정하려고'],['핵심 주장 3개 적기','발표의 뼈대를 만들려고'],['주장별로 필요한 근거 찾기','모든 자료를 조사하는 낭비를 줄이려고'],['슬라이드 목차 만들기','논리 흐름을 확인하려고'],['초안 작성하기','검토받을 결과물을 만들려고'],['팀원에게 검토 요청하기','제출 전에 부족한 부분을 찾으려고']]},
+  paper:{re:/보고서|과제|레포트|논문|에세이|자소서|글쓰기/,ask:'이번 주가 끝났을 때 어디까지 되어 있으면 좋겠어요?',o:['자료 모으기까지','초안까지','제출까지'],
+    crit:{'자료 모으기까지':'쓸 내용별로 참고 자료가 모여 있다','초안까지':'처음부터 끝까지 이어지는 초안이 있다','제출까지':'다듬은 최종본을 제출했다'},
+    tasks:[['요구사항과 분량 확인하기','무엇을 써야 하는지 범위를 정하려고'],['목차와 주장 한 줄씩 적기','글의 뼈대를 먼저 세우려고'],['목차별 자료 모으기','필요한 자료만 찾으려고'],['초안 쓰기','고칠 수 있는 결과물을 만들려고'],['소리 내어 읽으며 다듬기','어색한 부분을 찾으려고'],['형식 확인하고 제출하기','마감을 지키려고']]},
+  exam:{re:/시험|토익|토플|자격증|수능|내신|중간|기말|공부/,ask:'이번 주가 끝났을 때 어떤 상태면 좋겠어요?',o:['범위를 한 번 다 훑기','문제를 풀어 보기','틀린 것까지 다시 보기'],
+    crit:{'범위를 한 번 다 훑기':'시험 범위를 한 번씩 다 읽었다','문제를 풀어 보기':'범위별로 문제를 한 세트씩 풀었다','틀린 것까지 다시 보기':'틀린 문제를 다시 풀어 맞혔다'},
+    tasks:[['시험 범위와 날짜 적기','무엇을 언제까지 해야 하는지 알려고'],['범위를 하루치로 나누기','매일 할 양을 정하려고'],['단원별로 한 번 훑기','전체 그림을 잡으려고'],['단원별 문제 풀기','이해했는지 확인하려고'],['틀린 문제 다시 풀기','약한 부분을 메우려고']]},
+  fit:{re:/운동|헬스|러닝|걷기|요가|다이어트|살/,ask:'이번 주가 끝났을 때 어떤 상태면 좋겠어요?',o:['두 번 해 보기','세 번 해 보기','매일 10분씩'],
+    crit:{'두 번 해 보기':'이번 주에 운동을 두 번 했다','세 번 해 보기':'이번 주에 운동을 세 번 했다','매일 10분씩':'매일 10분씩 몸을 움직였다'},
+    tasks:[['할 운동 하나 정하기','고민하는 시간을 줄이려고'],['운동복과 신발 꺼내 두기','시작을 쉽게 하려고'],['첫 운동 해 보기','몸이 어떤지 확인하려고'],['두 번째 운동 하기','이어 가려고']]},
+  gen:{re:/./,ask:'이번 주가 끝났을 때 어디까지 되어 있으면 좋겠어요?',o:['첫걸음만 떼기','절반쯤','끝까지'],
+    crit:{'첫걸음만 떼기':'시작했다고 말할 수 있는 결과물 하나가 있다','절반쯤':'남은 일이 무엇인지 분명하고 절반쯤 진행됐다','끝까지':'끝났다고 판단할 결과물이 있다'},
+    tasks:[['끝난 모습을 한 문장으로 적기','어디까지 할지 범위를 정하려고'],['필요한 재료와 정보 모으기','시작할 준비를 하려고'],['첫 결과물 만들기','고칠 수 있는 것을 만들려고'],['다듬고 마무리하기','완료 기준에 맞추려고']]}
+};
+function gtOf(t){for(const k of ['pres','paper','exam','fit'])if(GT[k].re.test(t))return k;return 'gen';}
+function gGoalName(t){return String(t).replace(/(이번\s*주(에는|엔)?|좀|정말|꼭|해야\s*해|하고\s*싶어(요)?|싶어(요)?|끝내고|하려고|할래|해 볼래|좋겠어)/g,' ').replace(/\s+/g,' ').trim().slice(0,22)||'이번 주 목표';}
+function gLocalGoal(t){
+  const g=guideState();
+  if(g.gdraft&&g.gdraft.stage==='crit'){const d=g.gdraft,T=GT[d.cat];const crit=T.crit[t]||(t.length>3?t.replace(/까지$/,'')+'까지 되어 있다':T.crit[T.o[1]]);
+    d.stage='goal';gPropGoal({key:gwkKey(),title:(T.crit[t]?d.title+' '+t.replace(/\s*까지$/,'')+'까지':d.title).slice(0,40),crit},'좋아요. 이번 주 목표를 이렇게 정해 볼까요? 끝났는지는 완료 기준으로 판단해요.');return true;}
+  if(/(할 일|해야 할 일|어떤 일).*(나눠|만들어|짜)|나눠 줘|필요한 할 일/.test(t)){const gid=(ui.gctx&&ui.gctx.goal)||((wgOf(gwkKey()).find(x=>!tkOf(x.id).length)||wgOf(gwkKey())[0]||{}).id);const w=gid&&wgById(gid);
+    if(w){const cat=w.cat||gtOf(w.title);gPropTasks(w.id,GT[cat].tasks.map((x,i)=>({title:x[0],why:x[1],after:i?[i-1]:[]})),"'"+w.title+"'에 닿으려면 이런 순서로 해 보면 어떨까요? 필요 없는 일은 체크를 풀어 주세요.");return true;}}
+  if(/뭐부터|무엇부터|뭘 먼저|어떤 것부터/.test(t)){const n=nextTask(gwkKey());
+    if(n){const w=n.goalId&&wgById(n.goalId);pushGuide({text:"'"+n.title+"'부터 해 보면 좋겠어요."+(w?" '"+w.title+"'에 바로 이어지고,":'')+(n.why?' '+n.why+'.':' 지금 바로 시작할 수 있는 일이에요.'),next:n.id,chips:['더 작게 나눠 줘']});return true;}
+    if(!wgOf(gwkKey()).length){pushGuide({text:'먼저 이번 주에 이루고 싶은 걸 하나만 정해 볼까요? 이번 주가 끝났을 때 무엇이 달라져 있으면 좋겠어요?',chips:['발표 준비를 끝내고 싶어','공부 습관을 잡고 싶어']});return true;}}
+  if(/막막|어려워|너무 커|못 하겠|시작이 안/.test(t)){const tid=(ui.gctx&&ui.gctx.task)||((tkList().find(x=>x.status==='doing')||nextTask(gwkKey())||{}).id);const tk=tid&&tkById(tid);
+    if(tk){const r=gApplyTk([{ref:'x',op:'split',into:[{title:"'"+tk.title.slice(0,14)+"' 첫 단계 정하기",crit:'바로 할 행동 하나가 적혀 있다'},{title:tk.title.slice(0,14)+' 15분만 해 보기',crit:'15분 동안 손을 움직였다'},{title:tk.title.slice(0,14)+' 남은 것 적기',crit:'남은 일이 목록으로 있다'}]}],{x:tk.id});
+      pushGuide({text:'바로 시작할 수 있는 크기로 나눠 봤어요. 첫 단계는 5분이면 돼요.',sub:'· '+r.done.join('\n· '),chips:['되돌리기','뭐부터 하면 돼?']});return true;}}
+  if(/바빠|바쁘|시간이 없/.test(t)&&wgOf(gwkKey()).length){const gs=wgOf(gwkKey()),keep=gs[0],later=tkWeek(gwkKey()).filter(x=>x.status!=='done'&&x.goalId!==keep.id);
+    pushGuide({text:"이번 주는 '"+keep.title+"' 하나에 집중하고, 나머지 "+later.length+'개는 다음 주로 미루는 건 어때요? 필요하면 완료 기준도 낮출 수 있어요.',chips:later.length?['그렇게 미뤄 줘','완료 기준 낮추고 싶어']:['완료 기준 낮추고 싶어']});g.busyPlan=later.map(x=>x.id);return true;}
+  if(/그렇게 미뤄/.test(t)&&g.busyPlan){const map={};g.busyPlan.forEach((id,i)=>map['t'+i]=id);const r=gApplyTk(g.busyPlan.map((id,i)=>({ref:'t'+i,op:'later'})),map);g.busyPlan=null;pushGuide({text:'미뤘어요. 이번 주는 남은 하나에만 집중해요.',sub:'· '+r.done.join('\n· '),chips:['되돌리기']});return true;}
+  const wish=/싶어|싶다|끝내|준비|해야|하려고|목표|이루|마치|완성/.test(t)&&!parseEvent(t);
+  if(wish){const cat=gtOf(t),T=GT[cat];g.gdraft={stage:'crit',cat,title:gGoalName(t),text:t};pushGuide({label:'이번 주 목표',text:T.ask,options:T.o});return true;}
+  return false;
+}
+localTurn=(o=>function(text){
+  const t=String(text||'').trim();
+  if(gLocalGoal(t))return;
+  return o.call(this,text);
+})(localTurn);
+function introMsg(){
+  const key=gwkKey(),gs=wgOf(key);
+  if(!gs.length)return {text:'안녕하세요, 길잡이예요. '+(key===curKey()?'이번 주':'다음 주')+'가 끝났을 때, 무엇이 달라져 있으면 좋겠어요? 막연해도 괜찮아요. 끝났다고 판단할 기준과 필요한 일을 같이 정해요.',chips:['발표 준비를 끝내고 싶어','운동을 다시 시작하고 싶어','요즘 좀 지쳤어']};
+  return {text:wkLabel(key)+' 목표는 '+gs.map(g=>"'"+g.title+"'").join(', ')+'이에요. 하다가 막히거나 상황이 바뀌면 말해 주세요. 할 일을 같이 고쳐요.',chips:['뭐부터 해야 할지 모르겠어','이 일 너무 막막해','이번 주 갑자기 바빠졌어']};
+}
+msgHtml=(_msgHtml=>function(m,idx){
+  let h=_msgHtml(m,idx);
+  const ms=guideState().msgs,last=idx===ms.length-1;
+  let card='';
+  if(m.gprop){const p=m.gprop;
+    card=p.status==='open'?'<div class="v3-prop"><div class="between"><b>'+esc(wkLabel(p.key))+' 목표</b><span class="v3-badge">미확정</span></div><div class="gp-t">'+esc(p.title)+'</div>'+(p.crit?'<div class="v3-pr first"><span class="v3-pi">'+I3.check+'</span><span class="grow"><b>완료 기준</b> '+esc(p.crit)+'</span></div>':'')+
+      '<div class="grid2"><button type="button" class="btn primary" data-act="gp-ok" data-m="'+idx+'">이 목표로 정하기</button><button type="button" class="btn" data-act="gp-edit" data-m="'+idx+'">고치기</button></div></div>'
+      :'<span class="xs muted">'+(p.status==='accepted'?'목표로 정했어요.':'다른 안으로 바꿨어요.')+'</span>';}
+  if(m.tprop){const p=m.tprop;
+    card=p.status==='open'?'<div class="v3-prop"><div class="between"><b>할 일 제안 · '+p.tasks.filter(x=>x.on).length+'개</b><span class="v3-badge">미확정</span></div>'+
+      p.tasks.map((x,i)=>'<label class="tp-r'+(x.on?'':' off')+'"><input type="checkbox" data-field="tp-on" data-m="'+idx+'" data-i="'+i+'"'+(x.on?' checked':'')+'><span class="tp-n">'+(i+1)+'</span><span class="grow"><b>'+esc(x.title)+'</b>'+(x.why?'<span>'+esc(x.why)+'</span>':'')+((x.after&&x.after.length)||x.due?'<span class="tp-m">'+[x.after&&x.after.length?'먼저: '+x.after.map(a=>a+1).join(', ')+'번':'',x.due?dlTag(x.due):''].filter(Boolean).join(' · ')+'</span>':'')+'</span></label>').join('')+
+      '<div class="grid2"><button type="button" class="btn primary" data-act="tp-ok" data-m="'+idx+'">할 일로 넣기</button><button type="button" class="btn" data-act="g-chip" data-v="다르게 나눠 줘">다르게 나눠 줘</button></div></div>'
+      :'<span class="xs muted">'+(p.status==='accepted'?'할 일로 넣었어요.':'다른 안으로 바꿨어요.')+'</span>';}
+  if(m.next){const t=tkById(m.next);if(t)card='<div class="v3-prop"><span class="xs muted">추천하는 다음 일</span><b class="gp-t">'+esc(t.title)+'</b>'+(t.crit?'<span class="small muted">완료: '+esc(t.crit)+'</span>':'')+
+    '<div class="grid2"><button type="button" class="btn primary" data-act="tk-st" data-id="'+t.id+'" data-v="doing">지금 시작</button><button type="button" class="btn" data-act="tk-today" data-id="'+t.id+'">'+(t.today===dkey()?'오늘 할 일 ✓':'오늘 할 일로')+'</button></div></div>';}
+  if(card)h=h.replace(/(<div class="g-chips">|<\/div><\/div>$)/,card+'$1');
+  return h;
+})(msgHtml);
+/* AI가 틀린 응답을 줄 때 대비: 기존 길잡이(시간 블록) 흐름은 '시간 정해 줘'일 때만 */
+
+/* ---------- 7. 동작 ---------- */
+function tkKeep(t){const g=id=>{const el=document.getElementById(id);return el?el.value:null;};const E=ui.tkE||(ui.tkE={});const a=g('tkT'),c=g('tkC'),n=g('tkNote');if(a!=null)E.title=a;if(c!=null)E.crit=c;if(n!=null)E.note=n;return E;}
+function gTalk(text,ctx){ui.gctx=ctx||null;ui.tab='guide';ui.sheet=null;ui.gScroll=true;render();guideSend(text);}
+function goalAct(a,d){
+  switch(a){
+    case 'tk-open':ui.tkId=d.id;ui.tkE={};ui.sheet='tk';ui.sheetAnim=true;if(ui.tab==='search')render();else renderOverlay();return true;
+    case 'tk-done':{const t=tkById(d.id);if(!t)return true;const s=trSnap([],{});const before=clone(tkList());tkSet(t,t.status==='done'?'todo':'done');if(ui.sheet==='tk'&&t.status==='done')ui.sheet=null;
+      const g=t.goalId&&wgById(t.goalId),p=g&&wgProg(g);
+      if(t.status==='done'&&p&&p.n&&p.d===p.n&&g.status==='active')ui.change={title:"'"+g.title+"' 할 일을 모두 끝냈어요. 완료 기준에 닿았나요?",lines:g.crit?[{t:'완료 기준: '+g.crit}]:[],undo:{tasks:before},goalAsk:g.id};
+      commit();return true;}
+    case 'tk-st':{const t=tkById(d.id);if(!t)return true;
+      if(d.v==='done'){tkSet(t,'done');}else{if(t.status==='done')tkSet(t,d.v);else t.status=d.v;if(d.v==='doing'){for(const o of tkList())if(o!==t&&o.status==='doing')o.status='todo';t.today=dkey();toast("'"+t.title.slice(0,16)+"' 시작해요");}
+        if(d.v==='blocked'){ui.tkId=t.id;ui.tkE={};ui.sheet='tk';ui.sheetAnim=true;}}
+      commit();return true;}
+    case 'tk-today':{const t=tkById(d.id);if(!t)return true;t.today=t.today===dkey()?null:dkey();toast(t.today?'오늘 할 일로 골랐어요':'오늘 할 일에서 뺐어요');commit();return true;}
+    case 'tk-alt':{ui.skipTk=(ui.skipTk||[]).concat([d.id]);render();return true;}
+    case 'tk-more':ui.tkMore=true;render();return true;
+    case 'tk-add':{const gid=d.g||null,el=document.getElementById(d.inp||('tkNew_'+(gid||''))),v=el?el.value.trim():'';if(!v){if(el)el.focus();return true;}
+      const g=gid&&wgById(gid);const s={tasks:clone(tkList())};const t=tkAdd({title:v,goalId:gid,key:g?g.key:(d.k||wkKey()),order:g?tkOf(gid).length:tkList().length});
+      toast("'"+t.title.slice(0,16)+"' 추가했어요");const iid=el.id;commit();setTimeout(()=>{const e2=document.getElementById(iid);if(e2)e2.focus();},40);return true;}
+    case 'tk-save':{const t=tkById(d.id);if(!t)return true;const E=tkKeep(t);if(E.title&&E.title.trim())t.title=E.title.trim().slice(0,50);if(E.crit!=null)t.crit=E.crit.slice(0,80);if(E.note!=null)t.note=E.note.slice(0,80);ui.sheet=null;ui.tkE=null;commit();return true;}
+    case 'tk-dep':{const t=tkById(d.id);if(!t)return true;tkKeep(t);t.after=t.after||[];
+      if(t.after.includes(d.v))t.after=t.after.filter(x=>x!==d.v);else{let x=tkById(d.v),loop=false,seen=0;const chk=id=>{const z=tkById(id);if(!z||seen++>50)return false;if(z.id===t.id)return true;return (z.after||[]).some(chk);};if(chk(d.v)){toast('서로 기다리게 되어서 고를 수 없어요');return true;}t.after.push(d.v);}
+      store.save();renderOverlay();return true;}
+    case 'tk-due':{const t=tkById(d.id);if(!t)return true;tkKeep(t);t.due=d.v||null;store.save();renderOverlay();return true;}
+    case 'tk-del':{const t=tkById(d.id);if(!t)return true;const before=clone(tkList());S.tasks=tkList().filter(x=>x!==t);for(const o of tkList())o.after=(o.after||[]).filter(x=>x!==t.id);ui.sheet=null;ui.change={title:"'"+t.title+"'을(를) 지웠어요",lines:[],undo:{tasks:before}};commit();return true;}
+    case 'tk-split':{const t=tkById(d.id);if(!t)return true;gTalk("'"+t.title+"' 너무 막막해. 바로 시작할 수 있게 더 작게 나눠 줘",{task:t.id,ask:'split'});return true;}
+    case 'tk-talk':{const t=tkById(d.id);if(!t)return true;gTalk("'"+t.title+"'"+(t.status==='blocked'&&t.note?'에서 막혔어: '+t.note:' 하다가 막혔어'),{task:t.id,ask:'blocked'});return true;}
+    case 'tk-ask-why':{const t=tkById(d.id);if(!t)return true;const g=t.goalId&&wgById(t.goalId);gTalk("'"+t.title+"'"+(g?"까지 해야 해? '"+g.title+"'에 꼭 필요한 일이야?":'까지 해야 해?'),{task:t.id,ask:'why'});return true;}
+    case 'tk-reco':gTalk('뭐부터 해야 할지 모르겠어');return true;
+    case 'tk-sched':{const t=tkById(d.id);if(!t)return true;ui.add=addDefaults('todo');ui.add.mode='at';ui.add.title=t.title;ui.add.taskId=t.id;if(t.dur)ui.add.dur=t.dur;ui.sheet='quick';ui.sheetAnim=true;renderOverlay();return true;}
+    case 'wg-open':ui.wgId=d.id;ui.sheet='wg';ui.sheetAnim=true;renderOverlay();return true;
+    case 'wg-new':ui.wgId='new';ui.wgKey=d.k||wkKey();ui.sheet='wg';ui.sheetAnim=true;renderOverlay();setTimeout(()=>{const el=document.getElementById('wgT');if(el)el.focus();},80);return true;
+    case 'wg-save':{const g=id=>(document.getElementById(id)||{}).value||'';const T=g('wgT').trim();if(!T){toast('이루려는 것을 적어 주세요');return true;}
+      if(ui.wgId==='new'){const before=clone(wgList());wgAdd({key:ui.wgKey||curKey(),title:T,crit:g('wgC').trim(),why:g('wgW').trim()});ui.change={title:"'"+T+"' 목표를 정했어요",lines:[{t:'목표를 눌러 할 일을 만들거나, 길잡이에게 만들어 달라고 할 수 있어요'}],undo:{wgoals:before}};}
+      else{const w=wgById(ui.wgId);if(w){w.title=T.slice(0,40);w.crit=g('wgC').trim().slice(0,80);w.why=g('wgW').trim().slice(0,80);}}
+      ui.sheet=null;commit();return true;}
+    case 'wg-st':{const w=wgById(d.id);if(w){w.status=d.v;if(d.v==='done')award('wg:'+w.id,30,"'"+w.title.slice(0,14)+"' 이뤘어요",true);else revoke('wg:'+w.id);}commit();return true;}
+    case 'wg-prio':{const w=wgById(d.id);if(!w)return true;const l=wgOf(w.key),i=l.indexOf(w),j=clamp(i+(+d.v),0,l.length-1);l.splice(i,1);l.splice(j,0,w);l.forEach((x,n)=>x.prio=n);commit();return true;}
+    case 'wg-del':{const w=wgById(d.id);if(!w)return true;const before=clone(wgList());w.status='dropped';ui.sheet=null;ui.change={title:"'"+w.title+"' 목표를 내려놓았어요. 할 일은 목표 없는 할 일로 남아요",lines:[],undo:{wgoals:before}};for(const t of tkOf(w.id))if(t.status!=='done')t.goalId=null;commit();return true;}
+    case 'wg-ai':{const w=wgById(d.id);if(!w)return true;ui.gwk=w.key;gTalk(tkOf(w.id).length?"'"+w.title+"' 할 일을 같이 다듬고 싶어. 빠진 일이나 필요 없는 일이 있을까?":"'"+w.title+"'을(를) 이루려면 어떤 일을 해야 할지 나눠 줘",{goal:w.id});return true;}
+    case 'wg-ask':{const el=document.getElementById('wgAsk'),v=el?el.value.trim():'';if(!v){if(el)el.focus();return true;}ui.gwk=d.k||curKey();gTalk(v);return true;}
+    case 'wg-ask-next':ui.gwk=iso(addDays(fromIso(curKey()),7));ui.tab='guide';{const g=guideState();g.msgs=[];}render();return true;
+    case 'gp-ok':{const m=guideState().msgs[+d.m],p=m&&m.gprop;if(!p||p.status!=='open')return true;const before=clone(wgList());const w=wgAdd({key:p.key,title:p.title,crit:p.crit,why:p.why});p.status='accepted';p.goalId=w.id;
+      ui.change={title:"'"+w.title+"' 목표를 정했어요",lines:[],undo:{wgoals:before}};guideState().gdraft=null;
+      w.cat=gtOf(w.title+' '+(guideState().gdraft?guideState().gdraft.text:'')+' '+(guideState().msgs.slice(-6).map(x=>x.text).join(' ')));
+      ui.gScroll=true;commit();guideSend('좋아, 이 목표로 할게. 필요한 할 일을 나눠 줘');
+      return true;}
+    case 'gp-edit':{const m=guideState().msgs[+d.m],p=m&&m.gprop;if(!p)return true;ui.wgId='new';ui.wgKey=p.key;ui.sheet='wg';renderOverlay();setTimeout(()=>{const a=document.getElementById('wgT'),c=document.getElementById('wgC');if(a)a.value=p.title;if(c)c.value=p.crit;},30);p.status='replaced';store.save();return true;}
+    case 'tp-ok':{const m=guideState().msgs[+d.m],p=m&&m.tprop;if(!p||p.status!=='open')return true;const before=clone(tkList());const ids=[];let n=0;
+      const base=p.goalId?tkOf(p.goalId).length:0;
+      p.tasks.forEach((x,i)=>{if(!x.on){ids.push(null);return;}const t=tkAdd({title:x.title,crit:x.crit,why:x.why,goalId:p.goalId||null,key:p.key,due:x.due,order:base+i,after:(x.after||[]).map(j=>ids[j]).filter(Boolean)});ids.push(t.id);n++;});
+      p.status='accepted';ui.change={title:n+'개를 할 일로 넣었어요',lines:[],undo:{tasks:before}};
+      pushGuide({text:'넣었어요. 앞 단계가 끝난 일부터 "지금 진행할 만한 일"에 보여 드릴게요. 하다가 막히거나 상황이 바뀌면 언제든 말해 주세요.',chips:['뭐부터 해야 할지 모르겠어','이번 주 보기']});ui.gScroll=true;commit();return true;}
+    case 'rv-open':ui.rvKey=d.k;ui.rv=null;ui.sheet='rv';ui.sheetAnim=true;renderOverlay();return true;
+    case 'rv-skip':S.rvSkip=Object.assign(S.rvSkip||{},{[d.k]:1});for(const g of wgOf(d.k))if(!g.review)g.review={reach:'',helped:[],hard:'',at:dkey(),skipped:1};commit();return true;
+    case 'rv-reach':{const r=ui.rv&&ui.rv[d.g];if(r){rvKeep();r.reach=d.v;renderOverlay();}return true;}
+    case 'rv-help':case 'rv-carry':{const r=ui.rv&&ui.rv[d.g];if(r){rvKeep();const L=a==='rv-help'?r.helped:r.carry;const i=L.indexOf(d.v);if(i>=0)L.splice(i,1);else L.push(d.v);renderOverlay();}return true;}
+    case 'rv-save':rvKeep();rvSave();return true;
+    case 'rv-talk':{rvKeep();const k=ui.rvKey,lines=wgOf(k).map(g=>{const r=(ui.rv||{})[g.id]||{};return "'"+g.title+"' "+(({done:'다 이뤘어',partial:'일부만 됐어',not:'아직이야'})[r.reach]||'')+(r.hard?', 어려웠던 점: '+r.hard:'');}).join(' / ');
+      ui.gwk=k===curKey()?iso(addDays(fromIso(k),7)):curKey();gTalk('지난 한 주를 돌아보고 싶어. '+lines+'. 다음 주에 이어갈 것과 내려놓을 것을 같이 정해 줘');return true;}
+    case 'wk-mode':ui.wkMode=d.v;render();return true;
+    case 'v3-sched':ui.tab='week';ui.wkMode='sched';ui.wk=null;window.scrollTo(0,0);render();return true;
+  }
+  return false;
+}
+function rvKeep(){document.querySelectorAll('[data-field="rv-hard"]').forEach(el=>{const r=ui.rv&&ui.rv[el.dataset.g];if(r)r.hard=el.value.slice(0,80);});document.querySelectorAll('[data-field="rv-cont"]').forEach(el=>{const r=ui.rv&&ui.rv[el.dataset.g];if(r)r.cont=el.checked;});}
+act=(o=>function(a,d){d=d||{};
+  if(a==='blk-done'){const f=trFindBlock(d.k,d.id);if(f&&f.b.taskId){const t=tkById(f.b.taskId);if(t){tkSet(t,f.b.done?'todo':'done');commit();return;}}}
+  if(goalAct(a,d))return;return o.call(this,a,d);})(act);
+sheetHtml=(o=>function(){
+  const M={tk:tkSheet,wg:wgSheet,rv:rvSheet};
+  if(M[ui.sheet]){const inner=M[ui.sheet]();if(!inner)return '';const anim=ui.sheetAnim;ui.sheetAnim=false;
+    return '<div class="scrim" data-act="sheet-close"></div><div class="sheet'+(anim?' anim':'')+'" role="dialog" aria-modal="true"><div class="inner">'+inner+'</div></div>';}
+  return o.apply(this,arguments);})(sheetHtml);
+/* 할 일 세부 단계도 같은 '작게 나누기' 컨트롤로 */
+const _trustAct=trustAct;
+trustAct=function(a,d){
+  if((a==='sub-add'||a==='sub-tog'||a==='sub-del')&&d.s==='tk'){const t=tkById(d.id);if(!t)return true;if(!Array.isArray(t.subs))t.subs=[];
+    if(a==='sub-add'){const el=document.getElementById('subNew'),v=el?String(el.value).trim():'';if(!v)return true;tkKeep(t);t.subs.push({t:v.slice(0,40),done:false});}
+    else if(a==='sub-tog'){const s=t.subs[+d.i];if(s)s.done=!s.done;}else t.subs.splice(+d.i,1);
+    store.save();renderOverlay();if(a==='sub-add')setTimeout(()=>{const el=document.getElementById('subNew');if(el)el.focus();},30);return true;}
+  return _trustAct(a,d);
+};
+/* 추가하기: '할 일'은 할 일 목록에, 시간을 정하면 시간표에도 */
+addSave=(_addSave=>function(){
+  const a=addKeep();
+  if(a.tab==='todo'&&a.taskId&&a.mode==='at'){const t=tkById(a.taskId);const n0=new Set();for(const k in S.weeks)for(const b of S.weeks[k].blocks)n0.add(b.id);
+    _addSave();for(const k in S.weeks)for(const b of S.weeks[k].blocks)if(!n0.has(b.id)&&t){b.taskId=t.id;b.title=t.title;}store.save();return;}
+  if(a.tab==='todo'&&!a.taskId){
+    const before=new Set();for(const k in S.weeks)for(const b of S.weeks[k].blocks)before.add(b.id);const tb=new Set(tkList().map(t=>t.id));
+    _addSave();
+    if(a.mode!=='keep'){for(const k in S.weeks)for(const b of S.weeks[k].blocks)if(!before.has(b.id)&&!b.taskId){const t=tkAdd({title:b.title,key:k,due:b.deadline||null,dur:b.dur,goalId:a.goalId||null});b.taskId=t.id;}}
+    else if(a.goalId)for(const t of tkList())if(!tb.has(t.id)){t.goalId=a.goalId;const g=wgById(a.goalId);if(g)t.key=g.key;}
+    store.save();render();return;}
+  _addSave();
+})(addSave);
+addSheet=(_addSheet=>function(){
+  const a=addState();let h=_addSheet();
+  if(a.tab!=='todo')return h;
+  const gs=wgOf(a.wk&&a.wk>curKey()?a.wk:curKey());
+  const pick='<div class="stack"><span class="label">어느 목표의 일인가요?</span><div class="row-wrap">'+[{id:'',title:'목표 없음'}].concat(gs).map(g=>'<button type="button" class="chip sm'+((a.goalId||'')===g.id?' on':'')+'" data-act="add-goal" data-v="'+g.id+'">'+esc(g.title.slice(0,16))+'</button>').join('')+'</div></div>';
+  h=h.replace('<div class="add-modes"',pick+'<div class="add-modes"').replace('>알아서 빈 시간에<','>시간도 알아서 잡기<').replace('>날짜·시간 정하기<','>날짜·시간 정하기<').replace('>할 일로만 두기<','>할 일로 두기 (시간 없이)<');
+  return h;
+})(addSheet);
+addDefaults=(o=>function(tab){const a=o(tab);a.mode='keep';return a;})(addDefaults);
+const _goalAct=goalAct;
+goalAct=function(a,d){if(a==='add-goal'){const x=addKeep();x.goalId=d.v||null;renderOverlay();return true;}return _goalAct(a,d);};
+document.addEventListener('change',e=>{const el=e.target,f=el&&el.dataset&&el.dataset.field;if(!f)return;
+  if(f==='tk-due'){e.stopImmediatePropagation();const t=tkById(el.dataset.id);if(t){tkKeep(t);t.due=el.value||null;store.save();renderOverlay();}}
+  else if(f==='tp-on'){e.stopImmediatePropagation();const m=guideState().msgs[+el.dataset.m],x=m&&m.tprop&&m.tprop.tasks[+el.dataset.i];if(x){x.on=el.checked;store.save();render();}}
+  else if(f==='rv-cont'){e.stopImmediatePropagation();rvKeep();}
+},true);
+document.addEventListener('keydown',e=>{if(e.key!=='Enter'||e.isComposing)return;const el=e.target;if(!el||!el.dataset)return;
+  if(el.dataset.field==='tk-new'){e.preventDefault();act('tk-add',{g:el.dataset.g||'',k:wkKey(),inp:el.id});}
+  else if(el.dataset.field==='wg-ask'){e.preventDefault();act('wg-ask',{k:curKey()});}},true);
+/* 길잡이 탭에 들어갈 때 이번 주 목표 기준으로 인사 다시 */
+isFirstUse=(o=>function(wk){return !wgList().length&&!tkList().length&&o(wk);})(isFirstUse);
+if(location.protocol==='file:'&&window.__d)Object.assign(window.__d,{act:(a,d)=>act(a,d||{}),render:()=>render(),wgList,tkList,wgAdd,tkAdd,tkById,wgOf,nextTask,gRefsTk,gApplyTk,reviewKey});
+function inboxCard(){return '';}
+srResults=(o=>function(q){const r=o(q);if(!r)return r;const n=srNorm(q);r.ibx=tkList().filter(t=>srNorm(t.title).indexOf(n)>=0||srNorm(t.crit||'').indexOf(n)>=0||srNorm(t.memo||'').indexOf(n)>=0).map(t=>({id:t.id,title:t.title,done:t.status==='done'?t.doneAt||dkey():null,deadline:t.due}));
+  for(const g of wgList())if(srNorm(g.title).indexOf(n)>=0)r.ibx.unshift({id:'g:'+g.id,title:'목표 · '+g.title,done:null,deadline:null});return r;})(srResults);
+goalAct=(o=>function(a,d){
+  if(a==='ibx-open'&&String(d.id).startsWith('g:')){ui.wgId=d.id.slice(2);ui.sheet='wg';ui.sheetAnim=true;render();return true;}
+  if(a==='ibx-open'&&tkById(d.id)){ui.tkId=d.id;ui.tkE={};ui.sheet='tk';ui.sheetAnim=true;render();return true;}
+  return o(a,d);})(goalAct);
+demoState=(o=>function(){const s=o();const k=curKey();s.tkMig=1;s.inbox=[];
+  const g1={id:uid(),key:k,title:'금요일까지 발표 초안 완성',crit:'핵심 주장과 근거가 연결된 슬라이드 초안이 있다',why:'다음 주 월요일 팀 회의에서 보여 줘야 해서',prio:0,status:'active',created:dkey()};
+  const g2={id:uid(),key:k,title:'여행 영어로 주문해 보기',crit:'카페 주문을 처음부터 끝까지 영어로 말해 봤다',why:'',prio:1,status:'active',created:dkey()};
+  s.wgoals=[g1,g2];s.tasks=[];
+  const T=(g,title,why,st,after,o2)=>{const t=Object.assign({id:uid(),key:k,goalId:g.id,title,crit:'',why,after:after||[],due:null,status:st,note:'',subs:[],order:s.tasks.length,created:dkey(),doneAt:st==='done'?iso(addDays(today(),-1)):null},o2||{});s.tasks.push(t);return t;};
+  const a=T(g1,'발표에서 답할 질문 정하기','조사와 발표의 범위를 정하려고','done');
+  const b=T(g1,'핵심 주장 3개 적기','발표의 뼈대를 만들려고','doing',[a.id],{crit:'주장 3개가 한 문장씩 적혀 있다'});
+  const c=T(g1,'주장별 근거 찾기','모든 자료를 조사하는 낭비를 줄이려고','todo',[b.id]);
+  T(g1,'슬라이드 목차 만들기','논리 흐름을 확인하려고','todo',[b.id]);
+  T(g1,'초안 작성하기','검토받을 결과물을 만들려고','todo',[c.id],{due:iso(addDays(fromIso(k),4))});
+  T(g1,'팀원에게 검토 요청','제출 전에 부족한 부분을 찾으려고','blocked',[],{note:'팀원 답장 기다리는 중'});
+  T(g2,'주문 표현 5개 듣기','따라 말할 문장을 모으려고','done');
+  T(g2,'소리 내어 따라 말하기','입에 붙게 하려고','todo',[],{today:dkey()});
+  T(g2,'역할극으로 주문해 보기','완료 기준을 직접 확인하려고','todo');
+  s.tasks.push({id:uid(),key:k,goalId:null,title:'자전거 수리 맡기기',crit:'',why:'',after:[],due:null,status:'todo',note:'',subs:[],order:99,created:dkey()});
+  return s;})(demoState);
+
+function guideFailLine(m){
+  return '<div class="g-fail"><span class="small">AI 연결이 잠깐 안 돼서 기본 규칙으로 답했어요. 목표 정하기, 할 일 나누기, "뭐부터 해야 할지 모르겠어", "이번 주 바빠졌어" 같은 말은 AI 없이도 도와드려요.</span>'+
+    (m.retry?'<button type="button" class="btn sm" data-act="g-retry" data-t="'+esc(m.retry)+'">다시 보내기</button>':'')+'</div>';
+}
+viewOnb=(o=>function(){
+  if(ONB[ui.onb]!=='welcome')return o.apply(this,arguments);
+  return '<div class="stack-lg onb-w">'+
+    '<div class="onb-guide">'+guideImg('happy',96)+'<div class="bubble">안녕하세요, 저는 길잡이예요!</div></div>'+
+    '<h1 class="onb-h">이번 주가 끝났을 때 달라져 있을 것 하나, 같이 정하고 이뤄 봐요</h1>'+
+    '<div class="ex"><span class="ex-me">발표 준비 좀 끝내고 싶어</span><span class="ex-arrow" aria-hidden="true">↓</span>'+
+    '<div class="ex-plan"><span class="xs">이번 주 목표</span><b>금요일까지 발표 초안 완성</b><span class="small">완료 기준: 핵심 주장과 근거가 연결된 초안이 있다</span></div>'+
+    '<div class="ex-steps"><span>1 질문 한 문장 정하기</span><span>2 핵심 주장 3개 적기</span><span>3 주장별 근거 찾기</span></div></div>'+
+    '<p class="small muted">길잡이가 필요한 일을 나누고 순서를 잡아 줘요. 하다가 막히거나 바빠지면 말로 고쳐요. 주말엔 같이 돌아보고 다음 주로 이어가요.</p>'+
+    '<div class="paths"><button type="button" class="path main" data-act="onb-goal"><b>이번 주 목표부터 정하기</b><span>길잡이와 이야기하며 시작해요</span></button>'+
+    '<button type="button" class="path" data-act="onb-fixed"><b>수업·근무 시간표도 넣기</b><span>시간이 정해진 일이 많다면 함께 넣어 둬요</span></button></div>'+
+    '<button type="button" class="btn ghost" data-act="demo">예시 화면부터 둘러보기</button>'+
+    '<p class="xs muted onb-store">기록은 이 기기에만 저장돼요. 설정에서 백업 파일을 받을 수 있어요.</p></div>';
+})(viewOnb);
 
 /* ---------- boot ---------- */
 getSample().then(sm=>sm&&sm.limits?sm.limits():null).then(c=>{if(c&&c.images){ui.imgOK=true;ui.imgTypes=(c.images.mediaTypes||[]).join(',');render();}}).catch(()=>{});
