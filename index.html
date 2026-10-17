@@ -1620,6 +1620,231 @@ div.sr-row{cursor:default}
 .rt-fresh{background:linear-gradient(135deg,var(--accent-soft),color-mix(in srgb,var(--sun) 18%,var(--surface)))}
 .ex-plan{background:var(--accent-soft)}.ex-plan .xs{color:var(--accent-text)}
 
+/* ================= 2026.10.18 화면 시안 ================= */
+:root{--navy:#262A4A;--lav:#F3F0FF;--lav2:#E9E4FF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--navy:#C8BCFF;--lav:#231F3A;--lav2:#2E2850}}
+:root[data-theme="dark"]{--navy:#C8BCFF;--lav:#231F3A;--lav2:#2E2850}
+body{background:var(--surface)}
+.top{background:color-mix(in srgb,var(--surface) 92%,transparent);min-height:62px}
+.brand{font-size:20px;font-weight:850;letter-spacing:-.6px;gap:8px;color:var(--fg)}
+.brand-mc.v3-boat{width:30px;height:24px;margin:0;color:var(--navy);overflow:visible}
+.brand-mc.v3-boat svg{width:30px;height:24px}
+.save-state{display:none}
+.v3-me{width:44px;height:44px;border-radius:14px;border:0;padding:0;cursor:pointer;background:var(--lav);box-shadow:inset 0 0 0 1.5px var(--line);display:inline-flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.v3-me .px{width:34px;height:34px}
+.card{box-shadow:none;border:1.5px solid var(--line)}
+.card.dashed,.card.soft,.card.warn{border:0}
+#app{gap:16px}
+
+/* 제목 줄 */
+.v3-title{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:2px}
+.v3-title h1{font-size:34px;letter-spacing:-1.4px;line-height:1.15}
+.v3-date{font-size:17px;color:var(--fg);font-weight:600}
+.v3-ic{width:44px;height:44px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);display:inline-grid;place-items:center;cursor:pointer;padding:0;flex-shrink:0}
+.v3-ic svg{width:24px;height:24px}
+.v3-ic.plain{border:0}
+.v3-mo{display:inline-flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--muted);font:600 15px var(--font);cursor:pointer;padding:6px 4px 6px 10px;border-left:1.5px solid transparent}
+.v3-mo svg{width:26px;height:26px;color:var(--fg)}
+
+/* 오늘: 주 띠 */
+.v3-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.v3-day{display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:transparent;cursor:pointer;font:inherit;color:var(--muted);padding:0}
+.v3-day span{font-size:13px;font-weight:600}
+.v3-day b{width:100%;max-width:46px;height:44px;display:grid;place-items:center;border-radius:12px;border:1.5px solid var(--line);font-size:17px;color:var(--fg);font-weight:600;background:var(--surface)}
+.v3-day.on b{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:800}
+.v3-day.pst b{color:var(--muted)}
+
+/* 지금 카드 */
+.v3-now{display:flex;align-items:center;gap:14px;padding:14px;border-radius:20px;background:var(--lav);border:1.5px solid var(--lav2);position:relative}
+.v3-port{width:92px;height:92px;flex-shrink:0;border-radius:18px;background:var(--surface);border:1.5px solid var(--line);display:flex;align-items:flex-start;justify-content:center;overflow:hidden}
+.v3-port .px{width:88px;height:96px;margin-top:-2px}
+.v3-now-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.v3-now-tag{font-size:13px;font-weight:800;color:var(--accent-text)}
+.v3-now-t{font-size:19px;letter-spacing:-.5px;line-height:1.3;color:var(--fg)}
+.v3-now-meta{font-size:14px;color:var(--fg);opacity:.85}
+.v3-now-l{font-size:13.5px;color:var(--muted);line-height:1.45}
+.v3-now-alt{font-size:13px;align-self:flex-start;min-height:30px;padding:0}
+.v3-now-b{flex-shrink:0;align-self:center;min-height:48px;padding:0 20px;border-radius:12px}
+
+/* 하루 목록 */
+.v3-list{display:flex;flex-direction:column;position:relative}
+.v3-list:before{content:"";position:absolute;left:74px;top:22px;bottom:22px;width:2px;background:var(--line)}
+.v3-row{display:grid;grid-template-columns:56px 36px 1fr 28px;align-items:center;min-height:64px;border-bottom:1px solid var(--line);position:relative}
+.v3-row:last-child{border-bottom:0}
+.v3-t{font-size:15px;color:var(--fg);font-weight:500;padding-left:2px}
+.v3-node{width:24px;height:24px;border-radius:50%;justify-self:center;position:relative;z-index:1;display:grid;place-items:center;padding:0;border:0;background:var(--surface)}
+.v3-node svg{width:15px;height:15px}
+.v3-node.ck{cursor:pointer;box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--accent) 55%,var(--line));color:#fff}
+.v3-node.ck.on{background:var(--ok);box-shadow:none}
+.v3-node.ck.now{box-shadow:inset 0 0 0 2px var(--accent),inset 0 0 0 7px var(--surface),inset 0 0 0 12px var(--accent)}
+.v3-node.dot{background:hsl(var(--h,250) 55% 82%);box-shadow:0 0 0 3px var(--surface)}
+.v3-node.dot.k-event{background:color-mix(in srgb,var(--k-event) 60%,#fff)}
+.v3-node.dot.k-rest{background:color-mix(in srgb,var(--sun) 70%,#fff)}
+.v3-row.v3-fxrow .v3-node.dot{background:hsl(var(--h,250) 50% 78%)}
+.v3-node.v3-ngap{background:var(--surface);border:2px dashed var(--muted)}
+.v3-node.v3-ngap:after{content:"";position:absolute;inset:0;border-radius:50%;border:2px dashed var(--muted);opacity:.0}
+.v3-m{display:flex;flex-direction:column;align-items:flex-start;gap:1px;border:0;background:transparent;text-align:left;font:inherit;color:var(--fg);cursor:pointer;padding:10px 4px 10px 6px;min-width:0}
+.v3-m b{font-size:17px;font-weight:750;letter-spacing:-.3px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v3-m span{font-size:14px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v3-chev{color:var(--muted);display:inline-grid;place-items:center}
+.v3-chev svg{width:18px;height:18px}
+.v3-row.cur{background:var(--lav);border-radius:14px;border-bottom-color:transparent}
+.v3-row.cur:before{content:"";position:absolute;left:-6px;top:6px;bottom:6px;width:4px;border-radius:3px;background:var(--accent)}
+.v3-row.st-done .v3-m b{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1.5px}
+.v3-row.st-miss .v3-m b,.v3-row.sk .v3-m b{color:var(--muted)}
+.v3-row.v3-gaprow{min-height:56px}
+.v3-gap{font-size:15px!important;color:var(--fg)!important}
+.v3-add{width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);display:grid;place-items:center;cursor:pointer;padding:0;justify-self:end}
+.v3-add svg{width:18px;height:18px}
+.v3-row.v3-gaprow{grid-template-columns:56px 36px 1fr 38px}
+.v3-empty{padding:16px;text-align:center;border:1.5px dashed var(--line);border-radius:16px}
+.v3-sub{margin-top:4px}
+.v3-day-sec .ad-row{margin:0}
+
+/* 길잡이 넛지 */
+.v3-nudge{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:var(--lav);border:0;border-left:4px solid var(--accent);width:100%;text-align:left;font:inherit;color:var(--fg)}
+.v3-nudge .grow{display:flex;flex-direction:column;gap:1px;min-width:0}
+.v3-nudge b{font-size:16.5px;letter-spacing:-.3px;line-height:1.35}
+.v3-g{width:50px;height:50px;border-radius:14px;background:var(--surface);border:1.5px solid var(--line);display:inline-flex;align-items:flex-end;justify-content:center;overflow:hidden;flex-shrink:0}
+.v3-g.big{width:60px;height:60px;align-items:flex-start}
+.v3-g.big .px{width:44px}
+.v3-nb{border-radius:12px;box-shadow:inset 0 0 0 1.5px var(--accent)!important;color:var(--accent-text);background:var(--surface);white-space:nowrap}
+.v3-nudge-btn{cursor:pointer;border-left:0;border:1.5px solid var(--lav2)}
+
+/* FAB */
+.fab{width:56px;height:56px;border-radius:16px;background:var(--navy);color:var(--surface);box-shadow:0 8px 20px rgba(20,22,50,.28);font-size:30px}
+body.g-tab .fab{display:none}
+
+/* 이번 주 */
+.v3-wnav{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:-6px}
+.v3-wnav b{font-size:18px;font-weight:650;letter-spacing:-.3px}
+.v3-arr{width:40px;height:40px;border:0;background:transparent;font-size:26px;color:var(--fg);cursor:pointer;border-radius:12px}
+.v3-back{align-self:center;margin-top:-10px}
+.v3-card{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.v3-wk{padding:12px 10px 8px}
+.v3-wdays{display:grid;grid-template-columns:28px repeat(7,minmax(0,1fr));gap:2px;margin-bottom:6px}
+.v3-wdays:before{content:""}
+.v3-wd{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:transparent;cursor:pointer;font:inherit;color:var(--muted);padding:4px 0;border-radius:12px}
+.v3-wd span{font-size:13px;font-weight:650}
+.v3-wd b{font-size:18px;color:var(--fg);font-weight:600}
+.v3-wd.on{background:var(--accent);color:#fff}.v3-wd.on b{color:#fff;font-weight:800}
+.v3-wd.td:not(.on) b{color:var(--accent)}
+.v3g-scroll{max-height:330px;overflow-y:auto;overscroll-behavior:contain;border-top:1px solid var(--line)}
+.v3g-body{position:relative;display:grid;grid-template-columns:28px 1fr}
+.v3g-axis{position:relative}
+.v3g-axis span{position:absolute;left:0;font-size:12px;color:var(--muted);transform:translateY(-1px)}
+.v3g-cols{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.v3g-ln{position:absolute;left:0;right:0;height:1px;background:var(--line);pointer-events:none}
+.v3g-col{position:relative;border:0;border-left:1px solid var(--line);background:transparent;padding:0;cursor:pointer;min-height:100%}
+.v3g-col.sel{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+.v3g-b{position:absolute;left:2px;right:2px;border-radius:6px;padding:3px 3px 2px 5px;overflow:hidden;text-align:left;display:flex;flex-direction:column;gap:1px;
+  background:hsl(var(--h,250) 70% 95%);box-shadow:inset 3px 0 0 hsl(var(--h,250) 55% 72%);color:#2A2C4A}
+.v3g-b b{font-size:11px;font-weight:750;line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.v3g-b small{font-size:9.5px;line-height:1.2;color:#5D6080}
+.v3g-b.k-deep{background:#ECE8FF;box-shadow:inset 3px 0 0 #A898FF}
+.v3g-b.k-out{background:#E3F6EF;box-shadow:inset 3px 0 0 #7FD3B4}
+.v3g-b.k-light{background:#FBF0DE;box-shadow:inset 3px 0 0 #E8BE78}
+.v3g-b.k-rest{background:#F1EFF6;box-shadow:inset 3px 0 0 #C9C3DA}
+.v3g-b.k-event{background:#FDE7EE;box-shadow:inset 3px 0 0 #F09AB4}
+.v3g-b.v3-fx{background:hsl(var(--h,250) 40% 93%);box-shadow:inset 3px 0 0 hsl(var(--h,250) 35% 70%)}
+.v3g-b.done{opacity:.55}
+.v3g-b.gh{background:transparent;box-shadow:inset 0 0 0 1.5px var(--accent);border-radius:6px;border:0;background-image:repeating-linear-gradient(-45deg,color-mix(in srgb,var(--accent) 14%,transparent) 0 4px,transparent 4px 8px)}
+.v3g-col.pst .v3g-b{filter:saturate(.6)}
+.v3g-now{position:absolute;left:0;right:0;height:2px;background:var(--accent);z-index:2}
+.v3g-now:before{content:"";position:absolute;left:-3px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .v3g-b{filter:brightness(.88)}}
+.v3-daycard{padding:6px 14px 8px;gap:0}
+.v3-dh{display:flex;align-items:center;justify-content:space-between;border:0;background:transparent;font:inherit;color:var(--fg);padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.v3-dh b{font-size:18px;letter-spacing:-.4px}
+.v3-dr{display:grid;grid-template-columns:52px 22px 1fr auto 22px;align-items:center;gap:6px;border:0;border-bottom:1px solid var(--line);background:transparent;font:inherit;color:var(--fg);text-align:left;min-height:50px;cursor:pointer;padding:0}
+.v3-dr:last-child{border-bottom:0}
+.v3-dr .mono{font-size:15px}
+.v3-dr b{font-size:16px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v3-dr.done b{color:var(--muted);text-decoration:line-through}
+.v3-dot{width:14px;height:14px;border-radius:50%;display:block;background:hsl(var(--h,250) 60% 85%);justify-self:center}
+.v3-dot.k-deep{background:#CFC6FF}.v3-dot.k-out{background:#AEE5D0}.v3-dot.k-light{background:#F2D7AB}.v3-dot.k-event{background:#F7B9CC}.v3-dot.k-rest{background:#DDD8EA}
+.v3-ok{color:var(--ok);font-weight:700}
+.v3-none{padding:10px 0}
+.v3-daycard .ad-row{margin-top:8px}
+.v3-ch{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.v3-ch b{font-size:18px;letter-spacing:-.4px}
+.v3-ib{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:14px;padding:6px 6px 6px 12px;min-height:54px}
+.v3-ib.on{border:0;padding-left:0;min-height:40px}
+.v3-ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--muted);background:transparent;cursor:pointer;flex-shrink:0;padding:0;display:grid;place-items:center;color:#fff}
+.v3-ck.on{background:var(--ok);border-color:var(--ok)}.v3-ck svg{width:14px;height:14px}
+.v3-ibm{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;border:0;background:transparent;font:inherit;color:var(--fg);text-align:left;cursor:pointer;padding:4px 0}
+.v3-ibm b{font-size:16px;font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v3-find{display:inline-flex;align-items:center;gap:2px;border:0;background:transparent;color:var(--accent-text);font:700 15px var(--font);cursor:pointer;padding:8px 4px;white-space:nowrap}
+.v3-find svg{width:16px;height:16px}
+
+/* 길잡이 */
+.v3-ghd{display:flex;align-items:center;gap:14px}
+.v3-gport{width:72px;height:72px;border-radius:18px;background:var(--lav);border:1.5px solid var(--line);display:inline-flex;align-items:flex-end;justify-content:center;overflow:hidden;flex-shrink:0}
+.v3-gport .px{width:68px;height:68px}
+.v3-ghd h1{font-size:28px;letter-spacing:-1px}
+.v3-menu{display:flex;flex-direction:column;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;overflow:hidden;margin-top:-8px}
+.v3-menu button{border:0;border-bottom:1px solid var(--line);background:transparent;font:600 15.5px var(--font);color:var(--fg);text-align:left;padding:14px 16px;cursor:pointer}
+.v3-menu button:last-child{border-bottom:0}
+.v3-gwk{display:flex;align-items:center;gap:10px;width:100%;border:1.5px solid var(--line);border-radius:14px;background:var(--surface);padding:12px 14px;font:inherit;color:var(--fg);cursor:pointer;font-size:16.5px}
+.v3-gwk b{font-weight:800}
+.v3-gwk .v3-chev{margin-left:auto}
+.v3-pi{display:inline-grid;place-items:center;color:var(--accent);flex-shrink:0}
+.v3-pi svg{width:22px;height:22px}
+.g-ava.px-ava{width:52px;height:52px;border-radius:14px;background:var(--lav);border:1.5px solid var(--line)}
+.g-ava.px-ava .px{width:34px;height:34px;margin:0 0 4px}
+.msg.me{display:flex;align-items:flex-end;justify-content:flex-end;gap:8px}
+.msg.me p{background:var(--lav2);color:var(--fg);border-radius:18px 18px 6px 18px;font-weight:600}
+.v3-ava.me-ava{width:38px;height:38px;border-radius:50%;background:var(--lav);display:inline-flex;align-items:flex-end;justify-content:center;overflow:hidden;flex-shrink:0}
+.v3-ava .px{width:34px;height:34px}
+.g-body>p{background:var(--surface);border:1.5px solid var(--line);box-shadow:none;border-radius:6px 18px 18px 18px}
+.v3-prop{display:flex;flex-direction:column;gap:8px;border:1.5px solid var(--line);border-radius:18px;padding:14px;background:var(--surface)}
+.v3-prop>.between b{font-size:17px;letter-spacing:-.4px}
+.v3-badge{font-size:12px;font-weight:700;color:var(--muted);background:var(--sunk);border-radius:8px;padding:3px 8px;white-space:nowrap}
+.v3-pr{display:flex;align-items:center;gap:10px;font-size:15.5px}
+.v3-pr .mono{min-width:46px}
+.v3-pd{min-width:20px;font-weight:600}
+.v3-pr.first{border-top:1px solid var(--line);padding-top:10px;margin-top:2px;color:var(--fg)}
+.v3-prop .grid2 .btn{min-height:48px}
+.v3-other{align-self:center;text-decoration:underline;text-underline-offset:3px}
+.g-compose .inner{gap:8px}
+.g-att{width:50px;min-width:50px;height:50px;border-radius:14px!important;padding:0;display:grid;place-items:center}
+.g-att svg{width:22px;height:22px}
+.g-compose .field{border-radius:14px;box-shadow:none}
+.g-send{width:52px;min-width:52px;height:52px;border-radius:14px!important;padding:0;display:grid;place-items:center}
+.g-send svg{width:22px;height:22px}
+
+/* 프로필 */
+.v3-pf{display:flex;gap:16px;align-items:center}
+.v3-pfc{width:132px;height:150px;border-radius:22px;background:var(--lav);display:inline-flex;align-items:flex-end;justify-content:center;overflow:hidden;flex-shrink:0}
+.v3-pfc .px{width:132px;height:144px;margin-bottom:-6px}
+.v3-pf .grow{display:flex;flex-direction:column;gap:2px;min-width:0}
+.v3-name{border:0;background:transparent;font:850 28px/1.2 var(--font);letter-spacing:-1px;color:var(--fg);text-align:left;padding:0;cursor:pointer;margin-bottom:6px}
+.v3-st{font-size:22px;letter-spacing:-.6px}
+.v3-stl{align-self:flex-start;display:inline-flex;align-items:center;gap:2px;padding:0;margin-top:6px;font-size:16px}
+.v3-stl svg{width:16px;height:16px}
+.v3-menu-l{padding:4px 14px;gap:0}
+.v3-li{display:flex;align-items:center;gap:12px;border:0;border-bottom:1px solid var(--line);background:transparent;font:inherit;color:var(--fg);min-height:56px;cursor:pointer;text-align:left;padding:0}
+.v3-li:last-child{border-bottom:0}
+.v3-li b{flex:1;font-size:16.5px;font-weight:650}
+.v3-li .muted{font-size:15px}
+.v3-li-i{width:28px;display:inline-grid;place-items:center;color:var(--fg)}
+.v3-li-i svg{width:24px;height:24px}
+.v3-how{display:flex;align-items:center;gap:12px;background:var(--lav);border:1.5px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:18px;padding:12px 14px}
+.v3-howg{width:96px;height:96px;flex-shrink:0;display:inline-flex;align-items:flex-start;justify-content:center;overflow:hidden}
+.v3-how .grow{display:flex;flex-direction:column;gap:8px}
+.v3-how b{font-size:17px;letter-spacing:-.4px}
+.v3-tip{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600}
+.v3-tip i{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:inline-grid;place-items:center;flex-shrink:0}
+.v3-tip i svg{width:13px;height:13px}
+
+/* 탭 바: 활성 = 보라 + 밑줄, 채운 아이콘 */
+.tabs{background:var(--surface)}
+.tabs button{position:relative}
+.tabs button.on:after{content:"";position:absolute;bottom:2px;left:30%;right:30%;height:3px;border-radius:3px;background:var(--accent)}
+.tabs button.on svg .fillable{fill:currentColor;fill-opacity:1}
+.tabs button.on[data-tab="today"] svg .fillable{fill:currentColor}
+.tabs button.on[data-tab="guide"] svg .fillable{fill:color-mix(in srgb,currentColor 22%,transparent)}
+
 </style>
 
 <div id="splash" aria-hidden="true">
@@ -1657,10 +1882,10 @@ el.addEventListener('click',hide);setTimeout(hide,3500);})();</script>
 <button type="button" class="fab" data-act="sheet" data-v="quick" aria-label="빠르게 추가">+</button>
 <nav class="tabs" aria-label="화면">
   <div class="inner">
-    <button type="button" data-act="tab" data-tab="today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h1.5M11.25 14h1.5M14.5 14H16M8 17h1.5M11.25 17h1.5"/></svg>오늘</button>
-    <button type="button" data-act="tab" data-tab="week"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8.5L19 8v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19V5A1.5 1.5 0 0 1 6.5 3.5z"/><path d="M14 3.5V8h5"/><path d="M8.5 12h7M8.5 15.5h7"/></svg>이번 주</button>
-    <button type="button" data-act="tab" data-tab="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 14h19l-2.6 4.6a2 2 0 0 1-1.7 1H6.8a2 2 0 0 1-1.7-1z"/><path d="M6 14l6-10 6 10"/><path d="M12 4v10"/></svg>길잡이</button>
-    <button type="button" data-act="tab" data-tab="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>프로필</button>
+    <button type="button" data-act="tab" data-tab="today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M4 10.5L12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5H15v-5.5H9v5.5H5.5A1.5 1.5 0 0 1 4 19z"/></svg>오늘</button>
+    <button type="button" data-act="tab" data-tab="week"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg>이번 주</button>
+    <button type="button" data-act="tab" data-tab="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M2.5 13.5h19l-2.6 5a2 2 0 0 1-1.8 1H6.9a2 2 0 0 1-1.8-1z"/><path d="M6.5 13.5L12 5l5.5 8.5"/><path d="M12 5v8.5"/><path d="M2.5 13.5L5 9.5M21.5 13.5L19 9.5"/></svg>길잡이</button>
+    <button type="button" data-act="tab" data-tab="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="fillable" cx="12" cy="8" r="4"/><path class="fillable" d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5z"/></svg>프로필</button>
   </div>
 </nav>
 <div id="overlay"></div>
@@ -4361,7 +4586,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.17-5';
+const APP_VER='2026.10.18-1';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -7177,6 +7402,289 @@ function celeHtml(){
 }
 function guideAva(st){return '<span class="g-ava px-ava" aria-hidden="true">'+pxImg(SPR['ga_'+(st||'idle')]||SPR.ga_idle,34)+'</span>';}
 function guideImg(st,w,cls){return pxImg(SPR['g_'+(st||'idle')]||SPR.g_idle,w||88,cls,'');}
+/* ================= v3.js — 2026.10.18 화면 시안: 오늘 · 길잡이 · 이번 주 · 프로필 ================= */
+const BOAT_SVG='<svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 13.5h27l-3.4 6a2 2 0 0 1-1.7 1H7.6a2 2 0 0 1-1.7-1z"/><path d="M8 13.5l8-10 8 10"/><path d="M16 3.5v10"/><path d="M2.5 13.5L6 8.5M29.5 13.5L26 8.5"/></svg>';
+const I3={
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01M16 17h.01"/></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/></svg>',
+  clip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7.1-7.1l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4l7.8-7.8"/></svg>',
+  send:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4.5l17 7.5-17 7.5 2.5-7.5z"/><path d="M6.5 12H13" stroke="#fff" stroke-width="0"/></svg>',
+  dots:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12.5l4 4 8-9"/></svg>',
+  plan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg>',
+  bars:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 19v-4M10 19v-8M15 19V8M20 19V5"/></svg>',
+  face:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9 10h.01M15 10h.01M8.5 14.5c1 1.3 2.1 2 3.5 2s2.5-.7 3.5-2"/><path d="M6 7c2-2 4-1.5 6-1s4 .5 6-1"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>',
+  cloud:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5h10a4 4 0 0 0 .5-8 5.5 5.5 0 0 0-10.6-1.2A4.6 4.6 0 0 0 7 18.5z"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>'
+};
+function v3Me(){const G=gameS(),k=G.look||G.ptype;return SPR['ua_'+(k||'none')];}
+function v3Ava(cls){return '<span class="v3-ava '+(cls||'')+'">'+pxImg(v3Me(),34)+'</span>';}
+/* 상단: 종이배 로고 + 내 캐릭터 */
+function headerGame(){return '<button type="button" class="v3-me" data-act="tab" data-tab="profile" aria-label="프로필">'+pxImg(v3Me(),34)+'</button>';}
+try{const bm=document.querySelector('.brand-mc');if(bm){bm.innerHTML=BOAT_SVG;bm.classList.add('v3-boat');}}catch(e){}
+
+/* ---------- 오늘 ---------- */
+function v3Strip(){
+  const ck=curKey(),s=fromIso(ck),td=dow(today());
+  return '<div class="v3-strip" role="group" aria-label="이번 주 날짜">'+DAYS.map((d,i)=>{const dt=addDays(s,i),on=i===td;
+    return '<button type="button" class="v3-day'+(on?' on':'')+(i<td?' pst':'')+'" data-act="v3-day" data-d="'+i+'" aria-label="'+md(dt)+' '+d+'요일'+(on?', 오늘':'')+'"><span>'+d+'</span><b>'+dt.getDate()+'</b></button>';}).join('')+'</div>';
+}
+function v3Portrait(st){return '<span class="v3-port">'+guideImg(st||'idle',88)+'</span>';}
+function nowCard(wk){
+  const t=dow(today()),n=nowMin(),s=S.setup,k=wk.key,it=dayItems(wk,t,'today');
+  const cfl=new Set(conflicts(wk).map(c=>c.b.id));
+  const cur=it.bl.find(b=>!b.done&&b.started&&n<b.start+b.dur+90)||it.bl.find(b=>!b.done&&!b.skip&&b.src!=='rest'&&!cfl.has(b.id)&&b.start<=n&&n<b.start+b.dur);
+  const card=(tag,title,meta,line,btn,extra,st)=>'<section class="v3-now" aria-label="'+esc(tag)+'">'+v3Portrait(st)+'<div class="v3-now-m"><span class="v3-now-tag">'+tag+'</span><b class="v3-now-t">'+esc(title)+'</b>'+(meta?'<span class="v3-now-meta">'+meta+'</span>':'')+(line?'<span class="v3-now-l">'+esc(line)+'</span>':'')+(extra||'')+'</div>'+(btn||'')+'</section>';
+  const B=(a,label,id,cls)=>'<button type="button" class="btn '+(cls||'primary')+' v3-now-b" data-act="'+a+'" data-k="'+k+'" data-id="'+id+'">'+label+'</button>';
+  const alt=b=>'<button type="button" class="link v3-now-alt" data-act="blk-alt" data-k="'+k+'" data-id="'+b.id+'">다르게 하기</button>';
+  if(cur&&cur.kind==='event')return card('지금 · 약속',cur.title,hm(cur.start)+' – '+hm(cur.start+cur.dur)+' · '+durLabel(cur.dur),cur.place||'','','', 'idle');
+  if(cur){const started=!!cur.started,el=started?Math.max(0,Math.round((Date.now()-cur.started)/6e4)):0;
+    return card(started?'하는 중 · '+el+'분째':'지금',cur.title,hm(cur.start)+' – '+hm(cur.start+cur.dur)+' · '+durLabel(cur.dur),cur.first||'',started?B('blk-done','끝냈어요',cur.id):B('blk-start','시작',cur.id),alt(cur),started?'think':'idle');}
+  const fxNow=it.fx.find(f=>f.t==='fixed'&&f.start<=n&&n<f.end);
+  if(fxNow)return card('지금 · 반복 일정',fxNow.label,hm(fxNow.start)+' – '+hm(fxNow.end)+' · '+durLabel(fxNow.end-n)+' 남음','','','','idle');
+  if(n<s.dayStart)return card('하루 시작 전','곧 하루가 열려요',hm(s.dayStart)+'부터 계획해 둔 시간이에요','','','','sleep');
+  const up=it.bl.find(b=>!b.done&&!b.skip&&b.src!=='rest'&&!cfl.has(b.id)&&b.start>n);
+  if(up&&up.start-n<=90){const can=up.kind!=='event'&&fitsLoose(wk,t,Math.ceil(n/5)*5,up.dur,up.id);
+    return card('다음 · '+durLabel(up.start-n)+' 뒤',up.title,hm(up.start)+' – '+hm(up.start+up.dur)+' · '+durLabel(up.dur),up.first||'',can?B('blk-start','지금 시작',up.id):'',up.kind==='event'?'':alt(up),'idle');}
+  const g=it.gaps.find(g=>g.start<=Math.ceil((n+1)/10)*10&&g.end>n);
+  if(g&&n<s.dayEnd)return card('지금은 빈 시간',durLabel(g.end-Math.max(n,g.start))+' 비어 있어요',hm(Math.max(n,g.start))+' – '+hm(g.end)+(up?' · 다음 '+esc(up.title):''),'비워 둬도 괜찮아요. 하고 싶은 게 있으면 넣어요.',
+    '<button type="button" class="btn primary v3-now-b" data-act="gap" data-k="'+k+'" data-d="'+t+'" data-s="'+g.start+'" data-e="'+g.end+'">넣기</button>','<button type="button" class="link v3-now-alt" data-act="rest-mark" data-s="'+g.start+'" data-e="'+g.end+'">쉬기로 기록</button>','listen');
+  if(up)return card('다음',up.title,hm(up.start)+' – '+hm(up.start+up.dur),'','','','idle');
+  const left=it.bl.filter(b=>!b.done&&!b.skip&&trOwn(b)).length;
+  return card('오늘 하루 끝',left?'기록 안 한 블록 '+left+'개':'오늘 하루를 마무리해요','',left?'했는지만 남겨 두면 다음 계획이 쉬워져요.':'',left?'<button type="button" class="btn primary v3-now-b" data-act="close-day">정리</button>':'','','sleep');
+}
+function lateCard(wk){
+  const n=nowMin(),dawn=n<5*60,tgt=dawn?today():addDays(today(),1),tk=iso(mondayOf(tgt)),td=dow(tgt);
+  const tw=S.weeks[tk]||Object.assign(newWeek(tk,null),{_tmp:1,blocks:[]}),it=dayItems(tw,td,'future');
+  const items=it.fx.filter(f=>f.t==='fixed').map(f=>({s:f.start,l:f.label})).concat(it.bl.map(b=>({s:b.start,l:b.title}))).sort((a,b)=>a.s-b.s).slice(0,3);
+  const ad=adOn(iso(tgt)),lb=dawn?'오늘 아침':'내일';
+  return '<section class="v3-now" aria-label="'+lb+' 준비">'+v3Portrait('sleep')+'<div class="v3-now-m"><span class="v3-now-tag">'+(dawn?'지금은 새벽':'오늘은 여기까지')+'</span><b class="v3-now-t">'+(dawn?'오늘 아침 할 일을 정해 둘까요?':'내일 할 일 하나 정해 볼까요?')+'</b>'+
+    '<span class="v3-now-meta">'+lb+' '+md(tgt)+'('+DAYS[td]+') · '+(items.length||ad.length?ad.map(x=>esc(x.title)).concat(items.map(x=>hm(x.s)+' '+esc(x.l))).join(', '):'아직 비어 있어요')+'</span>'+
+    '<button type="button" class="link v3-now-alt" data-act="tab" data-tab="guide">길잡이와 정하기</button></div>'+
+    '<button type="button" class="btn primary v3-now-b" data-act="add-open" data-v="todo" data-when="'+(dawn?'today-am':'tomorrow')+'">넣기</button></section>';
+}
+/* 하루 목록: 시간 · 상태 점 · 이름 · › */
+function dayAgenda(wk,d){
+  const mode=modeFor(wk,d),it=dayItems(wk,d,mode),rows=[],n=nowMin();
+  for(const f of it.fx)if(f.t==='fixed')rows.push({s:f.start,e:f.end,h:'<div class="v3-row v3-fxrow" style="--h:'+hueOf(f.label)+'"><span class="v3-t mono">'+hm(f.start)+'</span><span class="v3-node dot" aria-hidden="true"></span>'+
+    '<button type="button" class="v3-m" data-act="fx-open" data-k="'+wk.key+'" data-d="'+d+'" data-id="'+(f.id||'')+'"><b>'+esc(f.label)+'</b><span>'+durLabel(f.end-f.start)+' · 반복 일정</span></button><span class="v3-chev">'+I3.chev+'</span></div>'});
+  for(const b of it.bl){
+    const st=blockState(b,mode),own=trOwn(b),g=goalOf(b);
+    const tag=[durLabel(b.dur),g?g.name:b.kind==='event'?'약속':b.lock?'시간 고정':b.src==='rest'?'쉼':'',b.deadline?dlTag(b.deadline):'',b.overlap?'겹침':'',b.subs&&b.subs.length?'단계 '+b.subs.filter(x=>x.done).length+'/'+b.subs.length:'',b.place||''].filter(Boolean).map(esc).join(' · ');
+    const node=own?'<button type="button" class="v3-node ck'+(b.done?' on':'')+(st==='now'?' now':'')+'" data-act="blk-done" data-k="'+wk.key+'" data-id="'+b.id+'" aria-pressed="'+!!b.done+'" aria-label="'+esc(b.title)+(b.done?' 끝냄 취소':' 끝냈어요')+'">'+(b.done?I3.check:'')+'</button>':
+      '<span class="v3-node dot k-'+b.kind+'" aria-hidden="true"></span>';
+    rows.push({s:b.start,e:b.start+b.dur,now:st==='now',h:'<div class="v3-row k-'+b.kind+' st-'+st+(b.skip?' sk':'')+(st==='now'?' cur':'')+'" style="--h:'+hueOf(b.title)+'"><span class="v3-t mono">'+hm(b.start)+'</span>'+node+
+      '<button type="button" class="v3-m" data-act="blk" data-k="'+wk.key+'" data-id="'+b.id+'"><b>'+esc(b.title)+'</b><span>'+tag+(b.skip&&!b.done?' · 못 함':'')+'</span></button><span class="v3-chev">'+I3.chev+'</span></div>'});
+  }
+  for(const g of it.gaps)rows.push({s:g.start,e:g.end,h:'<div class="v3-row v3-gaprow"><span class="v3-t mono">'+hm(g.start)+'</span><span class="v3-node v3-ngap" aria-hidden="true"></span>'+
+    '<button type="button" class="v3-m" data-act="gap" data-k="'+wk.key+'" data-d="'+d+'" data-s="'+g.start+'" data-e="'+g.end+'"><span class="v3-gap">'+hm(g.start)+' – '+hm(g.end)+' · 비어 있는 시간</span></button>'+
+    '<button type="button" class="v3-add" data-act="gap" data-k="'+wk.key+'" data-d="'+d+'" data-s="'+g.start+'" data-e="'+g.end+'" aria-label="'+hm(g.start)+' 빈 시간에 넣기">'+I3.plus+'</button></div>'});
+  rows.sort((a,b)=>a.s-b.s);
+  if(!rows.length)return '<div class="v3-empty small muted">이 날은 비어 있어요.</div>';
+  let hid=0,list=rows;
+  if(mode==='today'&&!ui.showPast){list=rows.filter(r=>!(r.e<=n&&!r.now));hid=rows.length-list.length;}
+  return (hid?'<button type="button" class="link ag-past" data-act="show-past">지난 일정 '+hid+'개 보기</button>':'')+'<div class="v3-list">'+list.map(r=>r.h).join('')+'</div>';
+}
+function dayAgendaToday(wk,d){return dayAgenda(wk,d);}
+function v3Nudge(text,btn,act,extra,st){return '<section class="v3-nudge"><span class="v3-g">'+pxImg(SPR['ga_'+(st||'idle')],34)+'</span><div class="grow"><span class="xs muted">길잡이</span><b>'+text+'</b></div>'+(btn?'<button type="button" class="btn sm v3-nb" data-act="'+act+'"'+(extra||'')+'>'+btn+'</button>':'')+'</section>';}
+function nudgeCard(wk){
+  if(ui.nudgeOff)return '';
+  const p=openProp();
+  if(p)return v3Nudge(esc(p.name)+' 제안을 아직 확인하지 않았어요','제안 보기','pp-view');
+  const cf=conflicts(wk)[0];
+  if(cf){const to=conflictFix(wk,cf.b);ui.cfFix={k:wk.key,id:cf.b.id,to};
+    return '<section class="v3-nudge"><span class="v3-g">'+pxImg(SPR.ga_think,34)+'</span><div class="grow"><span class="xs muted">길잡이</span><b>\''+esc(cf.with)+'\' · \''+esc(cf.b.title)+'\' 시간이 겹쳐요</b>'+(to?'<span class="small muted">'+DAYS[to.day]+'요일 '+hm(to.start)+'로 옮길까요?</span>':'')+'</div><div class="stack" style="gap:6px">'+(to?'<button type="button" class="btn sm v3-nb" data-act="cf-move">옮기기</button>':'')+'<button type="button" class="link" data-act="cf-skip">이번엔 생략</button></div></section>';}
+  const ck=checkDue();
+  if(ck)return v3Nudge(esc(ck.text),'이어서 짜기','ck-start',' data-g="'+ck.goal.id+'"');
+  const td=dow(today()),left=wk.blocks.filter(b=>b.day===td&&!b.done&&!b.skip&&trOwn(b)).length,ended=wk.blocks.filter(b=>!b.done&&!b.skip&&trOwn(b)&&trEnded(wk,b)).length;
+  if(ended)return v3Nudge('기록 안 한 블록이 '+ended+'개 있어요. 같이 정리할까요?','제안 보기','rec-past');
+  if(left)return v3Nudge('남은 일, 같이 정리할까요?','제안 보기','close-day');
+  return v3Nudge('해보고 싶은 일이 있으면 말해 주세요','이야기하기','tab',' data-tab="guide"','happy');
+}
+function viewToday(){
+  const t=today(),td=dow(t),wk=getWeek(curKey()),n=nowMin();
+  const first=isFirstUse(wk),late=n>=S.setup.dayEnd-30||n<4*60;
+  const out=['<div class="v3-title"><div class="stack" style="gap:2px"><h1>오늘</h1><span class="v3-date">'+(t.getMonth()+1)+'월 '+t.getDate()+'일 '+DAYS[td]+'요일</span></div><button type="button" class="v3-ic" data-act="month-open" aria-label="달력">'+I3.cal+'</button></div>'];
+  out.push(v3Strip());
+  out.push(otherTabCard());out.push(saveFailCard());out.push(changeCard());
+  if(ui.proposals)out.push(recCards(wk));
+  else if(first&&!late)out.push(firstCard());else if(late)out.push(lateCard(wk));else out.push(nowCard(wk));
+  if(!first||wk.blocks.length||fxOf(td,wk).length||adOn(dkey()).length)
+    out.push('<div class="stack v3-day-sec">'+adChips(dkey())+(ui.tlView==='tl'?timelineHtml(wk,td):dayAgenda(wk,td))+'<div class="between v3-sub"><span class="xs muted">'+hm(S.setup.dayStart)+'–'+hm(S.setup.dayEnd)+' 기준 · <button type="button" class="link xs" data-act="tab" data-tab="memory">고치기</button></span>'+tlToggle()+'</div></div>');
+  if(!first&&!ui.proposals)out.push(nudgeCard(wk));
+  out.push(dueCard());
+  if(!first)out.push(rtSection());
+  if(!first)out.push(rtFresh());
+  return out.join('');
+}
+
+/* ---------- 이번 주 ---------- */
+function weekGrid(wk,sel,act){
+  const r0=Math.max(6*60,Math.floor(S.setup.dayStart/60)*60),r1=Math.min(1440,Math.ceil(S.setup.dayEnd/60)*60),P=0.62;
+  const H=Math.round((r1-r0)*P),y=m=>Math.round((clamp(m,r0,r1)-r0)*P),td=wk.key===curKey()?dow(today()):-1,gp=openProp(),gpOn=gp&&gp.key===wk.key;
+  let axis='';for(let m=Math.ceil(r0/180)*180;m<r1;m+=180)axis+='<span style="top:'+y(m)+'px">'+pad(Math.floor(m/60))+'</span>';
+  let lines='';for(let m=Math.ceil(r0/180)*180;m<r1;m+=180)lines+='<i class="v3g-ln" style="top:'+y(m)+'px"></i>';
+  const cols=DAYS.map((_,i)=>{
+    const mode=modeFor(wk,i),it=dayItems(wk,i,'past');let h='';
+    const card=(top,hh,cls,st,title,tm,a)=>'<span class="v3g-b '+cls+'" style="top:'+top+'px;height:'+hh+'px;'+st+'"'+(a||'')+'>'+(hh>=18?'<b>'+esc(title)+'</b>':'')+(hh>=40?'<small>'+tm+'</small>':'')+'</span>';
+    for(const f of it.fx)if(f.t==='fixed'){const hh=Math.max(6,y(f.end)-y(f.start)-2);h+=card(y(f.start)+1,hh,'v3-fx','--h:'+hueOf(f.label),f.label,hm(f.start)+'<br>– '+hm(f.end));}
+    for(const b of it.bl){const hh=Math.max(6,y(b.start+b.dur)-y(b.start)-2);h+=card(y(b.start)+1,hh,'k-'+b.kind+' st-'+blockState(b,mode)+(b.done?' done':''),'--h:'+hueOf(b.title),b.title,hm(b.start)+'<br>– '+hm(b.start+b.dur));}
+    if(gpOn)for(const b of gp.blocks)if(b.day===i&&!b.off)h+='<span class="v3g-b gh" style="top:'+(y(b.start)+1)+'px;height:'+Math.max(6,y(b.start+b.dur)-y(b.start)-2)+'px"></span>';
+    if(i===td){const n=nowMin();if(n>r0&&n<r1)h+='<i class="v3g-now" style="top:'+y(n)+'px"></i>';}
+    return '<button type="button" class="v3g-col'+(i===sel?' sel':'')+(mode==='past'?' pst':'')+'" data-act="'+act+'" data-i="'+i+'" aria-label="'+DAYS[i]+'요일 보기">'+h+'</button>';
+  }).join('');
+  return '<div class="v3g"><div class="v3g-scroll" data-key="'+wk.key+'"><div class="v3g-body" style="height:'+H+'px"><div class="v3g-axis">'+axis+'</div><div class="v3g-cols">'+lines+cols+'</div></div></div></div>';
+}
+function v3WeekDays(wk,sel){
+  const s=fromIso(wk.key),td=wk.key===curKey()?dow(today()):-1;
+  return '<div class="v3-wdays">'+DAYS.map((d,i)=>{const n=wk.blocks.filter(b=>b.day===i&&b.dur>0&&b.src!=='rest').length;
+    return '<button type="button" class="v3-wd'+(i===sel?' on':'')+(i===td?' td':'')+'" data-act="day" data-i="'+i+'" aria-pressed="'+(i===sel)+'" aria-label="'+d+'요일, 일정 '+n+'개"><span>'+d+'</span><b>'+addDays(s,i).getDate()+'</b></button>';}).join('')+'</div>';
+}
+function v3DayCard(wk,d){
+  const mode=modeFor(wk,d),it=dayItems(wk,d,mode),ds=addDays(fromIso(wk.key),d);
+  const rows=it.fx.filter(f=>f.t==='fixed').map(f=>({s:f.start,h:'<button type="button" class="v3-dr" data-act="fx-open" data-k="'+wk.key+'" data-d="'+d+'" data-id="'+(f.id||'')+'"><span class="mono">'+hm(f.start)+'</span><i class="v3-dot v3-fx" style="--h:'+hueOf(f.label)+'"></i><b>'+esc(f.label)+'</b><span class="v3-chev">'+I3.chev+'</span></button>'}))
+    .concat(it.bl.map(b=>({s:b.start,h:'<button type="button" class="v3-dr'+(b.done?' done':'')+'" data-act="blk" data-k="'+wk.key+'" data-id="'+b.id+'"><span class="mono">'+hm(b.start)+'</span><i class="v3-dot k-'+b.kind+'" style="--h:'+hueOf(b.title)+'"></i><b>'+esc(b.title)+'</b>'+(b.done?'<span class="xs v3-ok">끝냄</span>':'')+'<span class="v3-chev">'+I3.chev+'</span></button>'}))).sort((a,b)=>a.s-b.s);
+  return '<section class="v3-card v3-daycard"><button type="button" class="v3-dh" data-act="v3-dayopen" data-i="'+d+'"><b>'+DAYS[d]+'요일 '+ds.getDate()+'일'+(wk.key===curKey()&&d===dow(today())?' · 오늘':'')+'</b><span class="v3-chev">'+I3.chev+'</span></button>'+
+    adChips(iso(ds))+(rows.length?rows.map(r=>r.h).join(''):'<span class="small muted v3-none">비어 있어요. 아래 + 로 넣을 수 있어요.</span>')+'</section>';
+}
+function inboxCard(wk){
+  const all=inbox(),list=all.filter(x=>!x.done&&(!x.key||x.key<=wk.key)).sort(ibxSort),fin=all.filter(x=>x.done);
+  return '<section class="v3-card ibx"><div class="v3-ch"><b>보관함 <span class="muted">· '+list.length+'</span></b><button type="button" class="link" data-act="add-open" data-v="todo" data-mode="keep">+ 할 일</button></div>'+
+    (list.length?list.map(x=>'<div class="v3-ib"><button type="button" class="v3-ck" data-act="ibx-done" data-id="'+x.id+'" aria-label="'+esc(x.title)+' 끝냈어요"></button>'+
+      '<button type="button" class="v3-ibm" data-act="ibx-open" data-id="'+x.id+'"><b>'+esc(x.title)+'</b>'+([x.dur?durLabel(x.dur):'',x.deadline?dlTag(x.deadline):''].filter(Boolean).length?'<span class="xs muted">'+[x.dur?durLabel(x.dur):'',x.deadline?dlTag(x.deadline):''].filter(Boolean).join(' · ')+'</span>':'')+'</button>'+
+      '<button type="button" class="v3-find" data-act="ibx-place" data-id="'+x.id+'" data-k="'+wk.key+'">시간 찾기 '+I3.chev+'</button></div>').join(''):'<span class="small muted v3-none">시간을 아직 정하지 않은 할 일을 모아 두는 곳이에요.</span>')+
+    (fin.length?'<details class="ibx-fin"><summary class="small">끝낸 할 일 '+fin.length+'개</summary>'+fin.slice(-20).reverse().map(x=>'<div class="v3-ib on"><button type="button" class="v3-ck on" data-act="ibx-done" data-id="'+x.id+'" aria-label="'+esc(x.title)+' 끝냄 취소">'+I3.check+'</button><span class="grow small">'+esc(x.title)+' <span class="xs muted">'+md(fromIso(x.done))+'</span></span></div>').join('')+'</details>':'')+'</section>';
+}
+function viewWeek(){
+  const k=wkKey(),cur=k===curKey(),wk=S.weeks[k]||(k>curKey()?getWeek(k):Object.assign(newWeek(k,null),{_tmp:1})),p=openProp(),s=fromIso(k);
+  if(ui.dayView==null)ui.dayView=cur?dow(today()):0;
+  const dv=ui.dayView,out=[];
+  out.push('<div class="v3-title"><h1>'+wkLabel(k)+'</h1><div class="row" style="gap:6px"><button type="button" class="v3-ic" data-act="srch" aria-label="찾기">'+I3.search+'</button><button type="button" class="v3-mo" data-act="month-open"><span>월간</span>'+I3.cal+'</button></div></div>');
+  out.push('<div class="v3-wnav"><button type="button" class="v3-arr" data-act="wk-go" data-v="-1" aria-label="지난주">‹</button><b>'+md(s)+' – '+md(addDays(s,6))+'</b><button type="button" class="v3-arr" data-act="wk-go" data-v="1" aria-label="다음 주">›</button></div>'+
+    (!cur?'<button type="button" class="link v3-back" data-act="wk-go" data-v="0">이번 주로 돌아가기</button>':''));
+  out.push(otherTabCard());out.push(saveFailCard());out.push(changeCard());
+  if(p&&p.key===wk.key)out.push('<div class="pp-bar"><div class="stack" style="gap:2px"><b>'+esc(p.name)+' · 제안 확인 중</b><span class="small muted">점선 블록이 아직 확정 전인 제안이에요.</span></div><div class="grid2"><button type="button" class="btn primary" data-act="pp-start">일정에 넣기</button><button type="button" class="btn" data-act="pp-view">자세히</button></div></div>');
+  for(const c of conflicts(wk).slice(0,1))out.push('<div class="card warn"><b>시간이 겹쳐요</b><span class="small">'+DAYS[c.b.day]+'요일 '+esc(c.b.title)+' · '+esc(c.with)+'. 블록을 눌러 옮길 수 있어요.</span></div>');
+  out.push('<section class="v3-card v3-wk">'+v3WeekDays(wk,dv)+weekGrid(wk,dv,'day')+'</section>');
+  out.push(v3DayCard(wk,dv));
+  if(!wk._tmp)out.push(inboxCard(wk));
+  if(!wk._tmp&&k>=curKey())out.push('<button type="button" class="v3-nudge v3-nudge-btn" data-act="v3-plan" data-k="'+k+'"><span class="v3-g big">'+pxImg(SPR.g_idle,44)+'</span><div class="grow"><span class="xs muted">길잡이</span><b>이 주 계획 함께 정리하기</b></div><span class="v3-chev">'+I3.chev+'</span></button>');
+  if(growthMode()!=='hide'&&!wk._tmp)out.push(trkCard(wk));
+  return out.join('');
+}
+
+/* ---------- 길잡이 ---------- */
+function guideAva(st){return '<span class="g-ava px-ava" aria-hidden="true">'+pxImg(SPR['ga_'+(st||'idle')]||SPR.ga_idle,34)+'</span>';}
+function msgHtml(m,idx){
+  if(m.role==='me')return '<div class="msg me"><p>'+esc(m.text)+'</p>'+v3Ava('me-ava')+'</div>';
+  const ms=guideState().msgs,last=idx===ms.length-1,busy=ui.busy.guide;
+  let h='<div class="msg guide">'+guideAva(idx===ms.length-1&&!busy?'idle':'idle')+'<div class="g-body">'+(m.label?'<span class="g-label">'+esc(m.label)+'</span>':'')+'<p>'+esc(m.text)+(m.sub&&!(m.prop&&m.prop.status==='open')?'<span class="g-sub">'+esc(m.sub)+'</span>':'')+'</p>'+(m.fail?guideFailLine(m):'');
+  if(m.options&&m.options.length&&last&&!busy)h+='<div class="g-opts">'+m.options.map(o=>'<button type="button" class="chip opt" data-act="g-chip" data-v="'+esc(o)+'">'+esc(o)+'</button>').join('')+'</div>';
+  const p=m.prop;
+  if(p){
+    if(p.status==='open'){const on=p.blocks.filter(b=>!b.off),fst=on.find(b=>b.first);
+      h+='<div class="v3-prop"><div class="between"><b>'+esc(p.multi?wkLabel(p.key)+' 계획':p.name+' · '+(p.goalId?'이번 주':'첫 주')+' 제안')+'</b><span class="v3-badge">미확정</span></div>'+
+        on.slice(0,6).map(b=>'<div class="v3-pr"><span class="v3-pi">'+I3.cal+'</span><span class="v3-pd">'+DAYS[b.day]+'</span><span class="mono">'+hm(b.start)+'</span><span class="grow">'+esc(b.title)+'</span></div>').join('')+
+        (on.length>6?'<span class="xs muted">외 '+(on.length-6)+'개</span>':'')+
+        (fst?'<div class="v3-pr first"><span class="v3-pi">'+I3.doc+'</span><span class="grow">'+esc(fst.first)+'</span></div>':'')+
+        '<div class="grid2"><button type="button" class="btn primary" data-act="v3-accept" data-m="'+idx+'">일정에 넣기</button><button type="button" class="btn" data-act="pp-open" data-m="'+idx+'">시간 바꾸기</button></div>'+
+        (last&&!busy?'<button type="button" class="link v3-other" data-act="pp-other">다른 방법</button>':'')+'</div>';}
+    else h+='<span class="xs muted">'+(p.status==='accepted'?'일정에 넣었어요. 블록을 누르면 제안 이유를 다시 볼 수 있어요.':'새 제안으로 바꿨어요.')+'</span>';
+  }
+  if(m.chips&&m.chips.length&&last&&!busy)h+='<div class="g-chips">'+m.chips.map(c=>'<button type="button" class="chip sm" data-act="g-chip" data-v="'+esc(c)+'">'+esc(c)+'</button>').join('')+'</div>';
+  return h+'</div></div>';
+}
+function gwkChip(){
+  const k=gWeek().key,s=fromIso(k);
+  return '<button type="button" class="v3-gwk" data-act="gwk-open"><span class="v3-pi">'+I3.cal+'</span><b>'+wkLabel(k)+'</b><span class="muted">·</span><span>'+md(s)+' – '+md(addDays(s,6))+'</span><span class="v3-chev">'+I3.chev+'</span></button>';
+}
+function viewGuide(){
+  const g=guideState();
+  if(!g.msgs.length){const it=introMsg();g.msgs.push({id:uid(),role:'guide',text:it.text,chips:it.chips});}
+  const out=['<div class="v3-ghd"><span class="v3-gport">'+pxImg(SPR['ga_'+(ui.busy.guide?'think':'idle')],68)+'</span><div class="grow"><h1>길잡이</h1><span class="small muted">'+(leadOn()?'알아서 짜 주는 중':'AI 계획 도우미')+'</span></div><button type="button" class="v3-ic plain" data-act="g-menu" aria-label="길잡이 메뉴" aria-expanded="'+!!ui.gMenu+'">'+I3.dots+'</button></div>'];
+  if(ui.gMenu)out.push('<div class="v3-menu" role="menu"><button type="button" role="menuitem" data-act="lead-set" data-v="'+(leadOn()?'0':'1')+'">'+(leadOn()?'같이 정하기로 바꾸기':'알아서 짜주기로 바꾸기')+'</button><button type="button" role="menuitem" data-act="tab" data-tab="memory">길잡이가 기억하는 것</button><button type="button" role="menuitem" data-act="g-reset">새 대화 시작</button></div>');
+  out.push(gwkChip());
+  if(ui.gResetAsk)out.push('<div class="card soft"><b>대화만 지울까요?</b><span class="small">지금까지의 대화만 지워요. 길잡이가 기억하는 목표와 선호는 그대로 남아요.</span><div class="grid2"><button type="button" class="btn" data-act="g-reset-no">취소</button><button type="button" class="btn primary" data-act="g-reset-yes">대화 지우기</button></div></div>');
+  out.push('<div class="thread">'+g.msgs.map(msgHtml).join('')+(ui.busy.guide?guideBusyHtml():'')+'</div>');
+  out.push(leadBtn());out.push(aiNoticeCard());
+  out.push('<div class="g-compose"><div class="inner"><label class="btn g-att" aria-label="시간표나 일정 캡처 올리기"><input type="file" accept="image/*,.ics,text/calendar" multiple data-field="g-import">'+I3.clip+'</label>'+
+    '<input id="gText" class="field" data-field="g-text" placeholder="메시지 입력" enterkeyhint="send" autocomplete="off" value="'+esc(ui.gDraft||'')+'" aria-label="길잡이에게 보낼 메시지">'+
+    '<button type="button" class="btn primary g-send" data-act="g-send"'+(ui.busy.guide?' disabled':'')+' aria-label="보내기">'+I3.send+'</button></div></div>');
+  return out.join('');
+}
+function gwkSheet(){
+  const cur=gWeek().key;
+  return '<div class="grab"></div><h2>어느 주를 계획할까요?</h2><div class="opt-list">'+[0,1,2,3,4].map(i=>{const k=iso(addDays(fromIso(curKey()),7*i)),s=fromIso(k),on=k===cur;
+    return '<button type="button" class="opt'+(on?' on':'')+'" data-act="gwk-pick" data-v="'+k+'" aria-pressed="'+on+'"><b>'+wkLabel(k)+'</b><span>'+md(s)+' – '+md(addDays(s,6))+' · 빈 시간 '+freeHours(getWeek(k))+'시간쯤</span></button>';}).join('')+'</div>';
+}
+
+/* ---------- 프로필 ---------- */
+function viewProfile(){
+  const G=gameS(),k=stCur(),T=k&&PTYPE[k],name=S.profile.name||'나',gm=growthMode();
+  const out=['<div class="v3-title"><h1>프로필</h1><button type="button" class="v3-ic" data-act="me" aria-label="설정">'+TIP_SVG.gear+'</button></div>'];
+  out.push('<section class="v3-pf"><span class="v3-pfc">'+pxImg(userSprite(),88,'',T?T.name+' 캐릭터':'캐릭터')+'</span><div class="grow"><button type="button" class="v3-name" data-act="v3-name">'+esc(name)+'</button>'+
+    (T?'<span class="small muted">요즘 계획 스타일</span><b class="v3-st">'+esc(T.name)+'</b><span class="small">'+esc(T.say)+'</span>':'<span class="small muted">계획 스타일</span><b class="v3-st">아직 고르지 않았어요</b>')+
+    '<button type="button" class="link v3-stl" data-act="style-open">'+(T?'스타일 변경':'스타일 고르기')+' '+I3.chev+'</button></div></section>');
+  out.push('<section class="v3-card v3-menu-l"><button type="button" class="v3-li" data-act="v3-sl" data-k="plan"><span class="v3-li-i">'+I3.plan+'</span><b>계획 잡기</b><span class="muted">'+(slVal('plan')>=0?SL_TXT.plan[slVal('plan')]:'정하기')+'</span><span class="v3-chev">'+I3.chev+'</span></button>'+
+    '<button type="button" class="v3-li" data-act="v3-sl" data-k="rhythm"><span class="v3-li-i">'+I3.bars+'</span><b>실행 리듬</b><span class="muted">'+(slVal('rhythm')>=0?SL_TXT.rhythm[slVal('rhythm')]:'정하기')+'</span><span class="v3-chev">'+I3.chev+'</span></button></section>');
+  if(T)out.push('<section class="v3-how"><span class="v3-howg">'+pxImg(SPR.g_happy,88)+'</span><div class="grow"><b>길잡이의 계획 방식</b>'+T.tips.map(x=>'<span class="v3-tip"><i>'+I3.check+'</i>'+esc(x[1])+'</span>').join('')+'</div></section>');
+  out.push('<section class="v3-card v3-menu-l">'+
+    '<button type="button" class="v3-li" data-act="look-open"><span class="v3-li-i">'+I3.face+'</span><b>캐릭터</b><span class="v3-chev">'+I3.chev+'</span></button>'+
+    '<button type="button" class="v3-li" data-act="tab" data-tab="routine"><span class="v3-li-i">'+I3.list+'</span><b>루틴</b><span class="muted">'+rtList().length+'개</span><span class="v3-chev">'+I3.chev+'</span></button>'+
+    '<button type="button" class="v3-li" data-act="v3-me" data-v="data"><span class="v3-li-i">'+I3.cloud+'</span><b>백업과 저장</b><span class="v3-chev">'+I3.chev+'</span></button>'+
+    '<button type="button" class="v3-li" data-act="v3-me" data-v="plan"><span class="v3-li-i">'+I3.bell+'</span><b>알림</b><span class="muted">'+(S.setup.notify?'켜짐':'꺼짐')+'</span><span class="v3-chev">'+I3.chev+'</span></button></section>');
+  if(gm!=='hide'){
+    const xp=xpTotal(),li=lvlInfo(xp),si=dayStreak(),pct=Math.round(li.into/li.need*100);
+    out.push('<section class="v3-card pf2-grow"><div class="v3-ch"><b>나의 기록</b><span class="pf2-lv">Lv.'+li.l+'</span></div>'+
+      '<div class="pf-bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+li.need+'" aria-valuenow="'+li.into+'" aria-label="다음 레벨까지"><i style="width:'+pct+'%"></i></div><span class="xs muted">다음 레벨까지 '+li.left+' XP · 기록이 끊겨도 XP는 줄지 않아요</span>'+
+      '<div class="grid3 pf-stats"><div class="stat"><b>'+si.n+'일</b><span class="xs muted">연속 기록</span></div><div class="stat"><b>'+xp+'</b><span class="xs muted">모은 XP</span></div><div class="stat"><b>'+Math.max(G.best,si.n)+'일</b><span class="xs muted">최고 기록</span></div></div></section>');
+    out.push(rtGarden());
+    out.push('<div class="v3-card"><div class="v3-ch"><b>배지</b></div><div class="pf-badges">'+badgeList().map(b=>'<div class="pf-badge'+(b.on?' on':'')+'">'+pxImg(SPR[b.on?'i_'+b.i:'i_lock'],24)+'<b>'+b.n+'</b><span>'+b.s+'</span></div>').join('')+'</div></div>');
+  }
+  return out.join('');
+}
+function slSheet(){
+  const k=ui.slK==='rhythm'?'rhythm':'plan',v=slVal(k),T=SL_TXT[k],D=k==='plan'?['언제 할지 미리 정해 둬요','대부분 미리, 가끔 그때그때','대부분 그때그때, 가끔 미리','그날 상황을 보고 정해요']:['10~30분씩 자주 해요','짧게 자주가 편해요','가끔 길게가 편해요','한 번에 길게 몰입해요'];
+  return '<div class="grab"></div><h2>'+(k==='plan'?'계획 잡기':'실행 리듬')+'</h2><div class="opt-list">'+T.map((t,i)=>'<button type="button" class="opt'+(v===i?' on':'')+'" data-act="st-sl" data-k="'+k+'" data-v="'+i+'" aria-pressed="'+(v===i)+'"><b>'+t+'</b><span>'+D[i]+'</span></button>').join('')+'</div>'+
+    '<span class="xs muted">두 가지를 합쳐 계획 스타일이 정해지고, 길잡이 제안에 반영돼요.</span>';
+}
+function nameSheet(){return '<div class="grab"></div><h2>뭐라고 부를까요?</h2><input id="v3Name" class="field" maxlength="12" value="'+esc(S.profile.name||'')+'" placeholder="이름이나 별명"><button type="button" class="btn primary block" data-act="v3-name-save">저장</button>';}
+
+/* ---------- 동작 ---------- */
+function v3Act(a,d){
+  switch(a){
+    case 'v3-day':{const i=+d.d;ui.tab='week';ui.wk=null;ui.dayView=i;window.scrollTo(0,0);render();return true;}
+    case 'v3-dayopen':ui.tlView=ui.tlView==='tl'?'tl':'list';ui.dayView=+d.i;render();return true;
+    case 'v3-plan':ui.gwk=d.k;ui.tab='guide';ui.gScroll=true;{const g=guideState();if(g.msgs.length===1&&g.msgs[0].role==='guide')g.msgs=[];}render();return true;
+    case 'v3-accept':ui.ppMsg=+d.m;act('pp-start',{});return true;
+    case 'g-menu':ui.gMenu=!ui.gMenu;render();return true;
+    case 'gwk-open':ui.sheet='gwk';ui.sheetAnim=true;renderOverlay();return true;
+    case 'gwk-pick':{ui.gwk=d.v;ui.sheet=null;const g=guideState();if(g.msgs.length===1&&g.msgs[0].role==='guide')g.msgs=[];render();return true;}
+    case 'v3-sl':ui.slK=d.k;ui.sheet='sl';ui.sheetAnim=true;renderOverlay();return true;
+    case 'v3-me':ui.meSec=d.v;ui.tab='me';window.scrollTo(0,0);render();return true;
+    case 'v3-name':ui.sheet='name';ui.sheetAnim=true;renderOverlay();setTimeout(()=>{const el=document.getElementById('v3Name');if(el)el.focus();},80);return true;
+    case 'v3-name-save':{const el=document.getElementById('v3Name');S.profile.name=el?el.value.trim().slice(0,12):'';ui.sheet=null;commit();return true;}
+    case 'st-sl':if(ui.sheet==='sl'){setTimeout(()=>{if(ui.sheet==='sl'){ui.sheet=null;renderOverlay();}},250);}return false;
+    case 'tab':case 'lead-set':case 'g-reset':ui.gMenu=false;return false;
+  }
+  return false;
+}
+act=(o=>function(a,d){if(v3Act(a,d||{}))return;return o.apply(this,arguments);})(act);
+sheetHtml=(o=>function(){
+  const M={gwk:gwkSheet,sl:slSheet,name:nameSheet};
+  if(M[ui.sheet]){const inner=M[ui.sheet](),anim=ui.sheetAnim;ui.sheetAnim=false;
+    return '<div class="scrim" data-act="sheet-close"></div><div class="sheet'+(anim?' anim':'')+'" role="dialog" aria-modal="true"><div class="inner">'+inner+'</div></div>';}
+  return o.apply(this,arguments);})(sheetHtml);
+/* 주간 격자는 지금 시각 근처로 스크롤 */
+render=(o=>function(){
+  const old=document.querySelector('.v3g-scroll'),ok=old&&old.dataset.key,ot=old?old.scrollTop:0;
+  const r=o.apply(this,arguments);
+  try{const sc=document.querySelector('.v3g-scroll');if(sc){if(sc.dataset.key===ok)sc.scrollTop=ot;else{const tg=sc.querySelector('.v3g-now')||sc.querySelector('.v3g-b:not(.v3-fx)')||sc.querySelector('.v3g-b');if(tg)sc.scrollTop=Math.max(0,tg.offsetTop-70);}}}catch(e){}
+  return r;})(render);
 
 /* ---------- boot ---------- */
 getSample().then(sm=>sm&&sm.limits?sm.limits():null).then(c=>{if(c&&c.images){ui.imgOK=true;ui.imgTypes=(c.images.mediaTypes||[]).join(',');render();}}).catch(()=>{});
