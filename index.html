@@ -1932,6 +1932,10 @@ img.art{display:block;height:auto;image-rendering:auto;flex-shrink:0}
 
 .g-fail-mini{margin-top:6px;opacity:.75}
 
+.nw-card{display:flex;flex-direction:column;gap:8px}
+.nw-row{display:flex;align-items:center;gap:10px;text-align:left;background:none;border:0;padding:8px 0;border-bottom:1px solid var(--line,#e6e3f5);font:inherit;color:inherit;width:100%}
+.nw-row .grow{display:flex;flex-direction:column;gap:2px}
+
 </style>
 
 <div id="splash" aria-hidden="true">
@@ -4673,7 +4677,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.18-2';
+const APP_VER='2026.10.18-3';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -7905,9 +7909,21 @@ function viewToday(){
   }
   if(!all.length&&!gs.length){const nm=nowMin();if(nm>=S.setup.dayEnd-30||nm<4*60)out.push(lateCard(getWeek(key)));}
   out.push(todaySched());
-  if(dow(t)>=5&&!wgOf(nk).length&&gs.length)out.push('<button type="button" class="v3-nudge v3-nudge-btn" data-act="wg-ask-next"><span class="v3-g big">'+pxImg(SPR.g_idle,48)+'</span><div class="grow"><span class="xs muted">길잡이</span><b>다음 주 목표도 미리 정해 볼까요?</b></div><span class="v3-chev">'+I3.chev+'</span></button>');
+  out.push(nextWeekCard(nk,gs.length));
   out.push(rtSection());
   return out.join('');
+}
+
+
+function nextWeekCard(nk,hasThis){
+  const ng=wgOf(nk),near=dow(today())>=4;
+  const hdr='<div class="sec-h"><h2>다음 주</h2><span class="xs muted">'+md(fromIso(nk))+'–'+md(addDays(fromIso(nk),6))+'</span></div>';
+  if(!ng.length){
+    if(!hasThis&&!near)return '';
+    return hdr+'<button type="button" class="v3-nudge v3-nudge-btn" data-act="wg-ask-next"><span class="v3-g big">'+pxImg(SPR.g_idle,48)+'</span><div class="grow"><span class="xs muted">길잡이</span><b>다음 주 목표 미리 정해 볼까요?</b></div><span class="v3-chev">'+I3.chev+'</span></button>';
+  }
+  return hdr+'<section class="v3-card nw-card">'+ng.map(g=>{const ts=tkOf(g.id);return '<button type="button" class="nw-row" data-act="wg-open" data-id="'+g.id+'"><span class="grow"><b>'+esc(g.title)+'</b>'+(g.crit?'<span class="xs muted">완료 기준 · '+esc(g.crit)+'</span>':'')+'</span><span class="xs muted">'+(ts.length?'할 일 '+ts.length:'할 일 아직')+'</span></button>';}).join('')+
+    '<div class="grid2"><button type="button" class="btn sm" data-act="wg-ask-next">길잡이와 이어서 짜기</button><button type="button" class="btn sm" data-act="wk-next">다음 주 보기</button></div></section>';
 }
 
 /* ---------- 3. 이번 주: 목표·할 일 / 시간표 ---------- */
@@ -8008,6 +8024,7 @@ function rvSave(){
 
 /* ---------- 6. 길잡이: 목표 → 완료 기준 → 할 일 → 실행하며 고치기 ---------- */
 function gwkKey(){return gWeek().key;}
+function wkWord(k){k=k||gwkKey();return k>curKey()?'다음 주':'이번 주';}
 function gRefsTk(key){
   const gs=wgOf(key),out={goals:[],tasks:[],map:{}};let gi=0,ti=0;
   const tk=t=>{const r='t'+(++ti);out.map[r]=t.id;return {ref:r,title:t.title,crit:t.crit||'',why:t.why||'',status:TK_ST[t.status],after:(t.after||[]).map(id=>{for(const k in out.map)if(out.map[k]===id)return k;return null;}).filter(Boolean),due:t.due||'',blockNote:t.note||'',today:t.today===dkey()};};
@@ -8019,7 +8036,7 @@ function gPropTasks(gid,list,say){
   const g=wgById(gid);
   pushGuide({text:say||(g?"'"+g.title+"'을(를) 위해 이렇게 해 보면 어떨까요?":'이렇게 나눠 봤어요.'),tprop:{id:uid(),goalId:gid,key:g?g.key:gwkKey(),tasks:list.slice(0,10).map((x,i)=>({title:String(x.title||'').slice(0,50),crit:String(x.crit||'').slice(0,80),why:String(x.why||'').slice(0,100),after:(Array.isArray(x.after)?x.after:[]).map(Number).filter(n=>n>=0&&n<i),due:/^\d{4}-\d{2}-\d{2}$/.test(x.due||'')?x.due:null,on:true})),status:'open'},chips:[]});
 }
-function gPropGoal(o,say){pushGuide({text:say||'이번 주 목표를 이렇게 정해 볼까요?',gprop:{id:uid(),key:o.key||gwkKey(),title:String(o.title||'').slice(0,40),crit:String(o.crit||'').slice(0,80),why:String(o.why||'').slice(0,80),status:'open'},chips:[]});}
+function gPropGoal(o,say){pushGuide({text:say||(wkWord(o.key)+' 목표를 이렇게 정해 볼까요?'),gprop:{id:uid(),key:o.key||gwkKey(),title:String(o.title||'').slice(0,40),crit:String(o.crit||'').slice(0,80),why:String(o.why||'').slice(0,80),status:'open'},chips:[]});}
 function gApplyTk(edits,map){
   const s=trSnap([],{}),done=[],fail=[],T=r=>tkById(map[r]),G=r=>wgById(map[r]);
   const before=clone(tkList());
@@ -8059,6 +8076,7 @@ async function aiTurn(text){
   const prompt=["너는 투두리스트 앱 '다음 주'의 길잡이다. 이 앱은 사용자가 주간 목표를 정하고, 너와 대화하며 그 목표에 필요한 할 일을 만들고 실행하며 고쳐 가는 곳이다. 『싯다르타』의 뱃사공처럼 먼저 귀 기울여 듣고, 사용자가 원하는 방향을 확인하고, 스스로 고를 수 있게 돕는다. JSON 하나로만 답하라.",
     '형식: {"type":"listen|ask|goal|tasks|edit|next|say|event","say":"메시지","options":["짧은 답"],"goal":{"title":"이번 주 목표(25자 이내, 결과 상태로)","crit":"끝났다고 판단할 상태 한 줄","why":"이유(선택)"},"goalRef":"g1","tasks":[{"title":"실행할 일(20자 이내, 동사로)","crit":"완료 기준 한 줄","why":"이 일이 목표에 필요한 이유 한 줄","after":[앞서 끝나야 할 tasks 배열 번호],"due":"YYYY-MM-DD 또는 빈 문자열"}],"edits":[{"ref":"t2","op":"split|drop|done|block|unblock|rename|after|due|today|later|add","into":[{"title":"","crit":""}],"title":"","crit":"","note":"","after":["t1"],"due":"","goal":"g1"}],"ref":"t3","event":{"day":"토","start":"HH:MM","minutes":120,"title":"약속"},"chips":["이어서 누를 짧은 답 2~3개"]}',
     '규칙:',
+    '- planningWeek가 다음 주면(오늘 날짜보다 뒤) "이번 주" 대신 "다음 주"라고 말하고, 지금 이번 주 목표의 남은 일과 약속(schedule)을 감안해 현실적인 범위로 제안한다. 이번 주에 못 끝낼 일이 있으면 다음 주로 넘길지 함께 정한다.',
     "- 사용자가 막연한 바람을 말하면(예: 발표 준비 좀 끝내고 싶어) 바로 할 일을 만들지 말고, 이번 주가 끝났을 때 도달할 상태를 묻는다(ask, options에 서로 다른 도달 상태 2~3개. 예: '자료 조사까지', '발표 초안까지', '연습까지'). 숫자가 아니어도 사용자가 끝났다고 판단할 수 있어야 한다.",
     '- 도달 상태가 정해지면 type goal로 주간 목표와 완료 기준을 제안한다. 사용자가 확정하면(대화에 목표 제안 accepted가 보이면) type tasks로 실행할 일을 제안한다.',
     '- tasks: 목표를 이루는 데 꼭 필요한 일만 3~7개. 빠뜨린 일을 찾고 불필요한 일은 빼고, 먼저 해야 다음 일이 풀리는 순서로 after를 건다. why에 그 일이 필요한 이유를 쓴다. 날짜는 실제 제약(제출일, 회의)이 있을 때만 due에 쓴다. "언제 할래요?"를 묻지 않는다.',
@@ -8114,12 +8132,12 @@ function gGoalName(t){return String(t).replace(/(이번\s*주(에는|엔)?|좀|�
 function gLocalGoal(t){
   const g=guideState();
   if(g.gdraft&&g.gdraft.stage==='crit'){const d=g.gdraft,T=GT[d.cat];const crit=T.crit[t]||(t.length>3?t.replace(/까지$/,'')+'까지 되어 있다':T.crit[T.o[1]]);
-    d.stage='goal';gPropGoal({key:gwkKey(),title:(T.crit[t]?d.title+' '+t.replace(/\s*까지$/,'')+'까지':d.title).slice(0,40),crit},'좋아요. 이번 주 목표를 이렇게 정해 볼까요? 끝났는지는 완료 기준으로 판단해요.');return true;}
+    d.stage='goal';gPropGoal({key:gwkKey(),title:(T.crit[t]?d.title+' '+t.replace(/\s*까지$/,'')+'까지':d.title).slice(0,40),crit},'좋아요. '+wkWord()+' 목표를 이렇게 정해 볼까요? 끝났는지는 완료 기준으로 판단해요.');return true;}
   if(/(할 일|해야 할 일|어떤 일).*(나눠|만들어|짜)|나눠 줘|필요한 할 일/.test(t)){const gid=(ui.gctx&&ui.gctx.goal)||((wgOf(gwkKey()).find(x=>!tkOf(x.id).length)||wgOf(gwkKey())[0]||{}).id);const w=gid&&wgById(gid);
     if(w){const cat=w.cat||gtOf(w.title);gPropTasks(w.id,GT[cat].tasks.map((x,i)=>({title:x[0],why:x[1],after:i?[i-1]:[]})),"'"+w.title+"'에 닿으려면 이런 순서로 해 보면 어떨까요? 필요 없는 일은 체크를 풀어 주세요.");return true;}}
   if(/뭐부터|무엇부터|뭘 먼저|어떤 것부터/.test(t)){const n=nextTask(gwkKey());
     if(n){const w=n.goalId&&wgById(n.goalId);pushGuide({text:"'"+n.title+"'부터 해 보면 좋겠어요."+(w?" '"+w.title+"'에 바로 이어지고,":'')+(n.why?' '+n.why+'.':' 지금 바로 시작할 수 있는 일이에요.'),next:n.id,chips:['더 작게 나눠 줘']});return true;}
-    if(!wgOf(gwkKey()).length){pushGuide({text:'먼저 이번 주에 이루고 싶은 걸 하나만 정해 볼까요? 이번 주가 끝났을 때 무엇이 달라져 있으면 좋겠어요?',chips:['발표 준비를 끝내고 싶어','공부 습관을 잡고 싶어']});return true;}}
+    if(!wgOf(gwkKey()).length){pushGuide({text:'먼저 '+wkWord()+'에 이루고 싶은 걸 하나만 정해 볼까요? '+wkWord()+'가 끝났을 때 무엇이 달라져 있으면 좋겠어요?',chips:['발표 준비를 끝내고 싶어','공부 습관을 잡고 싶어']});return true;}}
   if(/막막|어려워|너무 커|못 하겠|시작이 안/.test(t)){const tid=(ui.gctx&&ui.gctx.task)||((tkList().find(x=>x.status==='doing')||nextTask(gwkKey())||{}).id);const tk=tid&&tkById(tid);
     if(tk){const r=gApplyTk([{ref:'x',op:'split',into:[{title:"'"+tk.title.slice(0,14)+"' 첫 단계 정하기",crit:'바로 할 행동 하나가 적혀 있다'},{title:tk.title.slice(0,14)+' 15분만 해 보기',crit:'15분 동안 손을 움직였다'},{title:tk.title.slice(0,14)+' 남은 것 적기',crit:'남은 일이 목록으로 있다'}]}],{x:tk.id});
       pushGuide({text:'바로 시작할 수 있는 크기로 나눠 봤어요. 첫 단계는 5분이면 돼요.',sub:'· '+r.done.join('\n· '),chips:['되돌리기','뭐부터 하면 돼?']});return true;}}
@@ -8127,7 +8145,7 @@ function gLocalGoal(t){
     pushGuide({text:"이번 주는 '"+keep.title+"' 하나에 집중하고, 나머지 "+later.length+'개는 다음 주로 미루는 건 어때요? 필요하면 완료 기준도 낮출 수 있어요.',chips:later.length?['그렇게 미뤄 줘','완료 기준 낮추고 싶어']:['완료 기준 낮추고 싶어']});g.busyPlan=later.map(x=>x.id);return true;}
   if(/그렇게 미뤄/.test(t)&&g.busyPlan){const map={};g.busyPlan.forEach((id,i)=>map['t'+i]=id);const r=gApplyTk(g.busyPlan.map((id,i)=>({ref:'t'+i,op:'later'})),map);g.busyPlan=null;pushGuide({text:'미뤘어요. 이번 주는 남은 하나에만 집중해요.',sub:'· '+r.done.join('\n· '),chips:['되돌리기']});return true;}
   const wish=/싶어|싶다|끝내|준비|해야|하려고|목표|이루|마치|완성/.test(t)&&!parseEvent(t);
-  if(wish){const cat=gtOf(t),T=GT[cat];g.gdraft={stage:'crit',cat,title:gGoalName(t),text:t};pushGuide({label:'이번 주 목표',text:T.ask,options:T.o});return true;}
+  if(wish){const cat=gtOf(t),T=GT[cat];g.gdraft={stage:'crit',cat,title:gGoalName(t),text:t};pushGuide({label:wkWord()+' 목표',text:T.ask,options:T.o});return true;}
   return false;
 }
 localTurn=(o=>function(text){
@@ -8221,6 +8239,7 @@ function goalAct(a,d){
     case 'rv-save':rvKeep();rvSave();return true;
     case 'rv-talk':{rvKeep();const k=ui.rvKey,lines=wgOf(k).map(g=>{const r=(ui.rv||{})[g.id]||{};return "'"+g.title+"' "+(({done:'다 이뤘어',partial:'일부만 됐어',not:'아직이야'})[r.reach]||'')+(r.hard?', 어려웠던 점: '+r.hard:'');}).join(' / ');
       ui.gwk=k===curKey()?iso(addDays(fromIso(k),7)):curKey();gTalk('지난 한 주를 돌아보고 싶어. '+lines+'. 다음 주에 이어갈 것과 내려놓을 것을 같이 정해 줘');return true;}
+    case 'wk-next':ui.tab='week';ui.wkMode='goals';ui.wk=iso(addDays(fromIso(curKey()),7));ui.dayView=0;render();return true;
     case 'wk-mode':ui.wkMode=d.v;render();return true;
     case 'v3-sched':ui.tab='week';ui.wkMode='sched';ui.wk=null;window.scrollTo(0,0);render();return true;
   }
