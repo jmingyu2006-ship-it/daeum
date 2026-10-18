@@ -4677,16 +4677,21 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.18-4';
+const APP_VER='2026.10.18-5';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
-function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
+function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요(자동으로 두 번 다시 시도했어요). 1~2분 뒤에 다시 보내 주세요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
 function remoteSample(url){
   const call=async(input,opts,asJson)=>{
     opts=opts||{};
     const msgs=typeof input==='string'?[{role:'user',content:input}]:input;
     let r;
-    try{r=await fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:msgs,json:!!asJson,tier:opts.modelTier||'default'}),signal:opts.signal});}
+    const go=()=>fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:msgs,json:!!asJson,tier:opts.modelTier||'default'}),signal:opts.signal});
+    try{r=await go();
+      for(let n=0;n<2&&r.status===429;n++){
+        let w=+(r.headers.get('retry-after')||0);w=Math.min(Math.max(w,3+n*4),12)*1000;
+        await new Promise((ok,no)=>{const t=setTimeout(ok,w);if(opts.signal)opts.signal.addEventListener('abort',()=>{clearTimeout(t);no({name:'AbortError'});});});
+        r=await go();}}
     catch(e){if(e&&e.name==='AbortError')throw {code:'cancelled'};aiErr={code:'network',msg:String(e&&e.message||e).slice(0,60)};throw {code:'network'};}
     let j=null;try{j=await r.json();}catch(e){}
     if(r.status===429){aiErr={code:'rate_limited',status:429};throw {code:'rate_limited'};}
