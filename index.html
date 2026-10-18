@@ -4677,7 +4677,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.18-5';
+const APP_VER='2026.10.18-6';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요(자동으로 두 번 다시 시도했어요). 1~2분 뒤에 다시 보내 주세요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -7804,16 +7804,37 @@ try{const bm=document.querySelector('.brand-mc');if(bm){bm.innerHTML=BOAT_SVG;bm
 /* ---------- 1. 데이터 ---------- */
 const TK_ST={todo:'할 일',doing:'진행 중',blocked:'막힘',done:'완료'};
 function wgList(){if(!Array.isArray(S.wgoals))S.wgoals=[];return S.wgoals;}
-function tkList(){if(!Array.isArray(S.tasks))S.tasks=[];tkMigrate();return S.tasks;}
+function tkList(){if(!Array.isArray(S.tasks))S.tasks=[];tkMigrate();tkDayFix();return S.tasks;}
 function tkMigrate(){
   if(S.tkMig)return;S.tkMig=1;
   for(const x of (Array.isArray(S.inbox)?S.inbox:[]))S.tasks.push({id:x.id||uid(),key:x.key||curKey(),goalId:null,title:x.title,crit:'',why:'',after:[],due:x.deadline||null,status:x.done?'done':'todo',note:'',subs:x.subs||[],memo:x.memo||'',dur:x.dur||null,order:S.tasks.length,created:x.at||dkey(),doneAt:x.done||null});
   S.inbox=[];
 }
+function tkDayFix(){
+  if(S.tkDayFix)return;S.tkDayFix=1;
+  for(const t of (S.tasks||[])){if(t.day||t.status==='done')continue;const k=t.key||curKey(),n=tkNorm(t,k);
+    if(n.day){t.day=n.day;t.title=n.title;t.due=n.due;}
+    else if(t.due&&t.due<k&&t.goalId)t.due=null;}
+}
 function wgOf(key){return wgList().filter(g=>g.key===key&&g.status!=='dropped').sort((a,b)=>(a.prio||0)-(b.prio||0));}
 function wgById(id){return wgList().find(g=>g.id===id)||null;}
 function tkById(id){return tkList().find(t=>t.id===id)||null;}
 function tkOf(gid){return tkList().filter(t=>t.goalId===gid).sort((a,b)=>(a.order||0)-(b.order||0));}
+function tkIsToday(t){return !!t&&(t.today===dkey()||t.day===dkey());}
+function tkDayOk(k,d){return /^\d{4}-\d{2}-\d{2}$/.test(d||'')&&d>=k&&d<=iso(addDays(fromIso(k),6));}
+function tkNorm(x,k){
+  let title=String(x.title||'').trim(),day=tkDayOk(k,x.day)?x.day:null,due=/^\d{4}-\d{2}-\d{2}$/.test(x.due||'')&&x.due>=k?x.due:null;
+  const m=/^([월화수목금토일])(?:요일)?[\s:·-]+(?=\S)/.exec(title);
+  if(m){const dd=iso(addDays(fromIso(k),DAYS.indexOf(m[1])));if(!day)day=dd;if(day===dd)title=title.slice(m[0].length);}
+  if(due&&due===day)due=null;
+  return {title:title||'할 일',day,due};
+}
+function tkDayTag(t,noToday){
+  if(!t.day||t.status==='done')return '';const d=fromIso(t.day),td=dkey();
+  if(t.day===td)return noToday?'':'오늘';
+  if(t.day<td)return DAYS[dow(d)]+'요일에 하려던 일';
+  return DAYS[dow(d)]+'요일';
+}
 function tkLoose(key){return tkList().filter(t=>!t.goalId&&(t.key||curKey())<=key&&(t.status!=='done'||(t.key||'')===key)).sort((a,b)=>(a.due||'9')<(b.due||'9')?-1:(a.due||'9')>(b.due||'9')?1:(a.order||0)-(b.order||0));}
 function tkWeek(key){return tkList().filter(t=>t.key===key||(!t.key&&key===curKey()));}
 function tkDepsDone(t){return (t.after||[]).every(id=>{const d=tkById(id);return !d||d.status==='done';});}
@@ -7838,10 +7859,10 @@ function dueCard(){return '';}
 /* ---------- 2. 첫 화면: 이번 주에 이루려는 것 · 지금 할 만한 일 · 막힌 것 ---------- */
 function tkRow(t,o){
   o=o||{};const g=t.goalId&&wgById(t.goalId),w=tkWaitingOn(t),st=t.status;
-  const meta=[o.goal&&g?g.title:'',st==='doing'?'진행 중':'',st==='blocked'?'막힘'+(t.note?': '+t.note:''):'',w.length&&st!=='done'?'먼저: '+w.map(x=>x.title).join(', '):'',t.due?dlTag(t.due):'',t.subs&&t.subs.length?'단계 '+t.subs.filter(s=>s.done).length+'/'+t.subs.length:'',t.today===dkey()&&!o.noToday?'오늘':''].filter(Boolean);
+  const meta=[o.goal&&g?g.title:'',st==='doing'?'진행 중':'',st==='blocked'?'막힘'+(t.note?': '+t.note:''):'',w.length&&st!=='done'?'먼저: '+w.map(x=>x.title).join(', '):'',t.due?dlTag(t.due):'',t.subs&&t.subs.length?'단계 '+t.subs.filter(s=>s.done).length+'/'+t.subs.length:'',(t.day?tkDayTag(t,o.noToday):(t.today===dkey()&&!o.noToday?'오늘':''))].filter(Boolean);
   return '<div class="tk-row st-'+st+(w.length&&st!=='done'?' wait':'')+'"><button type="button" class="v3-ck'+(st==='done'?' on':'')+'" data-act="tk-done" data-id="'+t.id+'" aria-pressed="'+(st==='done')+'" aria-label="'+esc(t.title)+(st==='done'?' 완료 취소':' 끝냈어요')+'">'+(st==='done'?I3.check:'')+'</button>'+
     '<button type="button" class="tk-m" data-act="tk-open" data-id="'+t.id+'"><b>'+esc(t.title)+'</b>'+(meta.length?'<span class="'+(st==='blocked'?'tk-bl':'')+'">'+esc(meta.join(' · '))+'</span>':'')+(o.why&&t.why?'<span class="tk-why">'+esc(t.why)+'</span>':'')+'</button>'+
-    (o.pick&&st!=='done'?'<button type="button" class="tk-pick'+(t.today===dkey()?' on':'')+'" data-act="tk-today" data-id="'+t.id+'" aria-pressed="'+(t.today===dkey())+'">'+(t.today===dkey()?'오늘 ✓':'오늘 하기')+'</button>':'')+
+    (o.pick&&st!=='done'?'<button type="button" class="tk-pick'+(tkIsToday(t)?' on':'')+'" data-act="tk-today" data-id="'+t.id+'" aria-pressed="'+(tkIsToday(t))+'">'+(tkIsToday(t)?'오늘 ✓':'오늘 하기')+'</button>':'')+
     (o.talk?'<button type="button" class="tk-talk" data-act="tk-talk" data-id="'+t.id+'">이야기하기</button>':'')+'</div>';
 }
 function wgCard(g,o){
@@ -7870,8 +7891,8 @@ function focusCard(){
 }
 function nextTask(key){
   const gs=wgOf(key).filter(g=>g.status!=='done'),order=g=>gs.findIndex(x=>x.id===g);
-  const c=tkWeek(key).concat(tkLoose(key)).filter(t=>tkReady(t)&&t.status==='todo'&&!(ui.skipTk||[]).includes(t.id));
-  c.sort((a,b)=>((b.today===dkey())-(a.today===dkey()))||((a.due||'9')<(b.due||'9')&&a.due&&a.due<=iso(addDays(today(),1))?-1:0)||((a.goalId?order(a.goalId):99)-(b.goalId?order(b.goalId):99))||((a.order||0)-(b.order||0)));
+  const c=tkWeek(key).concat(tkLoose(key)).filter(t=>tkReady(t)&&t.status==='todo'&&!(t.day&&t.day>dkey())&&!(ui.skipTk||[]).includes(t.id));
+  c.sort((a,b)=>((tkIsToday(b))-(tkIsToday(a)))||((a.due||'9')<(b.due||'9')&&a.due&&a.due<=iso(addDays(today(),1))?-1:0)||((a.goalId?order(a.goalId):99)-(b.goalId?order(b.goalId):99))||((a.order||0)-(b.order||0)));
   return c[0]||null;
 }
 function todaySched(){
@@ -7895,8 +7916,8 @@ function viewToday(){
   else out.push('<div class="wg-stack">'+gs.map((g,i)=>wgCard(g,{idx:i})).join('')+'</div>');
   /* B. 지금 진행할 만한 일 */
   const all=tkWeek(key).concat(tkLoose(key).filter(x=>x.key!==key));
-  const picked=all.filter(x=>x.today===dkey()&&x.status!=='done');
-  const ready=all.filter(x=>tkReady(x)&&x.today!==dkey()).sort((a,b)=>{const o=g=>{const i=gs.findIndex(x=>x.id===g);return i<0?99:i;};return (a.status==='doing'?-1:0)-(b.status==='doing'?-1:0)||o(a.goalId)-o(b.goalId)||(a.order||0)-(b.order||0);});
+  const picked=all.filter(x=>tkIsToday(x)&&x.status!=='done');
+  const ready=all.filter(x=>tkReady(x)&&!tkIsToday(x)&&!(x.day&&x.day>dkey())).sort((a,b)=>{const o=g=>{const i=gs.findIndex(x=>x.id===g);return i<0?99:i;};return (a.status==='doing'?-1:0)-(b.status==='doing'?-1:0)||o(a.goalId)-o(b.goalId)||(a.order||0)-(b.order||0);});
   const doneToday=all.filter(x=>x.status==='done'&&x.doneAt===dkey());
   if(all.length||gs.length){
     const nm=nowMin();out.push(nm>=S.setup.dayEnd-30||nm<4*60?lateCard(getWeek(key)):focusCard());
@@ -7962,6 +7983,7 @@ function tkSheet(){
     '<label class="stack"><span class="label">무엇을 하면 완료인가요?</span><input id="tkC" class="field" value="'+esc(E.crit!=null?E.crit:t.crit||'')+'" placeholder="예: 핵심 주장 3개가 한 문장씩 적혀 있다" maxlength="80"></label>'+
     '<div class="tk-why-box"><span class="label">왜 필요한 일인가요?</span>'+(t.why?'<p class="small">'+esc(t.why)+'</p>':'<p class="small muted">아직 적힌 이유가 없어요.</p>')+'<button type="button" class="link" data-act="tk-ask-why" data-id="'+t.id+'">'+(t.why?'정말 필요한지 길잡이와 따져 보기':'길잡이에게 물어보기')+'</button></div>'+
     '<div class="stack"><span class="label">먼저 끝나야 할 일</span><div class="row-wrap">'+(sibs.length?sibs.map(x=>{const on=(t.after||[]).includes(x.id);return '<button type="button" class="chip sm'+(on?' on':'')+'" data-act="tk-dep" data-id="'+t.id+'" data-v="'+x.id+'" aria-pressed="'+on+'">'+esc(x.title.slice(0,18))+'</button>';}).join(''):'<span class="small muted">같은 목표의 다른 할 일이 생기면 고를 수 있어요.</span>')+'</div></div>'+
+    '<div class="stack"><span class="label">하는 날 <span class="xs muted">· 정하고 싶을 때만</span></span><div class="row-wrap"><button type="button" class="chip sm'+(t.day?'':' on')+'" data-act="tk-day" data-id="'+t.id+'" data-v="">정하지 않음</button>'+[0,1,2,3,4,5,6].map(i=>{const dd=iso(addDays(fromIso(t.key||curKey()),i));return '<button type="button" class="chip sm'+(t.day===dd?' on':'')+'" data-act="tk-day" data-id="'+t.id+'" data-v="'+dd+'">'+DAYS[i]+'</button>';}).join('')+'</div></div>'+
     '<div class="stack"><span class="label">실제 마감 <span class="xs muted">· 있을 때만</span></span><div class="add-dates"><button type="button" class="chip'+(t.due?'':' on')+'" data-act="tk-due" data-id="'+t.id+'" data-v="">없음</button><label class="chip add-pick'+(t.due?' on':'')+'">'+(t.due?dayName(t.due)+'까지':'날짜 고르기')+'<input type="date" value="'+(t.due||'')+'" data-field="tk-due" data-id="'+t.id+'"></label></div></div>'+
     '<span class="label">더 작게 나누기</span>'+subsHtml(t.subs,'tk','',t.id)+
     '<div class="grid2"><button type="button" class="btn" data-act="tk-split" data-id="'+t.id+'">길잡이와 나누기</button><button type="button" class="btn" data-act="tk-talk" data-id="'+t.id+'">막힌 점 이야기하기</button></div>'+
@@ -8032,14 +8054,14 @@ function gwkKey(){return gWeek().key;}
 function wkWord(k){k=k||gwkKey();return k>curKey()?'다음 주':'이번 주';}
 function gRefsTk(key){
   const gs=wgOf(key),out={goals:[],tasks:[],map:{}};let gi=0,ti=0;
-  const tk=t=>{const r='t'+(++ti);out.map[r]=t.id;return {ref:r,title:t.title,crit:t.crit||'',why:t.why||'',status:TK_ST[t.status],after:(t.after||[]).map(id=>{for(const k in out.map)if(out.map[k]===id)return k;return null;}).filter(Boolean),due:t.due||'',blockNote:t.note||'',today:t.today===dkey()};};
+  const tk=t=>{const r='t'+(++ti);out.map[r]=t.id;return {ref:r,title:t.title,crit:t.crit||'',why:t.why||'',status:TK_ST[t.status],after:(t.after||[]).map(id=>{for(const k in out.map)if(out.map[k]===id)return k;return null;}).filter(Boolean),due:t.due||'',blockNote:t.note||'',today:tkIsToday(t),day:t.day||''};};
   for(const g of gs){const r='g'+(++gi);out.map[r]=g.id;out.goals.push({ref:r,title:g.title,crit:g.crit||'',status:g.status,tasks:tkOf(g.id).map(tk)});}
   out.tasks=tkLoose(key).filter(t=>t.status!=='done').map(tk);
   return out;
 }
 function gPropTasks(gid,list,say){
   const g=wgById(gid);
-  pushGuide({text:say||(g?"'"+g.title+"'을(를) 위해 이렇게 해 보면 어떨까요?":'이렇게 나눠 봤어요.'),tprop:{id:uid(),goalId:gid,key:g?g.key:gwkKey(),tasks:list.slice(0,10).map((x,i)=>({title:String(x.title||'').slice(0,50),crit:String(x.crit||'').slice(0,80),why:String(x.why||'').slice(0,100),after:(Array.isArray(x.after)?x.after:[]).map(Number).filter(n=>n>=0&&n<i),due:/^\d{4}-\d{2}-\d{2}$/.test(x.due||'')?x.due:null,on:true})),status:'open'},chips:[]});
+  pushGuide({text:say||(g?"'"+g.title+"'을(를) 위해 이렇게 해 보면 어떨까요?":'이렇게 나눠 봤어요.'),tprop:{id:uid(),goalId:gid,key:g?g.key:gwkKey(),tasks:list.slice(0,10).map((x,i)=>({title:tkNorm(x,g?g.key:gwkKey()).title.slice(0,50),crit:String(x.crit||'').slice(0,80),why:String(x.why||'').slice(0,100),after:(Array.isArray(x.after)?x.after:[]).map(Number).filter(n=>n>=0&&n<i),due:tkNorm(x,g?g.key:gwkKey()).due,day:tkNorm(x,g?g.key:gwkKey()).day,on:true})),status:'open'},chips:[]});
 }
 function gPropGoal(o,say){pushGuide({text:say||(wkWord(o.key)+' 목표를 이렇게 정해 볼까요?'),gprop:{id:uid(),key:o.key||gwkKey(),title:String(o.title||'').slice(0,40),crit:String(o.crit||'').slice(0,80),why:String(o.why||'').slice(0,80),status:'open'},chips:[]});}
 function gApplyTk(edits,map){
@@ -8047,7 +8069,7 @@ function gApplyTk(edits,map){
   const before=clone(tkList());
   for(const e of (edits||[]).slice(0,8)){
     const op=String(e.op||''),t=T(String(e.ref||''));
-    if(op==='add'){const g=G(String(e.goal||''));const nt=tkAdd({title:e.title,crit:e.crit||'',why:e.why||'',goalId:g?g.id:null,key:g?g.key:gwkKey(),after:(e.after||[]).map(r=>map[r]).filter(Boolean)});done.push("'"+nt.title+"' 추가");continue;}
+    if(op==='add'){const g=G(String(e.goal||''));const nt=tkAdd({title:e.title,crit:e.crit||'',why:e.why||'',goalId:g?g.id:null,key:g?g.key:gwkKey(),after:(e.after||[]).map(r=>map[r]).filter(Boolean)});{const nn=tkNorm({title:nt.title,day:e.day,due:e.due},nt.key);nt.title=nn.title;nt.day=nn.day;nt.due=nn.due;}done.push("'"+nt.title+"' 추가");continue;}
     if(!t){fail.push('대상을 찾지 못했어요');continue;}
     if(op==='split'&&Array.isArray(e.into)&&e.into.length){let prev=null;const ids=[];for(const x of e.into.slice(0,5)){const nt=tkAdd({title:x.title||x,crit:x.crit||'',why:x.why||'',goalId:t.goalId,key:t.key,after:prev?[prev]:(t.after||[]).slice(),order:(t.order||0)+ids.length*0.01});ids.push(nt.id);prev=nt.id;}
       for(const o of tkList())if((o.after||[]).includes(t.id))o.after=o.after.filter(x=>x!==t.id).concat([prev]);
@@ -8059,6 +8081,7 @@ function gApplyTk(edits,map){
     if(op==='rename'&&e.title){const o=t.title;t.title=String(e.title).slice(0,50);if(e.crit)t.crit=String(e.crit).slice(0,80);done.push("'"+o+"' → '"+t.title+"'");continue;}
     if(op==='after'){t.after=(e.after||[]).map(r=>map[r]).filter(x=>x&&x!==t.id);done.push("'"+t.title+"' 순서 조정");continue;}
     if(op==='due'){t.due=/^\d{4}-\d{2}-\d{2}$/.test(e.due||'')?e.due:null;done.push("'"+t.title+"' 마감 "+(t.due?md(fromIso(t.due)):'없음'));continue;}
+    if(op==='day'){const k=t.key||curKey();t.day=tkDayOk(k,e.day)?e.day:null;done.push("'"+t.title+"' "+(t.day?DAYS[dow(fromIso(t.day))]+'요일에 하기':'날짜 없음'));continue;}
     if(op==='today'){t.today=dkey();done.push("'"+t.title+"' 오늘 하기로");continue;}
     if(op==='later'){const nk=iso(addDays(fromIso(t.key||curKey()),7));t.key=nk;t.today=null;done.push("'"+t.title+"' 다음 주로");continue;}
     fail.push("'"+t.title+"'에 할 수 없는 요청");
@@ -8079,8 +8102,9 @@ async function aiTurn(text){
   const sched=gRefs(uniq([key,curKey()]));
   const lw=wgOf(iso(addDays(fromIso(key),-7))).map(x=>({title:x.title,reach:x.review?x.review.reach:'',hard:x.review?x.review.hard:''}));
   const prompt=["너는 투두리스트 앱 '다음 주'의 길잡이다. 이 앱은 사용자가 주간 목표를 정하고, 너와 대화하며 그 목표에 필요한 할 일을 만들고 실행하며 고쳐 가는 곳이다. 『싯다르타』의 뱃사공처럼 먼저 귀 기울여 듣고, 사용자가 원하는 방향을 확인하고, 스스로 고를 수 있게 돕는다. JSON 하나로만 답하라.",
-    '형식: {"type":"listen|ask|goal|tasks|edit|next|say|event","say":"메시지","options":["짧은 답"],"goal":{"title":"이번 주 목표(25자 이내, 결과 상태로)","crit":"끝났다고 판단할 상태 한 줄","why":"이유(선택)"},"goalRef":"g1","tasks":[{"title":"실행할 일(20자 이내, 동사로)","crit":"완료 기준 한 줄","why":"이 일이 목표에 필요한 이유 한 줄","after":[앞서 끝나야 할 tasks 배열 번호],"due":"YYYY-MM-DD 또는 빈 문자열"}],"edits":[{"ref":"t2","op":"split|drop|done|block|unblock|rename|after|due|today|later|add","into":[{"title":"","crit":""}],"title":"","crit":"","note":"","after":["t1"],"due":"","goal":"g1"}],"ref":"t3","event":{"day":"토","start":"HH:MM","minutes":120,"title":"약속"},"chips":["이어서 누를 짧은 답 2~3개"]}',
+    '형식: {"type":"listen|ask|goal|tasks|edit|next|say|event","say":"메시지","options":["짧은 답"],"goal":{"title":"이번 주 목표(25자 이내, 결과 상태로)","crit":"끝났다고 판단할 상태 한 줄","why":"이유(선택)"},"goalRef":"g1","tasks":[{"title":"실행할 일(20자 이내, 동사로)","crit":"완료 기준 한 줄","why":"이 일이 목표에 필요한 이유 한 줄","after":[앞서 끝나야 할 tasks 배열 번호],"day":"그 일을 할 날 YYYY-MM-DD(planningWeek 안, 요일이 정해진 일만, 아니면 빈 문자열)","due":"실제 마감 YYYY-MM-DD(제출·약속처럼 진짜 마감만, 아니면 빈 문자열)"}],"edits":[{"ref":"t2","op":"split|drop|done|block|unblock|rename|after|due|today|later|add","into":[{"title":"","crit":""}],"title":"","crit":"","note":"","after":["t1"],"due":"","goal":"g1"}],"ref":"t3","event":{"day":"토","start":"HH:MM","minutes":120,"title":"약속"},"chips":["이어서 누를 짧은 답 2~3개"]}',
     '규칙:',
+    '- 요일별로 반복되는 일(예: 월·수·금 운동)은 요일마다 한 개씩 만들되, title에는 요일을 쓰지 말고 day에 그 날짜를 넣는다. day와 due는 다르다: day는 하기로 한 날, due는 진짜 마감일뿐이다. 둘 다 planningWeek 범위 안의 날짜여야 하며 이미 지난 날짜는 쓰지 않는다. 날짜가 꼭 필요 없는 일에는 day와 due를 비운다.',
     '- planningWeek가 다음 주면(오늘 날짜보다 뒤) "이번 주" 대신 "다음 주"라고 말하고, 지금 이번 주 목표의 남은 일과 약속(schedule)을 감안해 현실적인 범위로 제안한다. 이번 주에 못 끝낼 일이 있으면 다음 주로 넘길지 함께 정한다.',
     "- 사용자가 막연한 바람을 말하면(예: 발표 준비 좀 끝내고 싶어) 바로 할 일을 만들지 말고, 이번 주가 끝났을 때 도달할 상태를 묻는다(ask, options에 서로 다른 도달 상태 2~3개. 예: '자료 조사까지', '발표 초안까지', '연습까지'). 숫자가 아니어도 사용자가 끝났다고 판단할 수 있어야 한다.",
     '- 도달 상태가 정해지면 type goal로 주간 목표와 완료 기준을 제안한다. 사용자가 확정하면(대화에 목표 제안 accepted가 보이면) type tasks로 실행할 일을 제안한다.',
@@ -8180,11 +8204,11 @@ msgHtml=(_msgHtml=>function(m,idx){
       :'<span class="xs muted">'+(p.status==='accepted'?'목표로 정했어요.':'다른 안으로 바꿨어요.')+'</span>';}
   if(m.tprop){const p=m.tprop;
     card=p.status==='open'?'<div class="v3-prop"><div class="between"><b>할 일 제안 · '+p.tasks.filter(x=>x.on).length+'개</b><span class="v3-badge">미확정</span></div>'+
-      p.tasks.map((x,i)=>'<label class="tp-r'+(x.on?'':' off')+'"><input type="checkbox" data-field="tp-on" data-m="'+idx+'" data-i="'+i+'"'+(x.on?' checked':'')+'><span class="tp-n">'+(i+1)+'</span><span class="grow"><b>'+esc(x.title)+'</b>'+(x.why?'<span>'+esc(x.why)+'</span>':'')+((x.after&&x.after.length)||x.due?'<span class="tp-m">'+[x.after&&x.after.length?'먼저: '+x.after.map(a=>a+1).join(', ')+'번':'',x.due?dlTag(x.due):''].filter(Boolean).join(' · ')+'</span>':'')+'</span></label>').join('')+
+      p.tasks.map((x,i)=>'<label class="tp-r'+(x.on?'':' off')+'"><input type="checkbox" data-field="tp-on" data-m="'+idx+'" data-i="'+i+'"'+(x.on?' checked':'')+'><span class="tp-n">'+(i+1)+'</span><span class="grow"><b>'+esc(x.title)+'</b>'+(x.why?'<span>'+esc(x.why)+'</span>':'')+((x.after&&x.after.length)||x.due||x.day?'<span class="tp-m">'+[x.day?DAYS[dow(fromIso(x.day))]+'요일':'',x.after&&x.after.length?'먼저: '+x.after.map(a=>a+1).join(', ')+'번':'',x.due?dlTag(x.due):''].filter(Boolean).join(' · ')+'</span>':'')+'</span></label>').join('')+
       '<div class="grid2"><button type="button" class="btn primary" data-act="tp-ok" data-m="'+idx+'">할 일로 넣기</button><button type="button" class="btn" data-act="g-chip" data-v="다르게 나눠 줘">다르게 나눠 줘</button></div></div>'
       :'<span class="xs muted">'+(p.status==='accepted'?'할 일로 넣었어요.':'다른 안으로 바꿨어요.')+'</span>';}
   if(m.next){const t=tkById(m.next);if(t)card='<div class="v3-prop"><span class="xs muted">추천하는 다음 일</span><b class="gp-t">'+esc(t.title)+'</b>'+(t.crit?'<span class="small muted">완료: '+esc(t.crit)+'</span>':'')+
-    '<div class="grid2"><button type="button" class="btn primary" data-act="tk-st" data-id="'+t.id+'" data-v="doing">지금 시작</button><button type="button" class="btn" data-act="tk-today" data-id="'+t.id+'">'+(t.today===dkey()?'오늘 할 일 ✓':'오늘 할 일로')+'</button></div></div>';}
+    '<div class="grid2"><button type="button" class="btn primary" data-act="tk-st" data-id="'+t.id+'" data-v="doing">지금 시작</button><button type="button" class="btn" data-act="tk-today" data-id="'+t.id+'">'+(tkIsToday(t)?'오늘 할 일 ✓':'오늘 할 일로')+'</button></div></div>';}
   if(card)h=h.replace(/(<div class="g-chips">|<\/div><\/div>$)/,card+'$1');
   return h;
 })(msgHtml);
@@ -8204,7 +8228,7 @@ function goalAct(a,d){
       if(d.v==='done'){tkSet(t,'done');}else{if(t.status==='done')tkSet(t,d.v);else t.status=d.v;if(d.v==='doing'){for(const o of tkList())if(o!==t&&o.status==='doing')o.status='todo';t.today=dkey();toast("'"+t.title.slice(0,16)+"' 시작해요");}
         if(d.v==='blocked'){ui.tkId=t.id;ui.tkE={};ui.sheet='tk';ui.sheetAnim=true;}}
       commit();return true;}
-    case 'tk-today':{const t=tkById(d.id);if(!t)return true;t.today=t.today===dkey()?null:dkey();toast(t.today?'오늘 할 일로 골랐어요':'오늘 할 일에서 뺐어요');commit();return true;}
+    case 'tk-today':{const t=tkById(d.id);if(!t)return true;if(t.today===dkey()||t.day===dkey()){t.today=null;if(t.day===dkey())t.day=null;}else t.today=dkey();toast(t.today?'오늘 할 일로 골랐어요':'오늘 할 일에서 뺐어요');commit();return true;}
     case 'tk-alt':{ui.skipTk=(ui.skipTk||[]).concat([d.id]);render();return true;}
     case 'tk-more':ui.tkMore=true;render();return true;
     case 'tk-add':{const gid=d.g||null,el=document.getElementById(d.inp||('tkNew_'+(gid||''))),v=el?el.value.trim():'';if(!v){if(el)el.focus();return true;}
@@ -8214,6 +8238,7 @@ function goalAct(a,d){
     case 'tk-dep':{const t=tkById(d.id);if(!t)return true;tkKeep(t);t.after=t.after||[];
       if(t.after.includes(d.v))t.after=t.after.filter(x=>x!==d.v);else{let x=tkById(d.v),loop=false,seen=0;const chk=id=>{const z=tkById(id);if(!z||seen++>50)return false;if(z.id===t.id)return true;return (z.after||[]).some(chk);};if(chk(d.v)){toast('서로 기다리게 되어서 고를 수 없어요');return true;}t.after.push(d.v);}
       store.save();renderOverlay();return true;}
+    case 'tk-day':{const t=tkById(d.id);if(!t)return true;tkKeep(t);t.day=d.v||null;store.save();renderOverlay();return true;}
     case 'tk-due':{const t=tkById(d.id);if(!t)return true;tkKeep(t);t.due=d.v||null;store.save();renderOverlay();return true;}
     case 'tk-del':{const t=tkById(d.id);if(!t)return true;const before=clone(tkList());S.tasks=tkList().filter(x=>x!==t);for(const o of tkList())o.after=(o.after||[]).filter(x=>x!==t.id);ui.sheet=null;ui.change={title:"'"+t.title+"'을(를) 지웠어요",lines:[],undo:{tasks:before}};commit();return true;}
     case 'tk-split':{const t=tkById(d.id);if(!t)return true;gTalk("'"+t.title+"' 너무 막막해. 바로 시작할 수 있게 더 작게 나눠 줘",{task:t.id,ask:'split'});return true;}
@@ -8241,7 +8266,7 @@ function goalAct(a,d){
     case 'gp-edit':{const m=guideState().msgs[+d.m],p=m&&m.gprop;if(!p)return true;ui.wgId='new';ui.wgKey=p.key;ui.sheet='wg';renderOverlay();setTimeout(()=>{const a=document.getElementById('wgT'),c=document.getElementById('wgC');if(a)a.value=p.title;if(c)c.value=p.crit;},30);p.status='replaced';store.save();return true;}
     case 'tp-ok':{const m=guideState().msgs[+d.m],p=m&&m.tprop;if(!p||p.status!=='open')return true;const before=clone(tkList());const ids=[];let n=0;
       const base=p.goalId?tkOf(p.goalId).length:0;
-      p.tasks.forEach((x,i)=>{if(!x.on){ids.push(null);return;}const t=tkAdd({title:x.title,crit:x.crit,why:x.why,goalId:p.goalId||null,key:p.key,due:x.due,order:base+i,after:(x.after||[]).map(j=>ids[j]).filter(Boolean)});ids.push(t.id);n++;});
+      p.tasks.forEach((x,i)=>{if(!x.on){ids.push(null);return;}const t=tkAdd({title:x.title,crit:x.crit,why:x.why,goalId:p.goalId||null,key:p.key,due:x.due,day:x.day||null,order:base+i,after:(x.after||[]).map(j=>ids[j]).filter(Boolean)});ids.push(t.id);n++;});
       p.status='accepted';ui.change={title:n+'개를 할 일로 넣었어요',lines:[],undo:{tasks:before}};
       pushGuide({text:'넣었어요. 앞 단계가 끝난 일부터 "지금 진행할 만한 일"에 보여 드릴게요. 하다가 막히거나 상황이 바뀌면 언제든 말해 주세요.',chips:['뭐부터 해야 할지 모르겠어','이번 주 보기']});ui.gScroll=true;commit();return true;}
     case 'rv-open':ui.rvKey=d.k;ui.rv=null;ui.sheet='rv';ui.sheetAnim=true;renderOverlay();return true;
@@ -8309,7 +8334,7 @@ document.addEventListener('keydown',e=>{if(e.key!=='Enter'||e.isComposing)return
   else if(el.dataset.field==='wg-ask'){e.preventDefault();act('wg-ask',{k:curKey()});}},true);
 /* 길잡이 탭에 들어갈 때 이번 주 목표 기준으로 인사 다시 */
 isFirstUse=(o=>function(wk){return !wgList().length&&!tkList().length&&o(wk);})(isFirstUse);
-if(location.protocol==='file:'&&window.__d)Object.assign(window.__d,{act:(a,d)=>act(a,d||{}),render:()=>render(),wgList,tkList,wgAdd,tkAdd,tkById,wgOf,nextTask,gRefsTk,gApplyTk,reviewKey});
+if(location.protocol==='file:'&&window.__d)Object.assign(window.__d,{act:(a,d)=>act(a,d||{}),render:()=>render(),wgList,tkList,wgAdd,tkAdd,tkById,wgOf,nextTask,gRefsTk,gApplyTk,reviewKey,iso,addDays,fromIso,gPropTasks,guideState,tkIsToday,today,dkey,curKey,tkNorm});
 function inboxCard(){return '';}
 srResults=(o=>function(q){const r=o(q);if(!r)return r;const n=srNorm(q);r.ibx=tkList().filter(t=>srNorm(t.title).indexOf(n)>=0||srNorm(t.crit||'').indexOf(n)>=0||srNorm(t.memo||'').indexOf(n)>=0).map(t=>({id:t.id,title:t.title,done:t.status==='done'?t.doneAt||dkey():null,deadline:t.due}));
   for(const g of wgList())if(srNorm(g.title).indexOf(n)>=0)r.ibx.unshift({id:'g:'+g.id,title:'목표 · '+g.title,done:null,deadline:null});return r;})(srResults);
