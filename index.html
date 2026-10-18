@@ -4677,7 +4677,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.18-3';
+const APP_VER='2026.10.18-4';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -8144,6 +8144,13 @@ function gLocalGoal(t){
   if(/바빠|바쁘|시간이 없/.test(t)&&wgOf(gwkKey()).length){const gs=wgOf(gwkKey()),keep=gs[0],later=tkWeek(gwkKey()).filter(x=>x.status!=='done'&&x.goalId!==keep.id);
     pushGuide({text:"이번 주는 '"+keep.title+"' 하나에 집중하고, 나머지 "+later.length+'개는 다음 주로 미루는 건 어때요? 필요하면 완료 기준도 낮출 수 있어요.',chips:later.length?['그렇게 미뤄 줘','완료 기준 낮추고 싶어']:['완료 기준 낮추고 싶어']});g.busyPlan=later.map(x=>x.id);return true;}
   if(/그렇게 미뤄/.test(t)&&g.busyPlan){const map={};g.busyPlan.forEach((id,i)=>map['t'+i]=id);const r=gApplyTk(g.busyPlan.map((id,i)=>({ref:'t'+i,op:'later'})),map);g.busyPlan=null;pushGuide({text:'미뤘어요. 이번 주는 남은 하나에만 집중해요.',sub:'· '+r.done.join('\n· '),chips:['되돌리기']});return true;}
+  if(/(네가|니가|너가|알아서|아무거나|추천|정해\s*줘|판단)/.test(t)&&t.length<20){
+    if(g.gdraft&&g.gdraft.stage==='crit'){const T=GT[g.gdraft.cat];return gLocalGoal(T.o[1]);}
+    const ns=wgOf(gwkKey());
+    if(ns.length){const n=nextTask(gwkKey());if(n)return gLocalGoal('뭐부터');
+      const w=ns.find(x=>!tkOf(x.id).length)||ns[0];return gLocalGoal("'"+w.title+"' 할 일 나눠 줘");}
+    pushGuide({text:'그럼 제가 먼저 골라 볼게요. 요즘 가장 마음에 걸리는 일은 어느 쪽이에요? 하나만 고르면 '+wkWord()+'가 끝났을 때의 모습을 같이 정해요.',chips:['발표 준비를 끝내고 싶어','운동 습관을 만들고 싶어','시험 공부를 하고 싶어','요즘 좀 지쳤어']});return true;
+  }
   const wish=/싶어|싶다|끝내|준비|해야|하려고|목표|이루|마치|완성/.test(t)&&!parseEvent(t);
   if(wish){const cat=gtOf(t),T=GT[cat];g.gdraft={stage:'crit',cat,title:gGoalName(t),text:t};pushGuide({label:wkWord()+' 목표',text:T.ask,options:T.o});return true;}
   return false;
@@ -8327,7 +8334,7 @@ function guideFailLine(m){
   let lastF=-1;ms.forEach((x,i)=>{if(x&&x.fail)lastF=i;});
   if(lastF>=0&&ms[lastF]!==m)return '<div class="g-fail-mini xs muted">기본 규칙으로 답함</div>';
   return '<div class="g-fail"><span class="small">AI 연결이 잠깐 안 돼서 기본 규칙으로 답했어요. 목표 정하기, 할 일 나누기, "뭐부터 해야 할지 모르겠어", "이번 주 바빠졌어" 같은 말은 AI 없이도 도와드려요.</span>'+
-    (m.retry?'<button type="button" class="btn sm" data-act="g-retry" data-t="'+esc(m.retry)+'">다시 보내기</button>':'')+'</div>';
+    (m.fail?'<span class="xs muted g-why">원인: '+esc(m.fail)+'</span>':'')+(m.retry?'<button type="button" class="btn sm" data-act="g-retry" data-t="'+esc(m.retry)+'">다시 보내기</button>':'')+'</div>';
 }
 viewOnb=(o=>function(){
   if(ONB[ui.onb]!=='welcome')return o.apply(this,arguments);
