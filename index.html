@@ -4677,7 +4677,7 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.19-2';
+const APP_VER='2026.10.19-3';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
 function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요(자동으로 두 번 다시 시도했어요). 1~2분 뒤에 다시 보내 주세요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
@@ -7850,7 +7850,8 @@ function parseTarget(t){t=String(t||'');let m;
   return 0;}
 function wgTarget(g){if(Number.isInteger(g.target)&&g.target>0&&g.target<=14)return g.target;if(g.target===0)return 0;return parseTarget((g.title||'')+' '+(g.crit||''));}
 function wgProg(g){const l=tkOf(g.id),c=l.filter(t=>tkKind(t)==='core'),p=l.filter(t=>tkKind(t)==='prep'),T=wgTarget(g),cd=c.filter(t=>t.status==='done').length;
-  return {n:T||c.length,d:T?Math.min(cd,T):cd,pn:p.length,pd:p.filter(t=>t.status==='done').length,rep:T>0,T};}
+  const dd=c.filter(t=>t.status==='done');
+  return {n:T||c.length,d:T===7?Math.min(new Set(dd.map(t=>t.doneAt||'-')).size,7):(T?Math.min(cd,T):cd),pn:p.length,pd:p.filter(t=>t.status==='done').length,rep:T>0,T};}
 function tkBase(t){return String(t||'').replace(/^[월화수목금토일]요일\s*/,'').replace(/\s*\d+\s*(번째|회차|일차)\s*$/,'').trim();}
 /* 횟수가 정해진 목표: 핵심 일 개수를 횟수에 맞추고, 같은 일의 반복이면 모자란 만큼 채운다 */
 function tkFitTarget(g,list){
@@ -8250,11 +8251,13 @@ function gTalk(text,ctx){ui.gctx=ctx||null;ui.tab='guide';ui.sheet=null;ui.gScro
 function goalAct(a,d){
   switch(a){
     case 'tk-open':ui.tkId=d.id;ui.tkE={};ui.sheet='tk';ui.sheetAnim=true;if(ui.tab==='search')render();else renderOverlay();return true;
-    case 'tk-done':{const t=tkById(d.id);if(!t)return true;const s=trSnap([],{});const before=clone(tkList());tkSet(t,t.status==='done'?'todo':'done');if(ui.sheet==='tk'&&t.status==='done')ui.sheet=null;
+    case 'tk-done':{const t=tkById(d.id);if(!t)return true;
+      {const g0=t.goalId&&wgById(t.goalId);if(g0&&wgTarget(g0)===7&&t.status!=='done'&&t.day&&t.day>dkey()&&tkKind(t)==='core'){toast(DAYS[dow(fromIso(t.day))]+'요일 몫이에요. 그날 체크해 주세요');return true;}}const s=trSnap([],{});const before=clone(tkList());tkSet(t,t.status==='done'?'todo':'done');if(ui.sheet==='tk'&&t.status==='done')ui.sheet=null;
       const g=t.goalId&&wgById(t.goalId),p=g&&wgProg(g);
       if(t.status==='done'&&p&&p.n&&p.d===p.n&&g.status==='active')ui.change={title:"'"+g.title+"' 할 일을 모두 끝냈어요. 완료 기준에 닿았나요?",lines:g.crit?[{t:'완료 기준: '+g.crit}]:[],undo:{tasks:before},goalAsk:g.id};
       commit();return true;}
     case 'tk-st':{const t=tkById(d.id);if(!t)return true;
+      {const g0=t.goalId&&wgById(t.goalId);if(d.v==='done'&&g0&&wgTarget(g0)===7&&t.status!=='done'&&t.day&&t.day>dkey()&&tkKind(t)==='core'){toast(DAYS[dow(fromIso(t.day))]+'요일 몫이에요. 그날 체크해 주세요');return true;}}
       if(d.v==='done'){tkSet(t,'done');}else{if(t.status==='done')tkSet(t,d.v);else t.status=d.v;if(d.v==='doing'){for(const o of tkList())if(o!==t&&o.status==='doing')o.status='todo';t.today=dkey();toast("'"+t.title.slice(0,16)+"' 시작해요");}
         if(d.v==='blocked'){ui.tkId=t.id;ui.tkE={};ui.sheet='tk';ui.sheetAnim=true;}}
       commit();return true;}
@@ -8283,7 +8286,7 @@ function goalAct(a,d){
       if(T&&done.length>=T){toast('이미 이번 주 횟수를 채웠어요');return true;}
       if(T===7&&done.some(t=>t.doneAt===dkey())){toast('오늘은 이미 했어요');return true;}
       const before=clone(tkList());
-      let t=l.find(x=>x.status!=='done'&&x.day===dkey())||l.find(x=>x.status!=='done'&&!x.day)||l.find(x=>x.status!=='done');
+      let t=l.find(x=>x.status!=='done'&&x.day===dkey())||l.find(x=>x.status!=='done'&&!x.day)||(T===7?null:l.find(x=>x.status!=='done'));
       if(!t)t=tkAdd({title:tkBase(g.title).replace(/^(매일|주\s*\d+\s*회)\s*/,'')||g.title,goalId:g.id,key:g.key,kind:'core',order:tkList().length});
       tkSet(t,'done');t.day=t.day||dkey();
       const p=wgProg(g);ui.change={title:'했어요 · '+p.d+'/'+p.n,lines:[],undo:{tasks:before}};
