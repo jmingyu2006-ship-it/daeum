@@ -8618,7 +8618,7 @@ viewMe=function(){
     '<label class="label" for="pName2">부르는 이름</label><input id="pName2" class="field" data-field="p-name" value="'+esc(p.name||'')+'" placeholder="선택 사항">'+
     '<span class="label">대화 말투</span>'+chips('tone',OPT.tone)+
     '<div class="row-wrap"><button type="button" class="link" data-act="tab" data-tab="memory">기억하는 정보 확인 →</button></div></div>'+
-    leadCard()+'</section>'+
+    '<div class="v4-panel pad stack"><b>계획하는 방식</b><p class="small muted">길잡이가 먼저 제안하거나, 대화를 통해 함께 정할 수 있어요.</p><div class="row-wrap"><button type="button" class="chip'+(!leadOn()?' on':'')+'" data-act="lead-set" data-v="0">함께 정하기</button><button type="button" class="chip'+(leadOn()?' on':'')+'" data-act="lead-set" data-v="1">먼저 제안받기</button></div></div></section>' +
     '<section class="v4-section"><div class="v4-section-top"><h2>저장과 알림</h2></div>'+
     safeCard()+notifyCard()+'</section>'+
     '<section class="v4-section"><div class="v4-section-top"><h2>기타</h2></div>'+
