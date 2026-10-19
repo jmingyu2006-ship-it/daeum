@@ -312,3 +312,24 @@ body.g-tab .g-compose .field{
 body.kb.g-tab #main{padding-bottom:calc(170px + var(--kb,0px))!important}
 body.kb.g-tab .g-compose{bottom:calc(var(--kb,0px) + env(safe-area-inset-bottom,0px))!important}
 body.kb.g-tab .tabs{display:none!important}
+
+
+/* Root cause fix: the animation-fill-mode:both leaves transform on .v4-page.
+   A transformed ancestor makes position:fixed resolve against the scrolling
+   conversation instead of the viewport (Android Chromium included). */
+body.g-tab .v4-guide{
+  animation:none!important;
+  transform:none!important;
+  filter:none!important;
+  perspective:none!important;
+  contain:none!important;
+  will-change:auto!important;
+}
+body.g-tab #main{transform:none!important;filter:none!important;perspective:none!important}
+body.g-tab .v4-guide .g-compose{
+  position:fixed!important;
+  width:100vw!important;
+  max-width:none!important;
+  top:auto!important;
+  margin:0!important;
+}
