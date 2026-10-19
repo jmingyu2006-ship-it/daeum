@@ -1937,6 +1937,7 @@ img.art{display:block;height:auto;image-rendering:auto;flex-shrink:0}
 .nw-row .grow{display:flex;flex-direction:column;gap:2px}
 
 </style>
+<link rel="stylesheet" href="v4.css?v=4">
 
 <div id="splash" aria-hidden="true">
 <style>
@@ -8423,6 +8424,223 @@ viewOnb=(o=>function(){
     '<button type="button" class="path" data-act="onb-fixed"><b>수업·근무 시간표도 넣기</b><span>시간이 정해진 일이 많다면 함께 넣어 둬요</span></button></div>'+
     '<button type="button" class="btn ghost" data-act="demo">예시 화면부터 둘러보기</button>'+
     '<p class="xs muted onb-store">기록은 이 기기에만 저장돼요. 설정에서 백업 파일을 받을 수 있어요.</p></div>';
+})(viewOnb);
+
+
+/* ======================================================================
+ * DAEUM 04 / Product restructure
+ * Primary journey: Today -> Week goals & timetable -> Guide -> Settings.
+ * This adapter intentionally reuses the mature storage, calendar, task,
+ * import and AI engines; existing user records are not migrated or reset.
+ * All gamified character surfaces are retired except the guide.
+ * ====================================================================== */
+pxApply=function(){document.documentElement.setAttribute('data-px','off');};
+headerGame=function(){
+  return '<button type="button" class="v4-top-button" data-act="tab" data-tab="profile" aria-label="설정 열기">'+
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 14.3l1 1.7-1.9 3.3-2-.2a8 8 0 0 1-2.1 1.2l-.8 1.8H9.8l-.7-1.8a8 8 0 0 1-2.1-1.2l-2 .2-1.9-3.3 1-1.7a8 8 0 0 1 0-2.5l-1-1.7L5 6.8l2 .2a8 8 0 0 1 2.1-1.2L9.8 4h3.8l.8 1.8A8 8 0 0 1 16.5 7l2-.2 1.9 3.3-1 1.7a8 8 0 0 1 0 2.5z" transform="translate(0 -1) scale(1 .98)"/></svg></button>';
+};
+celeHtml=function(){return '';};
+try {
+  const brand=document.querySelector('.brand');
+  if(brand)brand.textContent='다음 주';
+  const labels={today:'오늘',week:'계획',guide:'길잡이',profile:'설정'};
+  document.querySelectorAll('.tabs button[data-tab]').forEach(b=>{
+    const txt=[...b.childNodes].filter(n=>n.nodeType===3);
+    if(txt.length)txt[txt.length-1].textContent=labels[b.dataset.tab]||b.dataset.tab;
+  });
+} catch(e){}
+
+function v4Heading(kicker,title,subtitle,act){
+  return '<div class="v4-head"><div><span class="v4-eyebrow">'+esc(kicker)+'</span><h1>'+esc(title)+'</h1>'+
+    (subtitle?'<p>'+esc(subtitle)+'</p>':'')+'</div>'+(act||'')+'</div>';
+}
+function v4AllTasks(k){
+  const seen=new Set();
+  return tkWeek(k).concat(tkLoose(k)).filter(t=>{
+    if(seen.has(t.id))return false;
+    seen.add(t.id);return true;
+  });
+}
+function v4SoftGuide(txt,button,act,extra){
+  return '<div class="v4-softnote">'+guideImg('idle',46)+
+    '<div class="grow"><b>'+esc(txt)+'</b><span>복잡해지면 길잡이와 함께 조정할 수 있어요.</span></div>'+
+    '<button type="button" data-act="'+(act||'tab')+'"'+(extra||' data-tab="guide"')+'>'+esc(button||'대화하기')+' →</button></div>';
+}
+function v4SchedulePeek(wk,di){
+  const d=dayItems(wk,di,modeFor(wk,di));
+  const list=[];
+  for(const f of d.fx)if(f.t==='fixed'){
+    list.push({s:f.start,label:f.label,dur:f.end-f.start,a:'fx-open',extra:' data-k="'+wk.key+'" data-d="'+di+'" data-id="'+(f.id||'')+'"'});
+  }
+  for(const b of d.bl){
+    if(b.src==='rest')continue;
+    list.push({s:b.start,label:b.title,dur:b.dur,done:!!b.done,a:'blk',extra:' data-k="'+wk.key+'" data-id="'+b.id+'"'});
+  }
+  list.sort((a,b)=>a.s-b.s);
+  if(!list.length)return '<div class="v4-empty"><b>시간이 정해진 일정이 없어요.</b><span>약속이나 공부 시간을 추가해 보세요.</span><button type="button" class="btn sm" data-act="add-open" data-v="event">일정 추가</button></div>';
+  return '<div class="v4-schedule-list">'+list.slice(0,6).map(x=>
+    '<button type="button" class="ts-r'+(x.done?' done':'')+'" data-act="'+x.a+'"'+x.extra+'>'+
+    '<span class="mono">'+hm(x.s)+'</span><b>'+esc(x.label)+'</b><span class="v3-chev">'+I3.chev+'</span></button>'
+  ).join('')+(list.length>6?'<div class="v4-meta" style="padding:12px 0">외 '+(list.length-6)+'개 일정은 시간표에서 볼 수 있어요.</div>':'')+'</div>';
+}
+function v4TaskSection(k,limit){
+  const all=v4AllTasks(k),pending=all.filter(t=>t.status!=='done');
+  const assigned=pending.filter(t=>tkIsToday(t));
+  const ready=pending.filter(t=>!tkIsToday(t)&&tkReady(t)&&(!t.day||t.day<=dkey()));
+  const ordered=assigned.concat(ready).filter((x,i,arr)=>arr.findIndex(y=>x.id===y.id)===i);
+  const done=all.filter(t=>t.status==='done'&&(t.doneAt===dkey()||tkIsToday(t)));
+  const arr=ordered.slice(0,limit||7);
+  let h='<section class="v4-section"><div class="v4-section-top"><h2>할 일 <span class="v4-count">'+pending.length+'</span></h2>'+
+    '<button type="button" class="link" data-act="tab" data-tab="week">전체 계획 보기 →</button></div><div class="v4-panel">';
+  if(arr.length)h+='<div class="v4-taskgroup">'+arr.map(t=>tkRow(t,{goal:true,pick:true})).join('')+'</div>';
+  else h+='<div class="v4-empty"><b>'+(!all.length?'할 일을 하나 만들어 볼까요?':'당장 진행할 일이 없어요.')+'</b><span>'+
+    (!all.length?'이번 주의 목표를 정하거나, 할 일을 바로 적어 보세요.':'끝낸 일과 기다리는 일은 전체 계획에서 확인할 수 있어요.')+'</span></div>';
+  if(done.length)h+='<details class="v4-done"><summary class="v4-meta" style="cursor:pointer;padding:12px 17px;border-top:1px solid var(--line)">완료한 일 '+done.length+'개 보기</summary><div class="v4-taskgroup">'+done.map(t=>tkRow(t,{goal:true})).join('')+'</div></details>';
+  h+='<div class="v4-inlineadd"><input id="v4TaskNew" class="field" placeholder="해야 할 일 빠르게 추가" maxlength="50" data-field="tk-new" data-g="" enterkeyhint="done" aria-label="새 할 일"><button type="button" class="btn" data-act="tk-add" data-g="" data-k="'+k+'" data-inp="v4TaskNew">추가</button></div></div></section>';
+  return h;
+}
+function v4Focus(k){
+  const doing=v4AllTasks(k).find(t=>t.status==='doing');
+  const t=doing||nextTask(k);
+  if(!t)return '<section class="v4-focus v4-panel"><span class="v4-eyebrow">YOUR NEXT STEP</span>'+
+    '<h2>이번 주, 무엇을 이루고 싶나요?</h2><div class="v4-muted">목표를 말하면 길잡이가 지금 할 수 있는 일부터 정리해 줘요.</div>'+
+    '<div class="v4-focus-acts"><button type="button" class="v4-main-act" data-act="tab" data-tab="guide">길잡이와 계획하기 →</button>'+
+    '<button type="button" class="v4-sub-act" data-act="wg-new" data-k="'+k+'">직접 목표 적기</button></div></section>';
+  const g=t.goalId&&wgById(t.goalId),sub=t.crit?'완료 기준 · '+t.crit:(g?'목표 · '+g.title:'할 일 한 가지에 집중해 보세요.');
+  return '<section class="v4-focus v4-panel"><span class="v4-eyebrow">'+(doing?'IN PROGRESS':'NEXT ACTION')+'</span>'+
+    '<h2>'+esc(t.title)+'</h2><div class="v4-muted">'+esc(sub)+'</div>'+
+    '<div class="v4-focus-acts"><button type="button" class="v4-main-act" data-act="'+(doing?'tk-done':'tk-st')+'" data-id="'+t.id+'"'+(doing?'':' data-v="doing"')+'">'+(doing?'완료하기 ✓':'지금 시작하기 →')+'</button>'+
+    '<button type="button" class="v4-sub-act" data-act="tk-open" data-id="'+t.id+'">자세히</button></div></section>';
+}
+viewToday=function(){
+  const t=today(),k=curKey(),di=dow(t),wk=getWeek(k),all=v4AllTasks(k);
+  const todo=all.filter(x=>x.status!=='done'),nDone=all.filter(x=>x.status==='done').length;
+  const gs=wgOf(k),s=fromIso(k),pct=all.length?Math.round(nDone/all.length*100):0;
+  const out=['<div class="v4-page">'];
+  out.push(v4Heading('TODAY','오늘의 흐름',t.getMonth()+1+'월 '+t.getDate()+'일 '+DAYS[di]+'요일 · '+md(s)+'–'+md(addDays(s,6)),
+    '<button type="button" class="v3-ic" data-act="month-open" aria-label="달력 보기">'+I3.cal+'</button>'));
+  out.push(otherTabCard(),saveFailCard(),changeCard());
+  if(ui.proposals)out.push(recCards(wk));
+  out.push('<div class="v4-kpis"><div class="v4-kpi"><span>이번 주 목표</span><strong>'+gs.length+'개</strong></div>'+
+    '<div class="v4-kpi"><span>할 일 완료</span><strong>'+nDone+' / '+all.length+'</strong></div></div>');
+  out.push(v4Focus(k));
+  out.push(v4TaskSection(k,7));
+  out.push('<section class="v4-section"><div class="v4-section-top"><h2>오늘의 일정</h2>'+
+    '<button type="button" class="link" data-act="v3-sched">시간표 보기 →</button></div><div class="v4-panel">'+v4SchedulePeek(wk,di)+'</div></section>');
+  const blocked=todo.filter(x=>x.status==='blocked'||(x.due&&x.due<dkey()));
+  if(blocked.length)out.push('<section class="v4-section"><div class="v4-section-top"><h2>확인이 필요한 일 <span class="v4-count">'+blocked.length+'</span></h2></div>'+
+    '<div class="v4-panel v4-taskgroup">'+blocked.map(x=>tkRow(x,{talk:true,goal:true})).join('')+'</div></section>');
+  const ng=nudgeCard(wk);if(ng)out.push('<div class="v4-legacy">'+ng+'</div>');
+  out.push(v4SoftGuide('계획이 바뀌었나요?','길잡이에게 말하기','tab',' data-tab="guide"'));
+  out.push('<div class="v4-glance">진행률 <b>'+pct+'%</b> · 목표와 할 일은 언제든 조정할 수 있어요.</div>');
+  return out.join('')+'</div>';
+};
+viewWeek=function(){
+  const k=wkKey(),current=k===curKey(),wk=S.weeks[k]||(k>curKey()?getWeek(k):Object.assign(newWeek(k,null),{_tmp:1}));
+  if(ui.dayView==null||ui.dayView<0||ui.dayView>6)ui.dayView=current?dow(today()):0;
+  const di=ui.dayView,mode=ui.wkMode==='sched'?'sched':'goals',s=fromIso(k),gs=wgOf(k);
+  const all=v4AllTasks(k),done=all.filter(t=>t.status==='done').length;
+  let h='<div class="v4-page">'+v4Heading('WEEKLY PLAN','주간 계획','목표를 실행할 일로, 실행할 일을 시간으로.',
+    '<button type="button" class="v3-ic" data-act="srch" aria-label="검색">'+I3.search+'</button>');
+  h+='<div class="v4-week-controls"><div class="v3-wnav"><button type="button" class="v3-arr" data-act="wk-go" data-v="-1" aria-label="지난주">‹</button>'+
+    '<b>'+md(s)+' – '+md(addDays(s,6))+'</b>'+
+    '<button type="button" class="v3-arr" data-act="wk-go" data-v="1" aria-label="다음주">›</button></div>'+
+    (k!==curKey()?'<button type="button" class="btn sm" data-act="wk-go" data-v="0">이번 주</button>':'')+'</div>';
+  h+='<div class="v4-modes" role="tablist" aria-label="계획 보기"><button type="button" role="tab" aria-selected="'+(mode==='goals')+'" class="'+(mode==='goals'?'on':'')+'" data-act="wk-mode" data-v="goals">목표 · 할 일</button>'+
+    '<button type="button" role="tab" aria-selected="'+(mode==='sched')+'" class="'+(mode==='sched'?'on':'')+'" data-act="wk-mode" data-v="sched">시간표</button></div>';
+  h+=otherTabCard()+saveFailCard()+changeCard();
+  if(mode==='goals'){
+    h+='<div class="v4-kpis"><div class="v4-kpi"><span>설정한 목표</span><strong>'+gs.length+'개</strong></div>'+
+      '<div class="v4-kpi"><span>완료한 할 일</span><strong>'+done+' / '+all.length+'</strong></div></div>';
+    h+='<section class="v4-section"><div class="v4-section-top"><h2>이번 주 목표</h2>'+
+      '<button type="button" class="link" data-act="wg-new" data-k="'+k+'">+ 목표 추가</button></div>';
+    if(!gs.length)h+=askCard(k);
+    else h+='<div class="v4-weekgoals">'+gs.map(g=>wgCard(g,{tasks:true})).join('')+'</div>';
+    h+='</section>';
+    const loose=tkLoose(k);
+    h+='<section class="v4-section"><div class="v4-section-top"><h2>목표 없는 할 일 <span class="v4-count">'+loose.filter(x=>x.status!=='done').length+'</span></h2></div><div class="v4-panel">'+
+      (loose.length?'<div class="v4-taskgroup">'+loose.map(t=>tkRow(t,{pick:true})).join('')+'</div>':'<div class="v4-empty">목표에 묶이지 않은 할 일은 여기에서 관리해요.</div>')+
+      '<div class="v4-inlineadd"><input class="field" id="v4WeekNew" placeholder="할 일 추가" maxlength="50" data-field="tk-new" data-g="" enterkeyhint="done">'+
+      '<button type="button" class="btn" data-act="tk-add" data-g="" data-k="'+k+'" data-inp="v4WeekNew">추가</button></div></div></section>';
+    h+=v4SoftGuide('목표를 더 작게 나눠 볼까요?','계획 의논하기','v3-plan',' data-k="'+k+'"');
+  } else {
+    const proposal=openProp();
+    if(proposal&&proposal.key===wk.key)h+='<div class="card soft"><b>길잡이의 시간 배치 제안이 있어요.</b><button type="button" class="btn sm primary" data-act="pp-view">제안 확인</button></div>';
+    h+='<section class="v4-section"><div class="v4-section-top"><h2>요일별 시간표</h2>'+
+      '<button type="button" class="link" data-act="month-open">월간 달력 →</button></div>'+
+      '<div class="v4-panel pad">'+v3WeekDays(wk,di)+'</div></section>';
+    h+='<section class="v4-section"><div class="v4-section-top"><h2>'+DAYS[di]+'요일 일정</h2>'+
+      '<button type="button" class="link" data-act="add-open" data-v="event">+ 일정 추가</button></div>'+
+      '<div class="v4-panel">'+v4SchedulePeek(wk,di)+'</div></section>';
+    h+='<details class="v4-section"><summary class="v4-meta" style="cursor:pointer;padding:2px 4px">주간 시간 블록 전체 펼쳐 보기</summary><div class="v4-panel pad">'+weekGrid(wk,di,'day')+'</div></details>';
+    h+=v4SoftGuide('빈 시간을 활용하고 싶다면','시간 제안받기','v3-plan',' data-k="'+k+'"');
+  }
+  return h+'</div>';
+};
+const __v4Guide=viewGuide;
+viewGuide=function(){
+  return '<div class="v4-page v4-guide">'+__v4Guide()+'</div>';
+};
+viewProfile=function(){
+  const name=S.profile.name||'내 공간',k=curKey(),w=wgOf(k),t=v4AllTasks(k);
+  const items=[
+    ['이번 주 계획','목표 '+w.length+'개 · 할 일 '+t.length+'개','tab',' data-tab="week"'],
+    ['반복 루틴','매일 하는 일을 관리해요','tab',' data-tab="routine"'],
+    ['길잡이 기억','길잡이가 참고하는 정보','tab',' data-tab="memory"'],
+    ['일정·알림·백업 설정','시간표, 알림, 저장 방식','me',''],
+    ['기록 찾기','지난 목표와 일정을 검색해요','srch','']
+  ];
+  return '<div class="v4-page">'+v4Heading('YOUR SPACE','설정','필요한 기능만 모아 두었어요.',
+    '<button type="button" class="v3-ic" data-act="me" aria-label="상세 설정">'+
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.5"/><path d="M12 2.7v2.4M12 18.9v2.4M2.7 12h2.4M18.9 12h2.4M5.4 5.4l1.7 1.7m9.8 9.8 1.7 1.7m0-13.2-1.7 1.7M7.1 16.9l-1.7 1.7"/></svg></button>')+
+    '<div class="v4-panel pad"><span class="v4-eyebrow">PERSONAL WORKSPACE</span><h2 style="margin:6px 0 2px">'+esc(name)+'</h2>'+
+    '<p class="v4-meta">내 일정과 기록은 기존과 같은 저장 방식으로 보관돼요.</p>'+
+    '<button type="button" class="link" data-act="v3-name">표시 이름 바꾸기 →</button></div>'+
+    '<section class="v4-section"><div class="v4-section-top"><h2>내 공간</h2></div><div class="v4-panel v4-settings-list">'+items.map(x=>
+    '<button type="button" class="v4-setting-row" data-act="'+x[2]+'"'+x[3]+'><div class="grow"><b>'+x[0]+'</b><small>'+x[1]+'</small></div>'+
+    '<span class="v3-chev">'+I3.chev+'</span></button>').join('')+'</div></section>'+
+    '<div class="v4-guide-card">'+guideImg('idle',76)+'<div class="grow"><b>길잡이는 여기 있어요.</b>'+
+    '<span>목표 설정, 할 일 정리, 일정 변경을 함께할 수 있어요.</span>'+
+    '<button type="button" class="btn sm" data-act="tab" data-tab="guide">길잡이 열기 →</button></div></div></div>';
+};
+viewMe=function(){
+  const p=S.profile;
+  return '<div class="v4-page">'+v4Heading('PREFERENCES','상세 설정','필요한 것만 바꿔도 계획에 바로 반영돼요.',
+      '<button type="button" class="btn sm" data-act="me-close">닫기</button>')+
+    '<section class="v4-section"><div class="v4-section-top"><h2>나의 생활 시간</h2></div>'+
+    '<div class="v4-panel pad stack"><p class="small muted">하루를 시작하고 마치는 시간을 기준으로 길잡이가 일정을 제안해요.</p>'+
+    '<div class="grid2">'+timeBtn('p-wake',p.wake,'하루 시작')+timeBtn('p-sleep',p.sleep,'하루 마무리')+'</div>'+
+    '<div class="between"><span class="small">통학·출퇴근 편도 '+p.commute+'분</span>'+
+    '<div class="stepper"><button type="button" class="icon-btn" data-act="p-commute" data-v="-10" aria-label="10분 줄이기">−</button>'+
+    '<button type="button" class="icon-btn" data-act="p-commute" data-v="10" aria-label="10분 늘리기">+</button></div></div></div></section>'+
+    '<section class="v4-section"><div class="v4-section-top"><h2>고정 시간표</h2></div><div class="v4-panel pad">'+fixedEditor()+'</div></section>'+
+    '<section class="v4-section"><div class="v4-section-top"><h2>길잡이 설정</h2></div><div class="v4-panel pad stack">'+
+    '<label class="label" for="pName2">부르는 이름</label><input id="pName2" class="field" data-field="p-name" value="'+esc(p.name||'')+'" placeholder="선택 사항">'+
+    '<span class="label">대화 말투</span>'+chips('tone',OPT.tone)+
+    '<div class="row-wrap"><button type="button" class="link" data-act="tab" data-tab="memory">기억하는 정보 확인 →</button></div></div>'+
+    leadCard()+'</section>'+
+    '<section class="v4-section"><div class="v4-section-top"><h2>저장과 알림</h2></div>'+
+    safeCard()+notifyCard()+'</section>'+
+    '<section class="v4-section"><div class="v4-section-top"><h2>기타</h2></div>'+
+    aiCard()+helpCard()+'</section>'+
+    '<div class="v4-meta" style="padding-bottom:14px">이전 버전의 목표·할 일·시간표 데이터는 그대로 유지됩니다.</div></div>';
+};
+viewOnb=(o=>function(){
+  if(ONB[ui.onb]!=='welcome')return '<div class="v4-page v4-onboarding">'+o.apply(this,arguments)+'</div>';
+  return '<div class="v4-onboarding"><div><span class="v4-eyebrow">WELCOME TO DAEUM</span>'+
+    '<h1 style="margin-top:13px">생각은 간단하게.<br>실행은 분명하게.</h1>'+
+    '<p class="muted" style="margin-top:11px">이번 주의 목표를 정하고, 할 일과 시간을 하나의 흐름으로 관리하세요.</p></div>'+
+    '<div class="v4-guide-card">'+guideImg('happy',104)+
+    '<div class="grow"><b>안녕하세요, 길잡이예요.</b><span>막연한 계획을 실행 가능한 단계로 바꿀 수 있도록 곁에서 도와드릴게요.</span></div></div>'+
+    '<div class="v4-panel pad">'+
+    '<div class="v4-step"><span class="v4-step-no">01</span><div><b>이번 주의 목표</b><p>무엇을 끝내고 싶은지 한 문장으로 정해요.</p></div></div>'+
+    '<div class="v4-step"><span class="v4-step-no">02</span><div><b>실행할 일</b><p>길잡이가 할 일을 나누고 우선순위를 함께 정해요.</p></div></div>'+
+    '<div class="v4-step"><span class="v4-step-no">03</span><div><b>시간에 배치</b><p>내 일정을 확인하면서 할 수 있는 때에 넣어요.</p></div></div></div>'+
+    '<div class="v4-onb-footer">'+
+    '<button type="button" class="btn primary block" data-act="onb-goal">길잡이와 시작하기 →</button>'+
+    '<button type="button" class="btn block" data-act="onb-fixed">고정 시간표부터 등록하기</button>'+
+    '<button type="button" class="btn ghost" data-act="demo">예시 화면 둘러보기</button>'+
+    '<p class="v4-meta" style="text-align:center">기존 데이터 저장 기능과 내보내기를 그대로 사용할 수 있어요.</p></div></div>';
 })(viewOnb);
 
 /* ---------- boot ---------- */
