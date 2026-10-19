@@ -8645,6 +8645,88 @@ viewOnb=(o=>function(){
     '<p class="v4-meta" style="text-align:center">기존 데이터 저장 기능과 내보내기를 그대로 사용할 수 있어요.</p></div></div>';
 })(viewOnb);
 
+
+/* BENCHMARK V5: task first, calendar second, guide on demand. */
+function v5Tasks(key){return v4AllTasks(key);}
+function v5Row(t,pick){
+ const g=t.goalId&&wgById(t.goalId),done=t.status==='done';
+ const note=[g&&g.title,t.status==='blocked'?'막힘':t.status==='doing'?'진행 중':'',t.due?'마감 '+t.due.slice(5):''].filter(Boolean).join(' · ');
+ return '<div class="v5-task'+(done?' done':'')+'"><button type="button" class="v5-task-check" data-act="tk-done" data-id="'+esc(t.id)+'" aria-label="'+esc(t.title)+' 완료 표시" aria-pressed="'+done+'">'+(done?I3.check:'')+'</button><button type="button" class="v5-task-body" data-act="tk-open" data-id="'+esc(t.id)+'"><b>'+esc(t.title)+'</b>'+(note?'<small>'+esc(note)+'</small>':'')+'</button>'+(pick&&!done?'<button type="button" class="v5-task-today'+(tkIsToday(t)?' active':'')+'" data-act="tk-today" data-id="'+esc(t.id)+'">'+(tkIsToday(t)?'오늘 ✓':'오늘 하기')+'</button>':'')+'</div>';
+}
+function v5Dates(key,selected,inWeek){
+ const start=fromIso(key);
+ return '<div class="v5-week-strip">'+DAYS.map((d,i)=>{const date=addDays(start,i);return '<button type="button" class="v5-day'+(selected===i?' active':'')+'" data-act="'+(inWeek?'v5-select-day':'v5-day')+'" data-d="'+i+'"><span>'+d+'</span><b>'+date.getDate()+'</b>'+(iso(date)===dkey()?'<i class="v5-day-dot"></i>':'')+'</button>';}).join('')+'</div>';
+}
+function v5Events(wk,d){
+ const it=dayItems(wk,d,modeFor(wk,d)),a=[];
+ it.fx.filter(f=>f.t==='fixed').forEach(f=>a.push({time:f.start,label:f.label,dur:f.end-f.start,fixed:true,act:'fx-open',data:' data-k="'+wk.key+'" data-d="'+d+'" data-id="'+(f.id||'')+'"'}));
+ it.bl.filter(b=>b.src!=='rest').forEach(b=>a.push({time:b.start,label:b.title,dur:b.dur,done:b.done,act:'blk',data:' data-k="'+wk.key+'" data-id="'+esc(b.id)+'"'}));
+ a.sort((x,y)=>x.time-y.time);
+ return a.length?'<div class="v5-timeline">'+a.map(x=>'<div class="v5-event'+(x.fixed?' fixed':'')+(x.done?' done':'')+'"><span class="v5-event-time">'+hm(x.time)+'</span><span class="v5-event-line"></span><button type="button" class="v5-event-body" data-act="'+x.act+'"'+x.data+'><b>'+esc(x.label)+'</b><small>'+(x.fixed?'고정 일정':durLabel(x.dur))+'</small></button></div>').join('')+'</div>':'<p class="v5-no-event">예정된 일정이 없어요.</p>';
+}
+function v5Goal(g){
+ const p=wgProg(g),ratio=p.n?Math.round(p.d/p.n*100):(g.status==='done'?100:0);
+ return '<div class="v5-goal"><button type="button" class="v5-goal-link" data-act="wg-open" data-id="'+g.id+'"><span class="grow"><b>'+esc(g.title)+'</b><small>'+esc(g.crit||'완료 기준을 정해 보세요')+'</small></span><span class="v5-goal-fraction">'+p.d+'/'+p.n+'</span></button><div class="v5-goal-progress"><i style="width:'+ratio+'%"></i></div></div>';
+}
+function v5GuideLink(){
+ return '<div class="v5-guide-callout"><span class="v5-guide-icon">'+guideImg('idle',36)+'</span><div class="v5-guide-copy"><b>계획을 함께 조정할까요?</b><span>길잡이가 우선순위와 시간을 정리해 줘요.</span></div><button type="button" data-act="tab" data-tab="guide">대화 →</button></div>';
+}
+function v5Heading(label,title,meta,act){
+ return '<header class="v5-heading"><div><span class="v5-heading-eyebrow">'+esc(label)+'</span><h1>'+esc(title)+'</h1>'+(meta?'<p class="v5-head-sub">'+esc(meta)+'</p>':'')+'</div>'+(act||'')+'</header>';
+}
+function v5Quick(key,id){
+ return '<div class="v5-quick-input"><input class="field" id="'+id+'" data-field="tk-new" data-g="" maxlength="50" placeholder="할 일 추가" enterkeyhint="done"><button type="button" data-act="tk-add" data-g="" data-k="'+key+'" data-inp="'+id+'" aria-label="추가">+</button></div>';
+}
+viewToday=function(){
+ const t=today(),k=curKey(),w=getWeek(k),d=dow(t),goals=wgOf(k),tasks=v5Tasks(k),pending=tasks.filter(x=>x.status!=='done');
+ const assigned=pending.filter(tkIsToday),ready=pending.filter(x=>!tkIsToday(x)&&tkReady(x)&&(!x.day||x.day<=dkey()));
+ const shown=assigned.concat(ready).filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i).slice(0,8);
+ const first=pending.find(x=>x.status==='doing')||nextTask(k);
+ let h='<div class="v5-screen">'+v5Heading((t.getMonth()+1)+'월 '+t.getDate()+'일 '+DAYS[d]+'요일','오늘','중요한 일부터 하나씩.',
+  '<button type="button" class="v5-plain-icon" data-act="month-open" aria-label="달력">'+I3.cal+'</button>')+v5Dates(k,d,false);
+ h+=otherTabCard()+saveFailCard()+changeCard();
+ if(ui.proposals)h+=recCards(w);
+ h+='<section class="v5-section"><div class="v5-section-head"><h2>다음 행동</h2></div><div class="v5-main-card">';
+ if(first){
+  const g=first.goalId&&wgById(first.goalId);
+  h+='<span class="v5-next-top">'+(first.status==='doing'?'진행 중':'지금 시작하기 좋은 일')+'</span><div class="v5-next-title">'+esc(first.title)+'</div><div class="v5-next-desc">'+esc(first.crit||((g&&g.title)||'지금 할 수 있는 한 가지에 집중해 보세요.'))+'</div><div class="v5-actions"><button type="button" class="v5-action-primary" data-act="'+(first.status==='doing'?'tk-done':'tk-st')+'" data-id="'+first.id+'"'+(first.status==='doing'?'':' data-v="doing"')+'>'+(first.status==='doing'?'끝냈어요':'시작하기')+'</button><button type="button" class="v5-action-secondary" data-act="tk-open" data-id="'+first.id+'">자세히</button></div>';
+ }else h+='<div class="v5-blank-next"><b>이번 주의 목표를 정해 보세요.</b><p>막연한 계획을 실행할 수 있는 일로 바꿔 드려요.</p><div class="v5-actions"><button type="button" class="v5-action-primary" data-act="tab" data-tab="guide">길잡이와 시작</button></div></div>';
+ h+='</div></section><section class="v5-section"><div class="v5-section-head"><h2>할 일 <span class="v5-count">'+pending.length+'</span></h2><button type="button" class="v5-txt-btn" data-act="v5-plan">전체 보기 →</button></div><div class="v5-tasklist">'+(shown.length?shown.map(x=>v5Row(x,!tkIsToday(x))).join(''):'<div class="v5-list-empty">할 일이 없어요. 한 가지 추가해 보세요.</div>')+v5Quick(k,'v5TodayAdd')+'</div></section>';
+ h+='<section class="v5-section"><div class="v5-section-head"><h2>오늘의 일정</h2><button type="button" class="v5-txt-btn" data-act="v5-calendar">시간표 →</button></div>'+v5Events(w,d)+'</section>';
+ h+='<section class="v5-section"><div class="v5-section-head"><h2>이번 주 목표 <span class="v5-count">'+goals.length+'</span></h2><button type="button" class="v5-txt-btn" data-act="v5-plan">관리 →</button></div>'+(goals.length?'<div class="v5-goal-peek">'+goals.map(v5Goal).join('')+'</div>':'<p class="v5-note">아직 설정한 목표가 없어요.</p>')+v5GuideLink()+'</section></div>';
+ return h;
+};
+viewWeek=function(){
+ const k=wkKey(),s=fromIso(k),w=S.weeks[k]||(k>curKey()?getWeek(k):Object.assign(newWeek(k,null),{_tmp:1})),mode=ui.wkMode==='sched'?'sched':'goals';
+ if(ui.dayView==null||ui.dayView<0||ui.dayView>6)ui.dayView=k===curKey()?dow(today()):0;
+ const gs=wgOf(k),d=ui.dayView;
+ let h='<div class="v5-screen">'+v5Heading('WEEKLY','주간 계획',md(s)+' – '+md(addDays(s,6)))+
+ '<div class="v5-week-nav"><b>'+wkLabel(k)+'</b><div><button data-act="wk-go" data-v="-1" aria-label="지난주">‹</button>'+(k===curKey()?'':'<button class="v5-this-week" data-act="wk-go" data-v="0">이번 주</button>')+'<button data-act="wk-go" data-v="1" aria-label="다음주">›</button></div></div>'+
+ '<div class="v5-modes"><button class="'+(mode==='goals'?'active':'')+'" data-act="wk-mode" data-v="goals">목표와 할 일</button><button class="'+(mode==='sched'?'active':'')+'" data-act="wk-mode" data-v="sched">시간표</button></div>';
+ h+=otherTabCard()+saveFailCard()+changeCard();
+ if(mode==='goals'){
+  h+='<section class="v5-section"><div class="v5-section-head"><h2>이번 주 목표 <span class="v5-count">'+gs.length+'</span></h2><button class="v5-txt-btn" data-act="wg-new" data-k="'+k+'">+ 추가</button></div>';
+  h+=gs.length?gs.map(g=>'<div class="v5-week-goal">'+v5Goal(g)+'<div class="v5-week-items">'+tkOf(g.id).map(t=>v5Row(t,true)).join('')+'</div><div class="v5-week-goal-actions"><button data-act="wg-open" data-id="'+g.id+'">목표 자세히</button><button data-act="wg-ai" data-id="'+g.id+'">길잡이와 정리 →</button></div></div>').join(''):askCard(k);
+  h+='</section><section class="v5-section"><div class="v5-section-head"><h2>별도의 할 일</h2></div><div class="v5-tasklist">'+tkLoose(k).map(t=>v5Row(t,true)).join('')+v5Quick(k,'v5WeekAdd')+'</div></section>'+v5GuideLink();
+ }else{
+  h+='<section class="v5-section"><div class="v5-section-head"><h2>요일 선택</h2><button class="v5-txt-btn" data-act="month-open">월간 보기 →</button></div>'+v5Dates(k,d,true)+'</section>';
+  h+='<section class="v5-section"><div class="v5-section-head"><h2>'+DAYS[d]+'요일 일정</h2><button class="v5-txt-btn" data-act="add-open" data-v="event">+ 일정 추가</button></div>'+v5Events(w,d)+'</section>';
+  h+='<details><summary class="v5-note">전체 시간 블록 펼치기</summary><div class="v4-panel pad">'+weekGrid(w,d,'day')+'</div></details>'+v5GuideLink();
+ }
+ return h+'</div>';
+};
+viewGuide=(function(previous){return function(){
+ const html=previous();
+ return '<div class="v5-screen v5-guide">'+html+'</div>';
+};})(viewGuide);
+act=(function(previous){return function(a,d){d=d||{};
+ if(a==='v5-day'){ui.tab='week';ui.wk=null;ui.wkMode='sched';ui.dayView=+d.d;window.scrollTo(0,0);render();return;}
+ if(a==='v5-select-day'){ui.dayView=+d.d;render();return;}
+ if(a==='v5-calendar'){ui.tab='week';ui.wk=null;ui.wkMode='sched';ui.dayView=dow(today());window.scrollTo(0,0);render();return;}
+ if(a==='v5-plan'){ui.tab='week';ui.wk=null;ui.wkMode='goals';window.scrollTo(0,0);render();return;}
+ return previous.call(this,a,d);
+};})(act);
+
 /* ---------- boot ---------- */
 getSample().then(sm=>sm&&sm.limits?sm.limits():null).then(c=>{if(c&&c.images){ui.imgOK=true;ui.imgTypes=(c.images.mediaTypes||[]).join(',');render();}}).catch(()=>{});
 S=emptyState();
