@@ -4680,9 +4680,9 @@ function gameAct(a,d){
 
 /* ---------- AI server (outside the Claude app): same interface as `sample` ---------- */
 const AI_URL_DEFAULT='https://daeum-ai.jmingyu2006.workers.dev';
-const APP_VER='2026.10.19-3';
+const APP_VER='2026.10.21-1';
 let aiErr=null; /* last server failure, shown in the guide so a silent fallback is never a mystery */
-function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'요청이 많아요(자동으로 두 번 다시 시도했어요). 1~2분 뒤에 다시 보내 주세요':c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
+function aiErrText(e){if(!e)return '';const c=e.code;return c==='network'?'서버에 닿지 않았어요 ('+(e.msg||'네트워크')+')':c==='rate_limited'?'무료 AI 한도에 잠깐 걸렸어요'+(e.wait>0?' · 약 '+(e.wait>90?Math.ceil(e.wait/60)+'분':e.wait+'초')+' 뒤에 다시 보내 주세요':' · 1분쯤 뒤에 다시 보내 주세요'):c==='parse'?'답을 읽지 못했어요':c==='empty'?'빈 답이 왔어요':'서버 오류 '+(e.status||'')+(e.detail?' '+e.detail:'');}
 function aiUrl(){const u=(S.setup&&S.setup.aiUrl)||'';if(u)return u;try{return localStorage.getItem('daeum-ai-url')||AI_URL_DEFAULT;}catch(e){return AI_URL_DEFAULT;}}
 function remoteSample(url){
   const call=async(input,opts,asJson)=>{
@@ -4691,13 +4691,13 @@ function remoteSample(url){
     let r;
     const go=()=>fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:msgs,json:!!asJson,tier:opts.modelTier||'default'}),signal:opts.signal});
     try{r=await go();
-      for(let n=0;n<2&&r.status===429;n++){
-        let w=+(r.headers.get('retry-after')||0);w=Math.min(Math.max(w,3+n*4),12)*1000;
+      for(let n=0;n<1&&r.status===429;n++){
+        let w=+(r.headers.get('retry-after')||0);if(w>25)break;w=Math.max(w,6)*1000;
         await new Promise((ok,no)=>{const t=setTimeout(ok,w);if(opts.signal)opts.signal.addEventListener('abort',()=>{clearTimeout(t);no({name:'AbortError'});});});
         r=await go();}}
     catch(e){if(e&&e.name==='AbortError')throw {code:'cancelled'};aiErr={code:'network',msg:String(e&&e.message||e).slice(0,60)};throw {code:'network'};}
     let j=null;try{j=await r.json();}catch(e){}
-    if(r.status===429){aiErr={code:'rate_limited',status:429};throw {code:'rate_limited'};}
+    if(r.status===429){const ra=+(r.headers.get('retry-after')||0);aiErr={code:'rate_limited',status:429,wait:ra};throw {code:'rate_limited'};}
     if(!r.ok){aiErr={code:'server',status:r.status,detail:j&&j.error};throw {code:'server'};}
     if(!j||typeof j.text!=='string'){aiErr={code:'server',status:r.status,detail:'bad_reply'};throw {code:'server'};}
     aiErr=null;
@@ -8078,6 +8078,14 @@ function rvSave(){
 }
 
 /* ---------- 6. 길잡이: 목표 → 완료 기준 → 할 일 → 실행하며 고치기 ---------- */
+/* AI에 보내는 데이터는 빈 값·기본값을 빼고 보낸다 (토큰 한도 절약) */
+function aiPrune(v){
+  if(Array.isArray(v)){const a=v.map(aiPrune).filter(x=>x!==undefined);return a.length?a:undefined;}
+  if(v&&typeof v==='object'){const o={};for(const k in v){const x=aiPrune(v[k]);if(x!==undefined)o[k]=x;}return Object.keys(o).length?o:undefined;}
+  if(v===''||v===false||v===null||v===undefined)return undefined;
+  if(typeof v==='string'&&v.length>160)return v.slice(0,160);
+  return v;
+}
 function gwkKey(){return gWeek().key;}
 function wkWord(k){k=k||gwkKey();return k>curKey()?'다음 주':'이번 주';}
 function gRefsTk(key){
@@ -8127,7 +8135,7 @@ changeUndo=function(){const u=ui.change&&ui.change.undo;if(u&&u.diff){if(u.tasks
 
 async function aiTurn(text){
   const key=gwkKey(),g=guideState(),R=gRefsTk(key),wk=getWeek(key);FXW=wk;
-  const hist=g.msgs.slice(-14).map(m=>({role:m.role==='me'?'user':'guide',text:m.text+(m.options?' [선택지: '+m.options.join(' / ')+']':'')+(m.tprop?' (할 일 제안 '+m.tprop.status+': '+m.tprop.tasks.map(x=>x.title).join(', ')+')':'')+(m.gprop?' (목표 제안 '+m.gprop.status+': '+m.gprop.title+' / 기준: '+m.gprop.crit+')':'')}));
+  const hist=g.msgs.slice(-10).map(m=>({role:m.role==='me'?'user':'guide',text:m.text+(m.options?' [선택지: '+m.options.join(' / ')+']':'')+(m.tprop?' (할 일 제안 '+m.tprop.status+': '+m.tprop.tasks.map(x=>x.title).join(', ')+')':'')+(m.gprop?' (목표 제안 '+m.gprop.status+': '+m.gprop.title+' / 기준: '+m.gprop.crit+')':'')}));
   const sched=gRefs(uniq([key,curKey()]));
   const lw=wgOf(iso(addDays(fromIso(key),-7))).map(x=>({title:x.title,reach:x.review?x.review.reach:'',hard:x.review?x.review.hard:''}));
   const prompt=["너는 투두리스트 앱 '다음 주'의 길잡이다. 이 앱은 사용자가 주간 목표를 정하고, 너와 대화하며 그 목표에 필요한 할 일을 만들고 실행하며 고쳐 가는 곳이다. 『싯다르타』의 뱃사공처럼 먼저 귀 기울여 듣고, 사용자가 원하는 방향을 확인하고, 스스로 고를 수 있게 돕는다. JSON 하나로만 답하라.",
@@ -8148,8 +8156,8 @@ async function aiTurn(text){
     '- 이미 있는 약속·반복 일정·시간 블록(schedule의 ref, b나 f로 시작)을 옮기거나 취소해 달라고 하면 type edit, edits에 ref와 op(move|cancel), day, start, minutes. f(반복 일정)는 이번 회차만 바뀐다.',
     '- 결과를 보장하지 않는다. 평가·훈계 금지. 말투: '+toneRule()+' 한국어. say는 1~3문장.',
     ptypeRule(),
-    '데이터: '+JSON.stringify({today:md(today())+' '+DAYS[dow(today())]+'요일',planningWeek:wkLabel(key)+' '+md(fromIso(key))+'–'+md(addDays(fromIso(key),6)),weekGoals:R.goals,tasksWithoutGoal:R.tasks,lastWeek:lw,
-      fixedSchedule:fxGroups().map(x=>x.days.map(dd=>DAYS[dd]).join('')+' '+hm(x.start)+'–'+hm(x.end)+' '+x.label).slice(0,12),schedule:sched.map(r=>({ref:r.ref,week:wkLabel(r.k),day:DAYS[r.day],time:hm(r.start)+'–'+hm(r.start+r.dur),title:r.title,kind:r.rec?'반복 일정':r.fixed?'약속':'시간 블록'})).slice(0,30),focus:ui.gctx||null}),
+    '데이터: '+JSON.stringify(aiPrune({today:md(today())+' '+DAYS[dow(today())]+'요일',planningWeek:wkLabel(key)+' '+md(fromIso(key))+'–'+md(addDays(fromIso(key),6)),weekGoals:R.goals,tasksWithoutGoal:R.tasks,lastWeek:lw,
+      fixedSchedule:fxGroups().map(x=>x.days.map(dd=>DAYS[dd]).join('')+' '+hm(x.start)+'–'+hm(x.end)+' '+x.label).slice(0,12),schedule:sched.map(r=>({ref:r.ref,week:wkLabel(r.k),day:DAYS[r.day],time:hm(r.start)+'–'+hm(r.start+r.dur),title:r.title,kind:r.rec?'반복 일정':r.fixed?'약속':'시간 블록'})).slice(0,30),focus:ui.gctx||null})),
     '대화: '+JSON.stringify(hist)].join('\n');
   const res=await runAI('guide',(sample,signal)=>sample.json(prompt,{signal,cache:false}),true);
   ui.gctx=null;
